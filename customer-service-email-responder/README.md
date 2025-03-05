@@ -1,4 +1,4 @@
-# Customer Service Email Responder with Genkit
+# Customer Service Email Responder
 This sample helps you use AI to take over your business's email customer support. 
 
 These genkit flows take an email as input. If the email is a question that can be answered with AI, the provided flow will run a genkit flow that:
