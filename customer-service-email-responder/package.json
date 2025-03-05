@@ -16,9 +16,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
-    "@genkit-ai/evaluator": "^1.0.5",
     "@genkit-ai/googleai": "^1.0.5",
-    "@genkit-ai/vertexai": "^1.0.5",
     "@prisma/client": "^4.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

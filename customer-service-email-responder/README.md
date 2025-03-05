@@ -30,15 +30,15 @@ Before you begin, make sure you have the following installed:
    pnpm i
    ```
 
-2. Set up your database:
-   a. Set up your environment variables:
+2. Set up your environment:
+   a. Grab your Google AI Studio API key from [here](aistudio.google.com/apikey).
+   b. Set up your environment variables:
       Create a `.env` file in the root directory and add the following:
       ```
-      PROJECT_ID=[YOUR PROJECT ID]
-      LOCATION=[YOUR LOCATION]
+      GOOGLE_API_KEY=[YOUR AI STUDIO API KEY]
       ```
 
-   b. Set up the database and seed with sample data:
+   c. Set up the database and seed with sample data:
       ```
       cd src/
       npx prisma generate
