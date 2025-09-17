@@ -24,7 +24,7 @@ The application is a single-page web app with a React front-end and an Express b
 ### 1. Install dependencies
 
 ```bash
-pnpm install
+npm install
 ```
 
 ### 2. Configure your environment
@@ -41,7 +41,7 @@ export GOOGLE_API_KEY="your-api-key"
 ### 3. Run the application
 
 ```bash
-pnpm dev
+npm start dev
 ```
 
 This will start the development server on `http://localhost:3000`.
