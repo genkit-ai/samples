@@ -98,6 +98,11 @@ export default function App() {
     }
   };
 
+  const handleCloseStory = () => {
+    setQuestion(null);
+    setStorybook({});
+  };
+
   return (
     <div className="min-h-screen bg-background font-sans relative">
       {hasSelfie && <UserAvatar />}
@@ -114,7 +119,11 @@ export default function App() {
         )}
         <div className="mt-12">
           {question ? (
-            <Story storybook={storybook} loading={loading} />
+            <Story
+              storybook={storybook}
+              loading={loading}
+              onClose={handleCloseStory}
+            />
           ) : hasSelfie ? (
             <Welcome onQuestion={handleQuestionSubmit} />
           ) : (
