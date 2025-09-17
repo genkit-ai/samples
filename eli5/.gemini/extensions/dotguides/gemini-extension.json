@@ -1,0 +1,19 @@
+{
+  "name": "dotguides",
+  "version": "0.0.1",
+  "mcpServers": {
+    "dotguides": {
+      "command": "dotguides",
+      "args": [
+        "mcp"
+      ]
+    },
+    "genkit": {
+      "command": "genkit",
+      "args": [
+        "mcp"
+      ]
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}

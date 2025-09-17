@@ -1,0 +1,9 @@
+- This is an Express Vite app with:
+  - Express server code in `src/server`
+  - React client code in `src/client`
+  - Genkit AI code in `src/ai`
+- This app uses Tailwind v4, read TAILWIND.md if you need to do style stuff.
+- Use `kebab-case` for filenames consistently.
+- Components should be created in `src/client/components`. In general create small encapsulated components over large files.
+- Make sure there are no TypeScript errors before considering a task complete.
+- Never run long-running servers. I'll do that.
