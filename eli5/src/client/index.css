@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Quicksand", "sans-serif";
+
+    --color-brand-primary: oklch(65.73% 0.19 259.36);
+    --color-brand-secondary: oklch(79.69% 0.17 299.36);
+    --color-brand-accent: oklch(81.56% 0.22 34.86);
+
+    --color-background: oklch(98.2% 0.01 259.36);
+    --color-foreground: oklch(29.22% 0.04 259.36);
+
+    --color-surface: oklch(99.51% 0.01 259.36);
+}
