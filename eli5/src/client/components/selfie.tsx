@@ -1,6 +1,8 @@
 import { runFlow } from "genkit/beta/client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CameraIcon, FileIcon } from "./icons.js";
+import { getItem, setItem } from "../lib/storage.js";
+import { Loader } from "./loader.js";
 
 function CameraView({
   onCapture,
@@ -77,6 +79,18 @@ export function Selfie({ onSelfieTaken }: { onSelfieTaken: () => void }) {
   const [loading, setLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [showCamera, setShowCamera] = useState(false);
+  const [existingSelfie, setExistingSelfie] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function checkExistingSelfie() {
+      const storedSelfie = await getItem<string>("cartoon-selfie");
+      if (storedSelfie) {
+        setExistingSelfie(storedSelfie);
+        setPreviewImage(storedSelfie);
+      }
+    }
+    checkExistingSelfie();
+  }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -97,7 +111,7 @@ export function Selfie({ onSelfieTaken }: { onSelfieTaken: () => void }) {
         url: "/api/cartoonify",
         input: { image: previewImage },
       });
-      localStorage.setItem("cartoon-selfie", result);
+      await setItem("cartoon-selfie", result);
       onSelfieTaken();
     } catch (error) {
       console.error("Error cartoonifying image:", error);
@@ -128,11 +142,15 @@ export function Selfie({ onSelfieTaken }: { onSelfieTaken: () => void }) {
       <div className="bg-surface rounded-lg shadow-sm overflow-hidden">
         <div className="p-6">
           <h2 className="text-2xl font-bold text-center mb-4 text-foreground">
-            {previewImage ? "Is this you?" : "First, a Selfie!"}
+            {previewImage
+              ? loading
+                ? "Cartoonifying..."
+                : "Is this you?"
+              : "First, a Selfie!"}
           </h2>
           {loading ? (
-            <div className="flex justify-center items-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-brand-primary"></div>
+            <div className="p-10 flex justify-center">
+              <Loader />
             </div>
           ) : previewImage ? (
             <div>
@@ -144,17 +162,23 @@ export function Selfie({ onSelfieTaken }: { onSelfieTaken: () => void }) {
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <button
                   type="button"
-                  onClick={cartoonifyAndStore}
+                  onClick={
+                    existingSelfie && previewImage === existingSelfie
+                      ? onSelfieTaken
+                      : cartoonifyAndStore
+                  }
                   className="bg-brand-primary hover:bg-brand-primary/90 text-white font-bold py-3 px-4 rounded-lg"
                 >
-                  Looks Good!
+                  {existingSelfie && previewImage === existingSelfie
+                    ? "Done"
+                    : "Looks Good!"}
                 </button>
                 <button
                   type="button"
                   onClick={reset}
                   className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg"
                 >
-                  Try Again
+                  {existingSelfie ? "Change Selfie" : "Try Again"}
                 </button>
               </div>
             </div>

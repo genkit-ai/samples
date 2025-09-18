@@ -1,5 +1,6 @@
 import type { Storybook } from "../../ai/flows/storify.js";
 import { X } from "lucide-react";
+import { Loader } from "./loader.js";
 
 interface Page {
   text: string;
@@ -18,13 +19,19 @@ export function Story({
   const pages = storybook.pages || [];
   const title = storybook.bookTitle;
 
+  console.log("[Story.tsx] Rendering with:", {
+    loading,
+    status: storybook.status,
+    pagesLength: pages.length,
+  });
+
   return (
-    <div className="fixed inset-0 bg-gradient-to-tr from-rose-100 to-teal-100 font-sans">
+    <div className="fixed inset-0 bg-gradient-to-tr from-purple-100 to-teal-100 font-sans">
       {title && (
-        <div className="sticky top-0 z-10 bg-gradient-to-r from-rose-900 to-teal-900 text-white shadow-md">
-          <div className="grid grid-cols-3 items-center p-2 px-4">
+        <div className="sticky top-0 z-10 bg-gradient-to-br from-purple-600 to-indigo-800 text-white shadow-md">
+          <div className="flex items-center p-2 px-4">
             <div className="font-bold text-lg">ELI5</div>
-            <h1 className="text-xl font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">
+            <h1 className="flex-1 text-xl font-bold text-center whitespace-nowrap overflow-hidden text-ellipsis">
               {title}
             </h1>
             <div className="flex justify-end">
@@ -40,7 +47,7 @@ export function Story({
       )}
       {loading && !pages.length && (
         <div className="fixed inset-0 z-20 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
-          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-current" />
+          <Loader />
           <div className="mt-4 text-lg">
             {storybook.status || "Preparing to research..."}
           </div>
@@ -63,8 +70,10 @@ export function Story({
                       className="w-full h-full object-contain rounded-lg"
                     />
                   ) : (
-                    <div className="text-gray-400">
-                      Generating illustration...
+                    <div className="w-full h-full rounded-lg cool-shimmer-loader flex items-center justify-center">
+                      <div className="text-gray-500 z-10">
+                        Generating illustration...
+                      </div>
                     </div>
                   )}
                 </div>
@@ -73,6 +82,7 @@ export function Story({
             </div>
           );
         })}
+        <div className="h-64"></div>
       </div>
     </div>
   );
