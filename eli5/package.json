@@ -32,5 +32,6 @@
     "nodemon": "^3.1.10",
     "tailwindcss": "^4.1.13",
     "vite": "^6.3.3"
-  }
+  },
+  "packageManager": "pnpm@10.13.1+sha256.0f9ed48d808996ae007835fb5c4641cf9a300def2eddc9e957d9bbe4768c5f28"
 }
