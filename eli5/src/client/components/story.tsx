@@ -11,10 +11,12 @@ export function Story({
   storybook,
   loading,
   onClose,
+  question,
 }: {
   storybook: Storybook & { illustrations?: (string | null)[] };
   loading: boolean;
   onClose: () => void;
+  question: string;
 }) {
   const pages = storybook.pages || [];
   const title = storybook.bookTitle;
@@ -46,7 +48,10 @@ export function Story({
         </div>
       )}
       {loading && !pages.length && (
-        <div className="fixed inset-0 z-20 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-20 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm p-8">
+          <div className="text-4xl font-bold text-center max-w-3xl shimmer-text mb-8">
+            {question}
+          </div>
           <Loader />
           <div className="mt-4 text-lg">
             {storybook.status || "Preparing to research..."}

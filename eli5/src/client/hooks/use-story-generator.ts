@@ -3,6 +3,21 @@ import { runFlow, streamFlow } from "genkit/beta/client";
 import type { Storybook } from "../../ai/flows/storify.js";
 import { getItem, setItem } from "../lib/storage.js";
 
+export interface QuestionHistoryItem {
+  question: string;
+  timestamp: number;
+}
+
+async function updateQuestionHistory(question: string) {
+  const history =
+    (await getItem<QuestionHistoryItem[]>("question-history")) || [];
+  const newHistory = [
+    { question, timestamp: Date.now() },
+    ...history.filter((item) => item.question !== question),
+  ];
+  await setItem("question-history", newHistory);
+}
+
 export function useStoryGenerator() {
   const [storybook, setStorybook] = useState<
     Storybook & { illustrations?: (string | null)[] }
@@ -12,6 +27,7 @@ export function useStoryGenerator() {
   const illustrationsRef = useRef<(string | null)[]>([]);
 
   const generateStory = async (question: string) => {
+    updateQuestionHistory(question);
     console.log("[StoryGenerator] Starting story generation for:", question);
     setLoading(true);
     setStorybook({});

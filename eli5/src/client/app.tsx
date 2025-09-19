@@ -9,6 +9,7 @@ import { getItem } from "./lib/storage.js";
 export default function App() {
   const [hasSelfie, setHasSelfie] = useState(false);
   const [question, setQuestion] = useState<string | null>(null);
+  const [initialQuestion, setInitialQuestion] = useState<string | undefined>();
   const { storybook, loading, generateStory } = useStoryGenerator();
 
   useEffect(() => {
@@ -19,6 +20,34 @@ export default function App() {
       }
     }
     checkSelfie();
+
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("q");
+      setQuestion(q);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (q) {
+      const cacheKey = `story-cache:${q}`;
+      getItem(cacheKey).then((cachedStory) => {
+        if (cachedStory) {
+          setQuestion(q);
+        } else {
+          setInitialQuestion(q);
+          window.history.replaceState({}, "", window.location.pathname);
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -26,6 +55,11 @@ export default function App() {
       generateStory(question);
     }
   }, [question]);
+
+  const handleQuestion = (q: string) => {
+    setQuestion(q);
+    window.history.pushState({}, "", `?q=${encodeURIComponent(q)}`);
+  };
 
   return (
     <div className="min-h-screen bg-background font-sans relative">
@@ -47,12 +81,19 @@ export default function App() {
         <div className="mt-12">
           {question ? (
             <Story
+              question={question}
               storybook={storybook}
               loading={loading}
-              onClose={() => setQuestion(null)}
+              onClose={() => {
+                setQuestion(null);
+                window.history.pushState({}, "", "/");
+              }}
             />
           ) : hasSelfie ? (
-            <Welcome onQuestion={setQuestion} />
+            <Welcome
+              onQuestion={handleQuestion}
+              initialQuestion={initialQuestion}
+            />
           ) : (
             <Selfie onSelfieTaken={() => setHasSelfie(true)} />
           )}
