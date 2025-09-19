@@ -91,6 +91,22 @@
     opacity: 0.5;
 }
 
+.shimmer-text {
+    background: linear-gradient(
+        110deg,
+        #a855f7,
+        #3b82f6,
+        #2dd4bf,
+        #3b82f6,
+        #a855f7
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer-gradient 4s ease infinite;
+}
+
 @keyframes shimmer-gradient {
     0% {
         background-position: 0% 50%;

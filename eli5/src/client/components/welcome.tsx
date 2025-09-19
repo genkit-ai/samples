@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { QuestionHistory } from "./question-history.js";
 
 const exampleQuestions = [
   "Why is the interstellar visitor 3I/ATLAS so interesting?",
@@ -35,10 +36,18 @@ const exampleQuestions = [
 
 export function Welcome({
   onQuestion,
+  initialQuestion,
 }: {
   onQuestion: (question: string) => void;
+  initialQuestion?: string;
 }) {
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState(initialQuestion || "");
+
+  useEffect(() => {
+    if (initialQuestion) {
+      setQuestion(initialQuestion);
+    }
+  }, [initialQuestion]);
   const randomQuestions = useMemo(() => {
     const shuffled = [...exampleQuestions].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 3);
@@ -93,6 +102,7 @@ export function Welcome({
           ))}
         </div>
       </div>
+      <QuestionHistory />
     </div>
   );
 }
