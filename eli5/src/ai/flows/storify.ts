@@ -41,9 +41,9 @@ export const storify = ai.defineFlow(
       latestChunk = latest;
       sendChunk(latestChunk);
     };
-    update({ status: "Researching topic..." });
+    update({ status: "Studying to prepare lesson..." });
     const { text: lesson } = await generateLesson({ question });
-    update({ status: "Research complete, generating lesson..." });
+    update({ status: "Generating lesson storybook..." });
     const { output } = await generateStorybook(
       { lesson },
       {
