@@ -49,7 +49,7 @@ export function Story({
         <div className="fixed inset-0 z-20 flex flex-col items-center justify-center bg-background/80 backdrop-blur-sm">
           <Loader />
           <div className="mt-4 text-lg">
-            {storybook.status || "Preparing to research..."}
+            {storybook.status || "Warming up..."}
           </div>
         </div>
       )}
