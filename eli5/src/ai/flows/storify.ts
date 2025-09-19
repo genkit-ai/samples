@@ -59,7 +59,7 @@ export const storify = ai.defineFlow(
   }
 );
 
-const WITTY_STATUS_UPDATES =   [
+const WITTY_STATUS_UPDATES = [
   // Short & Snappy
   "Consulting the oracle...",
   "Waking the hive mind...",
@@ -128,7 +128,7 @@ const WITTY_STATUS_UPDATES =   [
   "Assembling the puzzle...",
   "Cracking the code...",
   "Navigating the noise...",
-  "Parsing the patterns..."
+  "Parsing the patterns...",
 ];
 
 function startSendingStatusUpdates(
@@ -141,7 +141,7 @@ function startSendingStatusUpdates(
           Math.floor(Math.random() * WITTY_STATUS_UPDATES.length)
         ],
     });
-  }, Math.floor(2000 + Math.random() * 5000));
+  }, 5000);
 
   return to.close;
 }
