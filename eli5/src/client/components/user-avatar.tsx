@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
+import { getItem } from "../lib/storage.js";
 
-export function UserAvatar() {
+export function UserAvatar({ onEdit }: { onEdit: () => void }) {
   const [avatar, setAvatar] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedAvatar = localStorage.getItem("cartoon-selfie");
-    if (storedAvatar) {
-      setAvatar(storedAvatar);
+    async function getAvatar() {
+      const storedAvatar = await getItem<string>("cartoon-selfie");
+      if (storedAvatar) {
+        setAvatar(storedAvatar);
+      }
     }
+    getAvatar();
   }, []);
 
   if (!avatar) {
@@ -15,8 +19,16 @@ export function UserAvatar() {
   }
 
   return (
-    <div className="absolute top-4 right-4">
-      <img src={avatar} alt="Your cartoon selfie" className="w-16 h-16 rounded-full shadow-lg" />
+    <div className="absolute top-4 right-4 cursor-pointer" onClick={onEdit}>
+      <div
+        className="w-16 h-16 rounded-full shadow-lg"
+        style={{
+          backgroundImage: `url(${avatar})`,
+          backgroundSize: "300%",
+          backgroundPosition: "top",
+          imageRendering: "crisp-edges",
+        }}
+      />
     </div>
   );
 }

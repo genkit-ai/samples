@@ -12,3 +12,93 @@
 
     --color-surface: oklch(99.51% 0.01 259.36);
 }
+
+.loader {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(
+        165deg,
+        color-mix(in srgb, var(--loader-base-color) 20%, white) 0%,
+        var(--loader-base-color) 40%,
+        color-mix(in srgb, var(--loader-base-color) 80%, black) 98%,
+        color-mix(in srgb, var(--loader-base-color) 50%, black) 100%
+    );
+    border-radius: 50%;
+    position: relative;
+}
+
+.loader:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border-bottom: 0 solid #ffffff05;
+    box-shadow:
+        0 -10px 20px 20px
+            color-mix(in srgb, var(--loader-highlight-color) 25%, transparent)
+            inset,
+        0 -5px 15px 10px
+            color-mix(in srgb, var(--loader-highlight-color) 31%, transparent)
+            inset,
+        0 -2px 5px
+            color-mix(in srgb, var(--loader-highlight-color) 50%, transparent)
+            inset,
+        0 -3px 2px
+            color-mix(in srgb, var(--loader-highlight-color) 73%, transparent)
+            inset,
+        0 2px 0px var(--loader-highlight-color),
+        0 2px 3px var(--loader-highlight-color),
+        0 5px 5px
+            color-mix(in srgb, var(--loader-highlight-color) 56%, transparent),
+        0 10px 15px
+            color-mix(in srgb, var(--loader-highlight-color) 38%, transparent),
+        0 10px 20px 20px
+            color-mix(in srgb, var(--loader-highlight-color) 25%, transparent);
+    filter: blur(3px);
+    animation: 2s rotate linear infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.cool-shimmer-loader {
+    position: relative;
+    overflow: hidden;
+    background-color: #e9e9e9;
+}
+
+.cool-shimmer-loader::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        110deg,
+        #a855f7,
+        #3b82f6,
+        #2dd4bf,
+        #3b82f6,
+        #a855f7
+    );
+    background-size: 200% 200%;
+    animation: shimmer-gradient 4s ease infinite;
+    opacity: 0.5;
+}
+
+@keyframes shimmer-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
