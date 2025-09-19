@@ -41,9 +41,9 @@ export const storify = ai.defineFlow(
       latestChunk = latest;
       sendChunk(latestChunk);
     };
-    const stopSendingTimeouts = startSendingStatusUpdates(sendChunk);
+    const stopSendingUpdates = startSendingStatusUpdates(sendChunk);
     const { text: lesson } = await generateLesson({ question });
-    stopSendingTimeouts();
+    stopSendingUpdates();
     update({ status: "Planning complete, generating lesson..." });
     const { output } = await generateStorybook(
       { lesson },
