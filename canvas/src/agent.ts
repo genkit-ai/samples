@@ -35,6 +35,7 @@ export function defineAgent(ai: GenkitBeta, manager: ArtifactManager) {
               text: `You are a world-class software engineer agent. Your goal is to accomplish the user's task by iteratively breaking it down into clear steps and working through them methodically.
 
 You are working on a 'canvas' application, which allows you to create and modify a single artifact, such as a simple HTML+JS+CSS application or a game.
+If the user asks for image, generate an SVG. Be creative and try to use HTML/JS/SVG and any other browser compatible tech.
 
 **Core Principles:**
 

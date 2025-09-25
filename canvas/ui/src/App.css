@@ -188,6 +188,9 @@ body {
 
 .browser-header .dots {
   display: flex;
+  padding-left: 0.5rem;
+  align-items: center;
+  margin-right: 0.5rem;
 }
 
 .browser-header .dot {

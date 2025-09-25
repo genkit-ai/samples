@@ -24,6 +24,7 @@ function App() {
   const [messages, setMessages] = useState<MessageData[]>([]);
   const [input, setInput] = useState("");
   const [showPreview, setShowPreview] = useState(false);
+  const [artifactPath, setArtifactPath] = useState<string | null>(null);
   const [title, setTitle] = useState("New Tab");
   const [loading, setLoading] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -38,14 +39,31 @@ function App() {
   }, [messages]);
 
   useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage?.role === 'model') {
+      const toolRequestPart = lastMessage.content.find(
+        (p) => p.toolRequest?.name === 'open_file_preview'
+      );
+      if (toolRequestPart?.toolRequest?.input) {
+        const path = (toolRequestPart.toolRequest.input as { path: string })
+          ?.path;
+        if (path) {
+          setArtifactPath(path);
+          setShowPreview(true);
+        }
+      }
+    }
+  }, [messages]);
+
+  useEffect(() => {
     const iframe = iframeRef.current;
     const handleLoad = () => {
       if (iframe?.contentDocument?.title) {
         setTitle(iframe.contentDocument.title);
       }
     };
-    if (showPreview && iframe) {
-      iframe.src = "/artifacts/main.html";
+    if (showPreview && iframe && artifactPath) {
+      iframe.src = `/artifacts/${artifactPath}`;
       iframe.addEventListener("load", handleLoad);
     }
     return () => {
@@ -53,7 +71,7 @@ function App() {
         iframe.removeEventListener("load", handleLoad);
       }
     };
-  }, [showPreview]);
+  }, [showPreview, artifactPath]);
 
   const handleSend = async () => {
     const userMessage: MessageData = {
@@ -85,15 +103,6 @@ function App() {
         !chunk.content
       ) {
         continue;
-      }
-
-      if (
-        chunk.content.some((p: Part) => p.toolRequest?.name === "open_file_preview")
-      ) {
-        setShowPreview(true);
-        if (iframeRef.current) {
-          iframeRef.current.src += "";
-        }
       }
 
       setMessages((currentMessages) => {
@@ -168,16 +177,16 @@ function App() {
         <div className="preview-pane">
           <div className="browser-window">
             <div className="browser-header">
-              <div className="browser-tab">
-                <span className="browser-tab-title">{title}</span>
-              </div>
-            </div>
-            <div className="browser-toolbar">
               <div className="dots">
                 <span className="dot red"></span>
                 <span className="dot yellow"></span>
                 <span className="dot green"></span>
               </div>
+              <div className="browser-tab">
+                <span className="browser-tab-title">{title}</span>
+              </div>
+            </div>
+            <div className="browser-toolbar">
               <button
                 className="refresh-btn"
                 onClick={() => {
@@ -186,10 +195,12 @@ function App() {
               >
                 ⟳
               </button>
-              <div className="browser-address-bar">/artifacts/main.html</div>
+              <div className="browser-address-bar">{artifactPath}</div>
               <button
                 className="pop-out-btn"
-                onClick={() => window.open("/artifacts/main.html", "_blank")}
+                onClick={() =>
+                  artifactPath && window.open(`/artifacts/${artifactPath}`, "_blank")
+                }
               >
                 ↗
               </button>
