@@ -219,10 +219,20 @@ body {
   background: none;
   border: none;
   color: #f0f0f0;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   cursor: pointer;
   margin: 0 0.25rem;
-  line-height: 1;
+  padding: 0 5px;
+}
+
+.pop-out-btn {
+  font-size: 1.1rem;
+}
+
+.pop-out-btn:focus,
+.refresh-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #007bff;
 }
 
 .browser-content {
