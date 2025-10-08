@@ -274,3 +274,14 @@ body {
   margin: auto;
   color: #ccc;
 }
+
+.backend-toggle {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  color: #ccc;
+}
+
+.backend-toggle label {
+  margin-left: 0.5rem;
+}

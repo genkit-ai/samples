@@ -32,16 +32,14 @@ function updateMessages(
   initialMessagesCount: number
 ) {
   return (currentMessages: MessageData[]): MessageData[] => {
-    if (
-      typeof chunk.index !== 'number' ||
-      !chunk.role ||
-      !chunk.content
-    ) {
+    const chunkIndex = chunk.index ?? 0;
+    const role = chunk.role ?? 'model';
+    if (!chunk.content) {
       return currentMessages;
     }
 
     const newMessages = [...currentMessages];
-    const targetIndex = initialMessagesCount + chunk.index;
+    const targetIndex = initialMessagesCount + chunkIndex;
 
     if (newMessages[targetIndex]) {
       const existingContent = newMessages[targetIndex].content;
@@ -66,7 +64,7 @@ function updateMessages(
     } else {
       // This is the first chunk for a new message.
       newMessages[targetIndex] = {
-        role: chunk.role as Role,
+        role: role as Role,
         content: chunk.content,
       };
     }
@@ -79,7 +77,17 @@ function App() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState('');
+  const [backend, setBackend] = useState('nodejs');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const backendUrl = backend === 'nodejs' ? 'http://localhost:3000' : 'http://localhost:3001';
+
+  const setBackendAndUrl = (newBackend: string) => {
+    setBackend(newBackend);
+    const url = new URL(window.location.href);
+    url.searchParams.set('backend', newBackend);
+    window.history.replaceState({}, '', url.toString());
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -87,12 +95,18 @@ function App() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    const backendFromUrl = urlParams.get('backend');
+    if (backendFromUrl) {
+      setBackend(backendFromUrl);
+    }
     const sessionIdFromUrl = urlParams.get('sessionId');
     if (sessionIdFromUrl) {
       setSessionId(sessionIdFromUrl);
     } else {
       const newSessionId = uuidv4();
-      window.history.replaceState({}, '', `?sessionId=${newSessionId}`);
+      const url = new URL(window.location.href);
+      url.searchParams.set('sessionId', newSessionId);
+      window.history.replaceState({}, '', url.toString());
       setSessionId(newSessionId);
     }
   }, []);
@@ -105,7 +119,7 @@ function App() {
     if (sessionId) {
       loadHistory();
     }
-  }, [sessionId]);
+  }, [sessionId, backend]);
 
   const loadHistory = async () => {
     setLoading(true);
@@ -113,7 +127,7 @@ function App() {
     // This is useful for operations that do not need to be streamed,
     // like fetching the chat history.
     const history = await runFlow({
-        url: '/flows/getHistory',
+        url: `${backendUrl}/flows/getHistory`,
         input: { sessionId },
     });
     setMessages(history);
@@ -139,7 +153,7 @@ function App() {
       // This is ideal for real-time applications like chatbots,
       // allowing the UI to update as the response is generated.
       const { stream } = streamFlow<GenerateResponseData, GenerateResponseChunkData>({
-        url: "/flows/chat",
+        url: `${backendUrl}/flows/chat`,
         input: { sessionId, message: input },
       });
 
@@ -199,6 +213,29 @@ function App() {
           <div ref={messagesEndRef} />
         </div>
         <div className="input-area">
+          <div className="backend-toggle">
+            <span>Backend:</span>
+            <label>
+              <input
+                type="radio"
+                name="backend"
+                value="nodejs"
+                checked={backend === 'nodejs'}
+                onChange={() => setBackendAndUrl('nodejs')}
+              />
+              Node.js
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="backend"
+                value="go"
+                checked={backend === 'go'}
+                onChange={() => setBackendAndUrl('go')}
+              />
+              Go
+            </label>
+          </div>
           <button
             onClick={startNewConversation}
             className="new-conversation"
