@@ -25,8 +25,14 @@ This sample demonstrates a simple chatbot application that uses Genkit.
 
 3.  **Start the server:**
 
+    To run the Node.js server:
     ```bash
     npm start
     ```
 
-    The server will be running at `http://localhost:3000`.
+    To run the Go server (in a separate terminal):
+    ```bash
+    npm run start:go
+    ```
+
+    The UI and node backend server will be running at `http://localhost:3000` and the Go server will be running at `http://localhost:3001`.
