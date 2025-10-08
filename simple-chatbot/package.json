@@ -1,0 +1,24 @@
+{
+  "name": "simple-chatbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx genkit start -- npx tsx --watch src/index.ts",
+    "build": "cd ui && npm i && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@genkit-ai/express": "^1.19.3",
+    "@genkit-ai/google-genai": "^1.19.3",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "genkit-cli": "^1.19.3",
+    "tsx": "^4.20.5"
+  }
+}
