@@ -20,9 +20,9 @@ func main() {
 		genkit.WithPlugins(&googlegenai.GoogleAI{}),
 	)
 
-	convertTemperatureTool := tools.DefineTempConversionTool(g)
+	tools.DefineTempConversionTool(g)
 
-	chatFlow := flows.DefineChatFlow(g, convertTemperatureTool)
+	chatFlow := flows.DefineChatFlow(g)
 	historyFlow := flows.DefineHistoryFlow(g)
 
 	mux := http.NewServeMux()

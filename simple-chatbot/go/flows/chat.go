@@ -16,7 +16,7 @@ type ChatRequest struct {
 	Message   string `json:"message"`
 }
 
-func DefineChatFlow(g *genkit.Genkit, convertTemperatureTool ai.Tool) *core.Flow[*ChatRequest, string, *ai.ModelResponseChunk] {
+func DefineChatFlow(g *genkit.Genkit) *core.Flow[*ChatRequest, string, *ai.ModelResponseChunk] {
 	return genkit.DefineStreamingFlow(g, "chat", func(ctx context.Context, req *ChatRequest, cb func(context.Context, *ai.ModelResponseChunk) error) (string, error) {
 		h := history.Load(req.SessionID)
 		if h == nil {
@@ -29,7 +29,7 @@ func DefineChatFlow(g *genkit.Genkit, convertTemperatureTool ai.Tool) *core.Flow
 		resp, err := genkit.Generate(ctx, g,
 			ai.WithModelName("googleai/gemini-2.5-flash"),
 			ai.WithMessages(h...),
-			ai.WithTools(convertTemperatureTool),
+			ai.WithTools(ai.ToolName("convertTemperature")),
 			ai.WithStreaming(cb),
 		)
 		if err != nil {
