@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { runFlow, streamFlow } from "genkit/beta/client";
 import type { Storybook } from "../../ai/flows/storify.js";
 import { getItem, setItem } from "../lib/storage.js";
+import { useBackend } from "./use-backend.js";
 
 export interface QuestionHistoryItem {
   question: string;
@@ -19,6 +20,7 @@ async function updateQuestionHistory(question: string) {
 }
 
 export function useStoryGenerator() {
+  const { url } = useBackend();
   const [storybook, setStorybook] = useState<
     Storybook & { illustrations?: (string | null)[] }
   >({});
@@ -39,7 +41,7 @@ export function useStoryGenerator() {
 
     if (!userImage) {
       console.error(
-        "[StoryGenerator] User image not found. Cannot generate illustrations.",
+        "[StoryGenerator] User image not found. Cannot generate illustrations."
       );
       setLoading(false);
       return;
@@ -55,14 +57,14 @@ export function useStoryGenerator() {
           let imageUrl = await getItem<string>(cacheKey);
           if (imageUrl) {
             console.log(
-              `[StoryGenerator] Illustration for page ${index} found in cache.`,
+              `[StoryGenerator] Illustration for page ${index} found in cache.`
             );
           } else {
             console.log(
-              `[StoryGenerator] Generating illustration for page ${index}.`,
+              `[StoryGenerator] Generating illustration for page ${index}.`
             );
             imageUrl = await runFlow<string>({
-              url: "/api/illustrate",
+              url: `${url}/api/illustrate`,
               input: {
                 userImage,
                 illustration: page.illustration,
@@ -71,20 +73,20 @@ export function useStoryGenerator() {
             });
             await setItem(cacheKey, imageUrl);
             console.log(
-              `[StoryGenerator] Illustration for page ${index} generated and cached.`,
+              `[StoryGenerator] Illustration for page ${index} generated and cached.`
             );
           }
 
           illustrationsRef.current[index] = imageUrl;
           console.log(
             `[StoryGenerator] Updated illustrationsRef for page ${index}:`,
-            [...illustrationsRef.current],
+            [...illustrationsRef.current]
           );
           setStorybook((prev) => {
             const newIllustrations = [...illustrationsRef.current];
             console.log(
               `[StoryGenerator] setStorybook update for page ${index}. New illustration array:`,
-              newIllustrations,
+              newIllustrations
             );
             return {
               ...prev,
@@ -94,7 +96,7 @@ export function useStoryGenerator() {
         } catch (e) {
           console.error(
             `[StoryGenerator] Error generating illustration for page ${index}:`,
-            e,
+            e
           );
         }
       })();
@@ -111,7 +113,7 @@ export function useStoryGenerator() {
         });
         if (cachedStory.pages) {
           console.log(
-            `[StoryGenerator] Generating ${cachedStory.pages.length} illustrations from cached story.`,
+            `[StoryGenerator] Generating ${cachedStory.pages.length} illustrations from cached story.`
           );
           cachedStory.pages.forEach((page, index) => {
             generateIllustration(page, index);
@@ -119,10 +121,10 @@ export function useStoryGenerator() {
         }
       } else {
         console.log(
-          "[StoryGenerator] No cached story found, streaming new story.",
+          "[StoryGenerator] No cached story found, streaming new story."
         );
         const flow = streamFlow<Storybook, Storybook>({
-          url: "/api/storify",
+          url: `${url}/api/storify`,
           input: { question },
         });
 
@@ -141,7 +143,7 @@ export function useStoryGenerator() {
               console.log(
                 `[StoryGenerator] Processing pages from ${processedPagesCount} to ${
                   pagesToProcessUntil - 1
-                }.`,
+                }.`
               );
               while (
                 illustrationsRef.current.length <
@@ -169,7 +171,7 @@ export function useStoryGenerator() {
             console.log(
               `[StoryGenerator] Processing remaining pages from ${processedPagesCount} to ${
                 finalBook.pages.length - 1
-              }.`,
+              }.`
             );
             for (let i = processedPagesCount; i < finalBook.pages.length; i++) {
               generateIllustration(finalBook.pages[i], i);

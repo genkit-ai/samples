@@ -1,5 +1,6 @@
 import { runFlow } from "genkit/beta/client";
 import { useEffect, useRef, useState } from "react";
+import { useBackend } from "../hooks/use-backend.js";
 import { CameraIcon, FileIcon } from "./icons.js";
 import { getItem, setItem } from "../lib/storage.js";
 import { Loader } from "./loader.js";
@@ -76,6 +77,7 @@ function CameraView({
 }
 
 export function Selfie({ onSelfieTaken }: { onSelfieTaken: () => void }) {
+  const { url } = useBackend();
   const [loading, setLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [showCamera, setShowCamera] = useState(false);
@@ -108,7 +110,7 @@ export function Selfie({ onSelfieTaken }: { onSelfieTaken: () => void }) {
     setLoading(true);
     try {
       const result = await runFlow({
-        url: "/api/cartoonify",
+        url: `${url}/api/cartoonify`,
         input: { image: previewImage },
       });
       await setItem("cartoon-selfie", result);
