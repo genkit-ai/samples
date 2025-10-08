@@ -3,10 +3,12 @@ import { illustrate } from "../ai/flows/illustrate.js";
 import { storify } from "../ai/flows/storify.js";
 import { expressHandler } from "@genkit-ai/express";
 import express from "express";
+import cors from "cors";
 import ViteExpress from "vite-express";
 
 const app = express();
 app.use(express.json({ limit: "10mb" }));
+app.use(cors({origin: '*'}));
 
 app.get("/hello", (_, res) => {
   res.send("Hello Vite + React + TypeScript!");

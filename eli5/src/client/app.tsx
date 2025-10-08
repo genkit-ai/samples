@@ -3,6 +3,7 @@ import { Selfie } from "./components/selfie.js";
 import { Story } from "./components/story.js";
 import { UserAvatar } from "./components/user-avatar.js";
 import { Welcome } from "./components/welcome.js";
+import { useBackend } from "./hooks/use-backend.js";
 import { useStoryGenerator } from "./hooks/use-story-generator.js";
 import { getItem } from "./lib/storage.js";
 
@@ -11,6 +12,7 @@ export default function App() {
   const [question, setQuestion] = useState<string | null>(null);
   const [initialQuestion, setInitialQuestion] = useState<string | undefined>();
   const { storybook, loading, generateStory } = useStoryGenerator();
+  const { name, toggleBackend } = useBackend();
 
   useEffect(() => {
     async function checkSelfie() {
@@ -63,6 +65,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background font-sans relative">
+      <div className="absolute top-4 left-4">
+        <button
+          onClick={toggleBackend}
+          className="px-4 py-2 rounded-md bg-gray-800 text-white"
+        >
+          API backend: {name.toUpperCase()}
+        </button>
+      </div>
       {hasSelfie && <UserAvatar onEdit={() => setHasSelfie(false)} />}
       <main className="py-12">
         {!question && (
