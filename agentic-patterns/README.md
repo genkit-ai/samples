@@ -7,7 +7,7 @@ This directory contains examples of agentic patterns implemented in both TypeScr
 To run the JavaScript/TypeScript examples:
 
 ```bash
-cd agentic-patterns
+cd agentic-patterns/js
 npm i
 npm start
 ```
