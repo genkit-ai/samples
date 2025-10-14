@@ -1,0 +1,24 @@
+{
+  "name": "agentic-patterns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "genkit start -- npx tsx --watch src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@genkit-ai/dev-local-vectorstore": "latest",
+    "@genkit-ai/express": "latest",
+    "@genkit-ai/google-genai": "latest",
+    "express": "^4",
+    "genkit": "latest"
+  },
+  "devDependencies": {
+    "genkit-cli": "^1.21.0",
+    "tsx": "^4.20.6"
+  }
+}
