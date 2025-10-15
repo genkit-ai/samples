@@ -16,10 +16,12 @@
   "dependencies": {
     "@genkit-ai/express": "^1.19.3",
     "@genkit-ai/google-genai": "^1.19.3",
-    "express": "^4"
+    "express": "^4",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "genkit-cli": "^1.19.3",
-    "tsx": "^4.20.5"
+    "tsx": "^4.20.5",
+    "@types/cors": "^2.8.19"
   }
 }

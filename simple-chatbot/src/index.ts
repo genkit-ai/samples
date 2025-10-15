@@ -3,6 +3,7 @@ import { chatFlow, getHistoryFlow } from "./genkit";
 import { expressHandler } from '@genkit-ai/express';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,6 +12,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors({origin: '*'}));
 
 app.post('/flows/chat', expressHandler(chatFlow));
 app.post('/flows/getHistory', expressHandler(getHistoryFlow));
