@@ -16,8 +16,8 @@ type ChatRequest struct {
 	Message   string `json:"message"`
 }
 
-func DefineChatFlow(g *genkit.Genkit) *core.Flow[*ChatRequest, string, *ai.ModelResponseChunk] {
-	return genkit.DefineStreamingFlow(g, "chat", func(ctx context.Context, req *ChatRequest, cb func(context.Context, *ai.ModelResponseChunk) error) (string, error) {
+func DefineChatFlow(g *genkit.Genkit) *core.Flow[*ChatRequest, *ai.ModelResponse, *ai.ModelResponseChunk] {
+	return genkit.DefineStreamingFlow(g, "chat", func(ctx context.Context, req *ChatRequest, cb func(context.Context, *ai.ModelResponseChunk) error) (*ai.ModelResponse, error) {
 		h := history.Load(req.SessionID)
 		if h == nil {
 			h = []*ai.Message{
@@ -33,11 +33,11 @@ func DefineChatFlow(g *genkit.Genkit) *core.Flow[*ChatRequest, string, *ai.Model
 			ai.WithStreaming(cb),
 		)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 
 		history.Save(req.SessionID, resp.History())
 
-		return resp.Text(), nil
+		return resp, nil
 	})
 }
