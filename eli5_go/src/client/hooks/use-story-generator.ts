@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { runFlow, streamFlow } from "genkit/beta/client";
-import type { Storybook } from "../../ai/flows/storify.js";
 import { getItem, setItem } from "../lib/storage.js";
+import { type Storybook } from "../lib/types.js";
 
 export interface QuestionHistoryItem {
   question: string;
