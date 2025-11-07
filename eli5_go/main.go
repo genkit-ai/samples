@@ -26,7 +26,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	// Serve static files from the "dist" directory.
-	fs := http.FileServer(http.Dir("../dist"))
+	fs := http.FileServer(http.Dir("client/dist"))
 	mux.Handle("/", fs)
 
 	mux.HandleFunc("OPTIONS /api/cartoonify", corsMiddleware(nil))

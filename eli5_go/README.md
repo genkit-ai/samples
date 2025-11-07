@@ -12,7 +12,7 @@ ELI5 is a web application that takes a user's question and generates a simple, i
 
 The application is a single-page web app with a pre-built React front-end and a Go back-end. The back-end exposes a few API endpoints that are implemented as Genkit flows.
 
-*   **Front-end:** The front-end is a pre-built React application that is served as static files by the Go back-end.
+*   **Front-end:** The front-end is a pre-built React application, located in the `client` directory. It is served as static files by the Go back-end.
 *   **Back-end:** The back-end is a Go server that uses Genkit to define and expose AI flows. It also serves the front-end application.
 *   **Genkit Flows:** The core logic of the application is implemented as three Genkit flows:
     *   `cartoonify`: Takes an image of a person and uses a Google AI model to turn it into a cartoon character.
@@ -34,10 +34,9 @@ export GEMINI_API_KEY="your-api-key"
 
 ### 2. Run the application
 
-Navigate to the `go` directory and run the `main.go` file. This will also download the necessary dependencies.
+Run the `main.go` file from the root of the project. This will also download the necessary dependencies.
 
 ```bash
-cd go
 go run main.go
 ```
 
