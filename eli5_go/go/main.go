@@ -24,6 +24,11 @@ func main() {
 	storifyFlow := flows.DefineStorifyFlow(g)
 
 	mux := http.NewServeMux()
+
+	// Serve static files from the "dist" directory.
+	fs := http.FileServer(http.Dir("../dist"))
+	mux.Handle("/", fs)
+
 	mux.HandleFunc("OPTIONS /api/cartoonify", corsMiddleware(nil))
 	mux.HandleFunc("POST /api/cartoonify", corsMiddleware(genkit.Handler(cartoonifyFlow)))
 

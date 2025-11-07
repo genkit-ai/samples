@@ -1,0 +1,32 @@
+{
+  "name": "eli5",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npx genkit-cli start -- nodemon -w src/server -w src/ai -x tsx src/server/main.ts",
+    "start": "cd go & go run main.go",
+    "build": "npx tsc --noEmit && vite build",
+    "genkit:ui": "npx genkit-cli start -- npx tsx --watch src/ai/index.ts"
+  },
+  "dependencies": {
+    "genkit": "^1.22.0",
+    "idb-keyval": "^6.2.2",
+    "lucide-react": "^0.544.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typescript": "^5.8.3",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^22.15.2",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^4.4.1",
+    "nodemon": "^3.1.10",
+    "tailwindcss": "^4.1.13",
+    "vite": "^6.3.3"
+  },
+  "packageManager": "pnpm@10.13.1+sha256.0f9ed48d808996ae007835fb5c4641cf9a300def2eddc9e957d9bbe4768c5f28"
+}

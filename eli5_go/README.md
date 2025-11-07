@@ -10,10 +10,10 @@ ELI5 is a web application that takes a user's question and generates a simple, i
 
 ## How it works
 
-The application is a single-page web app with a React front-end and an Express back-end. The back-end exposes a few API endpoints that are implemented as Genkit flows.
+The application is a single-page web app with a pre-built React front-end and a Go back-end. The back-end exposes a few API endpoints that are implemented as Genkit flows.
 
-*   **Front-end:** The front-end is built with React and Vite. It uses the `genkit/beta/client` library to call the Genkit flows on the back-end.
-*   **Back-end:** The back-end is an Express server that uses the `@genkit-ai/express` library to expose the Genkit flows as API endpoints.
+*   **Front-end:** The front-end is a pre-built React application that is served as static files by the Go back-end.
+*   **Back-end:** The back-end is a Go server that uses Genkit to define and expose AI flows. It also serves the front-end application.
 *   **Genkit Flows:** The core logic of the application is implemented as three Genkit flows:
     *   `cartoonify`: Takes an image of a person and uses a Google AI model to turn it into a cartoon character.
     *   `storify`: Takes a question and generates a storybook about it. It uses two prompts, `generate-lesson` and `generate-storybook`, to first generate the lesson content and then create the storybook from it.
@@ -21,30 +21,27 @@ The application is a single-page web app with a React front-end and an Express b
 
 ## Getting Started
 
-### 1. Install dependencies
-
-```bash
-npm install
-```
-
-### 2. Configure your environment
+### 1. Configure your environment
 
 This sample uses the Google AI Gemini models. To use them, you need to provide an API key.
 
 1.  Go to [Google AI Studio](https://aistudio.google.com/) and create an API key.
-2.  Set the `GOOGLE_API_KEY` environment variable:
+2.  Set the `GEMINI_API_KEY` environment variable:
 
 ```bash
-export GOOGLE_API_KEY="your-api-key"
+export GEMINI_API_KEY="your-api-key"
 ```
 
-### 3. Run the application
+### 2. Run the application
+
+Navigate to the `go` directory and run the `main.go` file. This will also download the necessary dependencies.
 
 ```bash
-npm start dev
+cd go
+go run main.go
 ```
 
-This will start the development server on `http://localhost:3000`.
+This will start the server on `http://localhost:3001`.
 
 ## Genkit Flows
 
@@ -86,7 +83,7 @@ A stream of `Storybook` objects, and a final `Storybook` object.
 type Storybook = {
   status?: string;
   bookTitle?: string;
-p  pages?: {
+  pages?: {
     text: string;
     illustration: string;
   }[];
