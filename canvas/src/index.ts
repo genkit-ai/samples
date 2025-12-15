@@ -30,7 +30,7 @@ app.get(/^\/artifacts\/(.*)/, async (req, res) => {
     const contentType = mime.lookup(path) || "text/plain";
     res.type(contentType).send(content);
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(404).send((error as any).message);
   }
 });
 
