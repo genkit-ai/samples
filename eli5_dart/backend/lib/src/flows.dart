@@ -5,7 +5,7 @@ import 'schemas.dart';
 
 Future<String> generateLesson(Genkit ai, String question) async {
   final response = await ai.generate(
-    model: googleAI.gemini('gemini-2.5-pro'),
+    model: googleAI.gemini('gemini-2.5-flash'),
     config: GeminiOptions(
       googleSearch: GoogleSearch(),
     ),

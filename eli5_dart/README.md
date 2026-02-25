@@ -34,10 +34,10 @@ dart pub get
 This sample uses the Google AI Gemini models. To use them, you need to provide an API key.
 
 1.  Go to [Google AI Studio](https://aistudio.google.com/) and create an API key.
-2.  Set the `GOOGLE_GENAI_API_KEY` (or `GEMINI_API_KEY`) environment variable:
+2.  Set the `GEMINI_API_KEY` environment variable:
 
 ```bash
-export GOOGLE_GENAI_API_KEY="your-api-key"
+export GEMINI_API_KEY="your-api-key"
 ```
 
 ### 3. Run the application
