@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "genkit-dart": {
+      "source": "genkit-ai/genkit-dart",
+      "sourceType": "github",
+      "computedHash": "14c1d6bfa03c39f4adf5d7f123643bf71360340dcc07c9ace887934fc3f09a38"
+    },
+    "schemantic": {
+      "source": "genkit-ai/genkit-dart",
+      "sourceType": "github",
+      "computedHash": "bbc7a53b68df453c3d8a4682afd93bbc7c15a18cc1797bd8eb2b5a2893e66317"
+    }
+  }
+}
