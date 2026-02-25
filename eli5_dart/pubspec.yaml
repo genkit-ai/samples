@@ -1,0 +1,10 @@
+name: eli5_dart
+environment:
+  sdk: ^3.11.0
+
+workspace:
+  - app
+  - backend
+
+dependency_overrides:
+  meta: 1.17.0
