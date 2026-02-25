@@ -78,6 +78,24 @@ class CartoonifyInput {
 String // A data URI of the generated cartoon image
 ```
 
+### `generateLesson`
+
+This flow takes a question and generates a lesson plan that explains the core concepts of the subject using grounded search results.
+
+**Input:**
+
+```dart
+class GenerateLessonRequest {
+  final String question;
+}
+```
+
+**Output:**
+
+```dart
+String // The generated lesson plan
+```
+
 ### `storify`
 
 This flow takes a question and generates a storybook about it.
