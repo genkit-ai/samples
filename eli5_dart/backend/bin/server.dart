@@ -10,11 +10,13 @@ import 'package:backend/src/flows.dart';
 void main() async {
   final ai = Genkit(plugins: [googleAI()]);
 
+  final generateLessonFlow = getGenerateLessonFlow(ai);
   final cartoonifyFlow = getCartoonifyFlow(ai);
   final illustrateFlow = getIllustrateFlow(ai);
   final storifyFlow = getStorifyFlow(ai);
 
   final router = Router();
+  router.post('/api/generateLesson', shelfHandler(generateLessonFlow));
   router.post('/api/cartoonify', shelfHandler(cartoonifyFlow));
   router.post('/api/illustrate', shelfHandler(illustrateFlow));
   router.post('/api/storify', shelfHandler(storifyFlow));
