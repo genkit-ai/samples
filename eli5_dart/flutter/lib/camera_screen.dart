@@ -11,9 +11,8 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  late CameraController _controller;
+  CameraController? _controller;
   late Future<void> _initializeControllerFuture;
-  late List<CameraDescription> _cameras;
 
   @override
   void initState() {
@@ -22,17 +21,20 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<void> _initializeCamera() async {
-    _cameras = await availableCameras();
+    final cameras = await availableCameras();
+    if (cameras.isEmpty) {
+      throw Exception('No cameras found');
+    }
     _controller = CameraController(
-      _cameras.first,
+      cameras.first,
       ResolutionPreset.medium,
     );
-    await _controller.initialize();
+    await _controller!.initialize();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -44,18 +46,24 @@ class _CameraScreenState extends State<CameraScreen> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
-          } else {
-            return const Center(child: CircularProgressIndicator());
+            if (snapshot.hasError) {
+              return Center(child: Text('Camera error: ${snapshot.error}'));
+            }
+            if (_controller != null) {
+              return CameraPreview(_controller!);
+            }
           }
+          return const Center(child: CircularProgressIndicator());
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           try {
             await _initializeControllerFuture;
-            final image = await _controller.takePicture();
-            widget.onPictureTaken(image);
+            final image = await _controller?.takePicture();
+            if (image != null) {
+              widget.onPictureTaken(image);
+            }
           } catch (e) {
             print(e);
           }

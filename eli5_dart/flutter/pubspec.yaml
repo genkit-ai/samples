@@ -34,8 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  genkit: ^0.7.0
-  json_annotation: ^4.9.0
+  genkit: ^0.10.0
+  schemantic: ^0.1.0
   image_picker: ^1.2.0
   shared_preferences: ^2.5.3
   camera: ^0.11.2
@@ -51,8 +51,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-  build_runner: ^2.9.0
-  json_serializable: ^6.11.1
+  build_runner: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

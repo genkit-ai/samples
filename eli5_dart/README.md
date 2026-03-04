@@ -23,7 +23,6 @@ The backend powers the intelligence behind ELI5.
 ```bash
 cd eli5_dart
 dart pub get
-dart run build_runner build -d
 dart run bin/server.dart
 ```
 

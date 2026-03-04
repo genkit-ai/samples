@@ -1,44 +1,42 @@
 import 'package:genkit/client.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:schemantic/schemantic.dart';
 
 part 'genkit_service.g.dart';
 
-@JsonSerializable()
-class Page {
-  final String text;
-  final String illustration;
+@Schema()
+abstract class $Page {
+  @Field(description: "1-2 paragraphs of text explaining a key concept")
+  String get text;
 
-  Page({required this.text, required this.illustration});
-
-  factory Page.fromJson(Map<String, dynamic> json) => _$PageFromJson(json);
-  Map<String, dynamic> toJson() => _$PageToJson(this);
+  @Field(description: "a detailed description of the image")
+  String get illustration;
 }
 
-@JsonSerializable()
-class Storybook {
-  final String? bookTitle;
-  final List<Page>? pages;
+@Schema()
+abstract class $Storybook {
+  @Field(defaultValue: "")
+  String get status;
 
-  Storybook({this.bookTitle, this.pages});
+  @Field(defaultValue: "")
+  String get bookTitle;
 
-  factory Storybook.fromJson(Map<String, dynamic> json) =>
-      _$StorybookFromJson(json);
-  Map<String, dynamic> toJson() => _$StorybookToJson(this);
+  @Field(defaultValue: [])
+  List<$Page> get pages;
 }
 
 final storifyFlow = defineRemoteAction(
   url: 'http://localhost:3400/storify',
-  fromResponse: (data) => Storybook.fromJson(data),
+  outputSchema: Storybook.$schema,
 );
 
 final illustrateFlow = defineRemoteAction(
   url: 'http://localhost:3400/illustrate',
-  fromResponse: (data) => data as String,
+  outputSchema: SchemanticType.string(),
 );
 
 final cartoonifyFlow = defineRemoteAction(
   url: 'http://localhost:3400/cartoonify',
-  fromResponse: (data) => data as String,
+  outputSchema: SchemanticType.string(),
 );
 
 class GenkitService {

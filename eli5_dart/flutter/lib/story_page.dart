@@ -69,16 +69,16 @@ class _StoryPageState extends State<StoryPage> {
             final storybook = snapshot.data!;
             return ListView(
               children: [
-                if (storybook.bookTitle != null)
+                if (storybook.bookTitle.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      storybook.bookTitle!,
+                      storybook.bookTitle,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
-                if (storybook.pages != null)
-                  ...storybook.pages!.asMap().entries.map(
+                if (storybook.pages.isNotEmpty)
+                  ...storybook.pages.asMap().entries.map(
                         (entry) => Column(
                           children: [
                             FutureBuilder<String>(
