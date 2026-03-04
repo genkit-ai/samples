@@ -30,9 +30,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ELI5'),
-      ),
+      appBar: AppBar(title: const Text('ELI5')),
       body: _buildBody(),
     );
   }
@@ -43,8 +41,9 @@ class _HomePageState extends State<HomePage> {
     }
     if (_hasSelfie!) {
       return FutureBuilder<String?>(
-        future: SharedPreferences.getInstance()
-            .then((prefs) => prefs.getString('cartoon-selfie')),
+        future: SharedPreferences.getInstance().then(
+          (prefs) => prefs.getString('cartoon-selfie'),
+        ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -60,9 +59,10 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => StoryPage(
-                          question: question,
-                          userImage: selfie,
-                          cartoonUserImage: snapshot.data!),
+                        question: question,
+                        userImage: selfie,
+                        cartoonUserImage: snapshot.data!,
+                      ),
                     ),
                   );
                 }

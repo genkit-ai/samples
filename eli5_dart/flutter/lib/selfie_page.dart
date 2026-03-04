@@ -120,7 +120,9 @@ class _SelfiePageState extends State<SelfiePage> {
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.purple.shade300,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
+                            horizontal: 20,
+                            vertical: 15,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 20),
@@ -144,7 +146,9 @@ class _SelfiePageState extends State<SelfiePage> {
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.orange.shade400,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
+                            horizontal: 20,
+                            vertical: 15,
+                          ),
                         ),
                       ),
                     ],

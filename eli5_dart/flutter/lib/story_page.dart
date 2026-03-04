@@ -1,5 +1,3 @@
-
-
 import 'package:eli5_flutter/genkit_service.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +6,12 @@ class StoryPage extends StatefulWidget {
   final String userImage;
   final String cartoonUserImage;
 
-  const StoryPage(
-      {super.key,
-      required this.question,
-      required this.userImage,
-      required this.cartoonUserImage});
+  const StoryPage({
+    super.key,
+    required this.question,
+    required this.userImage,
+    required this.cartoonUserImage,
+  });
 
   @override
   State<StoryPage> createState() => _StoryPageState();
@@ -39,7 +38,10 @@ class _StoryPageState extends State<StoryPage> {
       base64Image = base64Image.split(',').last;
     }
     final future = _genkitService.illustrate(
-        base64Image, illustration, widget.question);
+      base64Image,
+      illustration,
+      widget.question,
+    );
     _illustrationFutures[index] = future;
     return future;
   }
@@ -79,32 +81,35 @@ class _StoryPageState extends State<StoryPage> {
                   ),
                 if (storybook.pages.isNotEmpty)
                   ...storybook.pages.asMap().entries.map(
-                        (entry) => Column(
-                          children: [
-                            FutureBuilder<String>(
-                              future: _getIllustration(
-                                  entry.value.illustration, entry.key),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                } else if (snapshot.hasError) {
-                                  return const Icon(Icons.error);
-                                } else if (snapshot.hasData) {
-                                  return Image.network(snapshot.data!);
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(entry.value.text),
-                            ),
-                          ],
+                    (entry) => Column(
+                      children: [
+                        FutureBuilder<String>(
+                          future: _getIllustration(
+                            entry.value.illustration,
+                            entry.key,
+                          ),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return const Icon(Icons.error);
+                            } else if (snapshot.hasData) {
+                              return Image.network(snapshot.data!);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          },
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(entry.value.text),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             );
           } else {

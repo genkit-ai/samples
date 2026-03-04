@@ -5,11 +5,12 @@ class WelcomePage extends StatefulWidget {
   final String cartoonUserImage;
   final VoidCallback onEdit;
 
-  const WelcomePage(
-      {super.key,
-      required this.onQuestion,
-      required this.cartoonUserImage,
-      required this.onEdit});
+  const WelcomePage({
+    super.key,
+    required this.onQuestion,
+    required this.cartoonUserImage,
+    required this.onEdit,
+  });
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();

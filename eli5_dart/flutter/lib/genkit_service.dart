@@ -46,19 +46,24 @@ class GenkitService {
   }
 
   Future<String> illustrate(
-      String userImage, String illustration, String question) async {
-    final response = await illustrateFlow(input: {
-      'userImage': 'data:image/jpeg;base64,$userImage',
-      'illustration': illustration,
-      'question': question,
-    });
+    String userImage,
+    String illustration,
+    String question,
+  ) async {
+    final response = await illustrateFlow(
+      input: {
+        'userImage': 'data:image/jpeg;base64,$userImage',
+        'illustration': illustration,
+        'question': question,
+      },
+    );
     return response;
   }
 
   Future<String> cartoonify(String image) async {
-    final response = await cartoonifyFlow(input: {
-      'image': 'data:image/jpeg;base64,$image',
-    });
+    final response = await cartoonifyFlow(
+      input: {'image': 'data:image/jpeg;base64,$image'},
+    );
     return response;
   }
 }

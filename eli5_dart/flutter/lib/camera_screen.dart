@@ -25,10 +25,7 @@ class _CameraScreenState extends State<CameraScreen> {
     if (cameras.isEmpty) {
       throw Exception('No cameras found');
     }
-    _controller = CameraController(
-      cameras.first,
-      ResolutionPreset.medium,
-    );
+    _controller = CameraController(cameras.first, ResolutionPreset.medium);
     await _controller!.initialize();
   }
 
