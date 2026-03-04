@@ -52,7 +52,9 @@ Flow<StorifyRequest, Storybook, Storybook, void> defineStorifyFlow(Genkit ai) =>
 3. Break the lesson down into no more than 10 key ideas. Make sure to include details that could be turned into nice illustrations.
 
 User question: ${input.question}''',
-          // Note: We use googleSearch tool if available, otherwise just general model knowledge.
+          config: GeminiOptions(
+            googleSearch: GoogleSearch(),
+          ),
         );
 
         final lessonText = lessonResponse.text;
@@ -61,6 +63,9 @@ User question: ${input.question}''',
         final storybookResponse = await ai.generate(
           model: googleAI.gemini('gemini-2.5-flash'),
           outputSchema: Storybook.$schema,
+          config: {
+            'temperature': 2,
+          },
           prompt:
               '''You are an app that helps people understand complex concepts in a simple and fun way. The user has a question that they want explained in an engaging way. A lesson plan has already been generated and included below. Your task is to generate up to 10 pages of a simple "storybook lesson" that explains the subject. Each page should include 1-2 paragraphs and a detailed description of an illustration to accompany it.
 
