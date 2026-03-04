@@ -18,7 +18,7 @@ type IllustrationRequest struct {
 func DefineIllustrateFlow(g *genkit.Genkit) *core.Flow[*IllustrationRequest, string, struct{}] {
 	return genkit.DefineFlow(g, "illustrate", func(ctx context.Context, req *IllustrationRequest) (string, error) {
 		resp, err := genkit.Generate(ctx, g,
-			ai.WithModelName("googleai/gemini-2.5-flash-image-preview"),
+			ai.WithModelName("googleai/gemini-2.5-flash-image"),
 			ai.WithMessages(
 				ai.NewUserMessage(
 					ai.NewTextPart("[USER]:\n"),

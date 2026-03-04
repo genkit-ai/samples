@@ -191,7 +191,7 @@ startFlowServer({
 
 <package name="@genkit-ai/google-genai">
 <docs>
-- [Edit images with `gemini-2.5-flash-image-preview` (aka "Nano Banana")](docs:@genkit-ai/google-genai:editing-images): read this if you need to perform sophisticated image edits such as background removal, post matching, character replacement, relighting, on an existing image
+- [Edit images with `gemini-2.5-flash-image` (aka "Nano Banana")](docs:@genkit-ai/google-genai:editing-images): read this if you need to perform sophisticated image edits such as background removal, post matching, character replacement, relighting, on an existing image
 - [Generating Speech with Gemini](docs:@genkit-ai/google-genai:generating-speech): read this to understand how to generate realistic speech audio from a text script
 - [Search Grounding and URL Context](docs:@genkit-ai/google-genai:search-and-urls): read this to understand how to ground results on Google search or automatically ingest URLs in prompts to understand their contents
 </docs>

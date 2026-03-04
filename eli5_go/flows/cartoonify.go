@@ -16,7 +16,7 @@ type CartoonifyRequest struct {
 func DefineCartoonifyFlow(g *genkit.Genkit) *core.Flow[*CartoonifyRequest, string, struct{}] {
 	return genkit.DefineFlow(g, "cartoonify", func(ctx context.Context, req *CartoonifyRequest) (string, error) {
 		resp, err := genkit.Generate(ctx, g,
-			ai.WithModelName("googleai/gemini-2.5-flash-image-preview"),
+			ai.WithModelName("googleai/gemini-2.5-flash-image"),
 			ai.WithMessages(
 				ai.NewUserMessage(
 					ai.NewTextPart("Transform the person in the following image into a full-body cartoon character in a neutral pose. The background should be white."),

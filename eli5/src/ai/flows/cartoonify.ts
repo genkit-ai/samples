@@ -18,7 +18,7 @@ export const cartoonify = ai.defineFlow(
   },
   async ({ image }: CartoonifyRequest) => {
     const { media } = await ai.generate({
-      model: googleAI.model("gemini-2.5-flash-image-preview"),
+      model: googleAI.model("gemini-2.5-flash-image"),
       config: { responseModalities: ["TEXT", "IMAGE"] },
       prompt: [
         {

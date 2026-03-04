@@ -21,7 +21,7 @@ export const illustrate = ai.defineFlow(
     question,
   }: z.infer<typeof illustrationSchema>) => {
     const { media } = await ai.generate({
-      model: googleAI.model("gemini-2.5-flash-image-preview"),
+      model: googleAI.model("gemini-2.5-flash-image"),
       config: { responseModalities: ["TEXT", "IMAGE"] },
       prompt: [
         { text: "[USER]:\n" },
