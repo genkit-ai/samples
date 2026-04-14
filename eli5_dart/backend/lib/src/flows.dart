@@ -11,7 +11,7 @@ Flow getGenerateLessonFlow(Genkit ai) {
     fn: (input, _) async {
       final req = input as GenerateLessonRequest;
       final response = await ai.generate(
-        model: googleAI.gemini('gemini-flash-latest'),
+        model: googleAI.gemini('gemini-2.5-flash'),
         config: GeminiOptions(
           googleSearch: GoogleSearch(),
         ),
@@ -116,7 +116,7 @@ Flow getStorifyFlow(Genkit ai) {
 
       context.sendChunk(Storybook(status: "Generating lesson storybook..."));
       final response = await ai.generate(
-        model: googleAI.gemini('gemini-flash-latest'),
+        model: googleAI.gemini('gemini-2.5-flash'),
         messages: [
           Message(
             role: Role.system,
