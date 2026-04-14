@@ -1,8 +1,11 @@
-import 'package:eli5_flutter/selfie_page.dart';
-import 'package:eli5_flutter/story_page.dart';
-import 'package:eli5_flutter/welcome_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:eli5_flutter/welcome_page.dart';
+import 'package:eli5_flutter/selfie_page.dart';
+import 'package:eli5_flutter/history_page.dart';
+import 'package:eli5_flutter/history_service.dart';
+import 'package:eli5_flutter/story_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,81 +15,111 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool? _hasSelfie;
+  int _currentIndex = 0;
+  String? _cartoonSelfie;
+  String? _selfie;
+  bool _loaded = false;
 
   @override
   void initState() {
     super.initState();
-    _checkSelfie();
+    _loadSelfie();
   }
 
-  Future<void> _checkSelfie() async {
+  Future<void> _loadSelfie() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _hasSelfie = prefs.containsKey('cartoon-selfie');
-    });
+    if (mounted) {
+      setState(() {
+        _cartoonSelfie = prefs.getString('cartoon-selfie');
+        _selfie = prefs.getString('selfie');
+        _loaded = true;
+      });
+    }
+  }
+
+  void _navigateToStory(String question) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StoryPage(
+          question: question,
+          userImage: _selfie,
+          cartoonUserImage: _cartoonSelfie,
+        ),
+      ),
+    );
+  }
+
+  void _openSavedStory(StorySummary summary) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StoryPage(
+          question: summary.question,
+          userImage: _selfie,
+          cartoonUserImage: _cartoonSelfie,
+          savedStorybook: summary.storybook,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('ELI5'),
-      ),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    if (_hasSelfie == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (_hasSelfie!) {
-      return FutureBuilder<String?>(
-        future: SharedPreferences.getInstance()
-            .then((prefs) => prefs.getString('cartoon-selfie')),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasData) {
-            return WelcomePage(
-              cartoonUserImage: snapshot.data!,
-              onQuestion: (question) async {
-                final prefs = await SharedPreferences.getInstance();
-                final selfie = prefs.getString('selfie');
-                if (selfie != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => StoryPage(
-                          question: question,
-                          userImage: selfie,
-                          cartoonUserImage: snapshot.data!),
-                    ),
-                  );
-                }
-              },
-              onEdit: () async {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.remove('selfie');
-                await prefs.remove('cartoon-selfie');
-                setState(() {
-                  _hasSelfie = false;
-                });
-              },
-            );
-          }
-          return const Center(child: Text('Error loading avatar.'));
-        },
+    if (!_loaded) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
       );
     }
-    return SelfiePage(
-      onSelfieTaken: () {
-        setState(() {
-          _hasSelfie = true;
-        });
-      },
+
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          WelcomePage(
+            cartoonUserImage: _cartoonSelfie,
+            onQuestion: _navigateToStory,
+          ),
+          HistoryPage(onStoryTap: _openSavedStory),
+          SelfiePage(
+            currentCartoonSelfie: _cartoonSelfie,
+            onSelfieTaken: () => _loadSelfie(),
+            onSelfieCleared: () async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.remove('selfie');
+              await prefs.remove('cartoon-selfie');
+              setState(() {
+                _cartoonSelfie = null;
+                _selfie = null;
+              });
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) {
+          HapticFeedback.selectionClick();
+          setState(() => _currentIndex = index);
+        },
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.explore_outlined),
+            selectedIcon: Icon(Icons.explore),
+            label: 'Explore',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.auto_stories_outlined),
+            selectedIcon: Icon(Icons.auto_stories),
+            label: 'Library',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outlined),
+            selectedIcon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }

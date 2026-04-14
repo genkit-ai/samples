@@ -10,8 +10,8 @@ abstract class $CartoonifyRequest {
 
 @Schema()
 abstract class $IllustrationRequest {
-  @StringField(description: "the user's image as a data URI")
-  String get userImage;
+  @StringField(description: "the user's image as a data URI (optional)")
+  String? get userImage;
 
   @StringField(description: 'a description of the illustration to generate')
   String get illustration;
