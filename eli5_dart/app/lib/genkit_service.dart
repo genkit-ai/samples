@@ -16,10 +16,11 @@ class Page {
 
 @JsonSerializable()
 class Storybook {
+  final String? status;
   final String? bookTitle;
   final List<Page>? pages;
 
-  Storybook({this.bookTitle, this.pages});
+  Storybook({this.status, this.bookTitle, this.pages});
 
   factory Storybook.fromJson(Map<String, dynamic> json) =>
       _$StorybookFromJson(json);
