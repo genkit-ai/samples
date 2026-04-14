@@ -7,11 +7,11 @@ Flow getGenerateLessonFlow(Genkit ai) {
   return ai.defineFlow(
     name: 'generateLesson',
     inputSchema: GenerateLessonRequest.$schema,
-    outputSchema: stringSchema(),
+    outputSchema: SchemanticType.string(),
     fn: (input, _) async {
       final req = input as GenerateLessonRequest;
       final response = await ai.generate(
-        model: googleAI.gemini('gemini-2.5-flash'),
+        model: googleAI.gemini('gemini-flash-latest'),
         config: GeminiOptions(
           googleSearch: GoogleSearch(),
         ),
@@ -43,7 +43,7 @@ Flow getCartoonifyFlow(Genkit ai) {
   return ai.defineFlow(
     name: 'cartoonify',
     inputSchema: CartoonifyRequest.$schema,
-    outputSchema: stringSchema(),
+    outputSchema: SchemanticType.string(),
     fn: (input, _) async {
       final req = input as CartoonifyRequest;
       final response = await ai.generate(
@@ -72,7 +72,7 @@ Flow getIllustrateFlow(Genkit ai) {
   return ai.defineFlow(
     name: 'illustrate',
     inputSchema: IllustrationRequest.$schema,
-    outputSchema: stringSchema(),
+    outputSchema: SchemanticType.string(),
     fn: (input, _) async {
       final req = input as IllustrationRequest;
       final response = await ai.generate(
@@ -116,7 +116,7 @@ Flow getStorifyFlow(Genkit ai) {
 
       context.sendChunk(Storybook(status: "Generating lesson storybook..."));
       final response = await ai.generate(
-        model: googleAI.gemini('gemini-2.5-flash'),
+        model: googleAI.gemini('gemini-flash-latest'),
         messages: [
           Message(
             role: Role.system,

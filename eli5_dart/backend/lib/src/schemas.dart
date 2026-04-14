@@ -2,13 +2,13 @@ import 'package:schemantic/schemantic.dart';
 
 part 'schemas.g.dart';
 
-@Schematic()
+@Schema()
 abstract class $CartoonifyRequest {
   @StringField(description: 'A data URI of an image of a person to cartoonify')
   String get image;
 }
 
-@Schematic()
+@Schema()
 abstract class $IllustrationRequest {
   @StringField(description: "the user's image as a data URI")
   String get userImage;
@@ -20,19 +20,19 @@ abstract class $IllustrationRequest {
   String get question;
 }
 
-@Schematic()
+@Schema()
 abstract class $GenerateLessonRequest {
   @StringField(description: 'the question to generate a lesson for')
   String get question;
 }
 
-@Schematic()
+@Schema()
 abstract class $StorifyRequest {
   @StringField(description: 'the question to generate a story for')
   String get question;
 }
 
-@Schematic()
+@Schema()
 abstract class $PageSchema {
   @StringField(
       description:
@@ -45,7 +45,7 @@ abstract class $PageSchema {
   String get illustration;
 }
 
-@Schematic()
+@Schema()
 abstract class $Storybook {
   @StringField(description: 'do not fill this in')
   String? get status;

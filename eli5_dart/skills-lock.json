@@ -1,6 +1,16 @@
 {
   "version": 1,
   "skills": {
+    "developing-genkit-dart": {
+      "source": "genkit-ai/skills",
+      "sourceType": "github",
+      "computedHash": "efb996c6300472acebd7a0f0934d7bd3984600a48f821e19ad82fd6d11f7fe9f"
+    },
+    "flutter-building-layouts": {
+      "source": "flutter/skills",
+      "sourceType": "github",
+      "computedHash": "2fc5b3828e53902e4e61d79d2bbd5557409e27e9713ea0aa4efb307a6c9cda43"
+    },
     "genkit-dart": {
       "source": "genkit-ai/genkit-dart",
       "sourceType": "github",
