@@ -52,3 +52,7 @@ app.*.map.json
 
 # OS specific files
 [Tt]humbs.db
+
+# Environment files
+.env
+**/.env
