@@ -1,0 +1,28 @@
+{
+  "name": "quickstart-nextjs-app-router",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "genkit:start": "genkit start -- tsx --watch src/genkit/bargainChefFlow.ts"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "genkit": "1.35.0",
+    "@genkit-ai/google-genai": "1.35.0",
+    "@genkit-ai/next": "1.35.0",
+    "@genkit-ai/middleware": "1.35.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tsx": "^4.19.2",
+    "genkit-cli": "1.35.0"
+  }
+}

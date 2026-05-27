@@ -1,0 +1,58 @@
+<main>
+  <h1>Bargain Chef</h1>
+  <p class="tagline">
+    Tell me what you feel like eating and I'll suggest a recipe built around
+    today's grocery deals.
+  </p>
+
+  <form class="prompt" (submit)="$event.preventDefault(); generateRecipe()">
+    <input
+      type="text"
+      [ngModel]="craving()"
+      (ngModelChange)="craving.set($event)"
+      name="craving"
+      placeholder="What are you in the mood for?"
+      [disabled]="isStreaming()"
+    />
+    <button type="submit" [disabled]="isStreaming()">
+      {{ isStreaming() ? 'Cooking…' : 'Suggest a recipe' }}
+    </button>
+  </form>
+
+  @if (recipe(); as r) {
+    <article>
+      @if (r.title) {
+        <h2>{{ r.title }}</h2>
+      }
+      @if (r.description) {
+        <p class="description">{{ r.description }}</p>
+      }
+      @if (r.servings) {
+        <p class="serves"><strong>Serves:</strong> {{ r.servings }}</p>
+      }
+
+      @if (r.ingredients?.length) {
+        <h3>Ingredients</h3>
+        <ul class="ingredients">
+          @for (ing of r.ingredients; track $index) {
+            <li>
+              {{ ing.quantity }} {{ ing.name }}
+              @if (ing.onSale) {
+                <span class="badge">on sale</span>
+              }
+            </li>
+          }
+        </ul>
+      }
+
+      @if (r.steps?.length) {
+        <h3>Steps</h3>
+        <ol class="steps">
+          @for (step of r.steps; track $index) {
+            <li>{{ step }}</li>
+          }
+        </ol>
+      }
+    </article>
+  }
+</main>

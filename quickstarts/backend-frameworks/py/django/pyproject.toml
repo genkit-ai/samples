@@ -1,0 +1,17 @@
+[project]
+name = "quickstart-django"
+version = "0.0.0"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.1",
+    "django-cors-headers>=4.6",
+    "django-ninja>=1.3",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "genkit",
+    "genkit-plugin-google-genai",
+]
+
+[tool.uv.sources]
+genkit = { path = "/Users/chgill/Projects/genkit/py/packages/genkit", editable = true }
+genkit-plugin-google-genai = { path = "/Users/chgill/Projects/genkit/py/plugins/google-genai", editable = true }

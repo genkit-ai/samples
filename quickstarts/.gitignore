@@ -1,0 +1,67 @@
+# JS/Node
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.angular/
+.tanstack/
+.astro/
+.cache/
+.vite/
+out/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.uv-cache/
+
+# Go
+*.test
+*.out
+bin/
+vendor/
+go.work
+go.work.sum
+
+# Dart / Flutter
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+pubspec.lock
+build/
+
+# Genkit
+.genkit/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

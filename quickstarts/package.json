@@ -1,0 +1,17 @@
+{
+  "name": "genkit-quickstarts",
+  "version": "0.0.0",
+  "private": true,
+  "pnpm": {
+    "overrides": {
+      "genkit": "file:/Users/chgill/Projects/genkit/js/genkit",
+      "@genkit-ai/core": "file:/Users/chgill/Projects/genkit/js/core",
+      "@genkit-ai/ai": "file:/Users/chgill/Projects/genkit/js/ai",
+      "@genkit-ai/google-genai": "file:/Users/chgill/Projects/genkit/js/plugins/google-genai",
+      "@genkit-ai/express": "file:/Users/chgill/Projects/genkit/js/plugins/express",
+      "@genkit-ai/middleware": "file:/Users/chgill/Projects/genkit/js/plugins/middleware",
+      "@genkit-ai/fetch": "file:/Users/chgill/Projects/genkit/js/plugins/fetch",
+      "@genkit-ai/next": "file:/Users/chgill/Projects/genkit/js/plugins/next"
+    }
+  }
+}

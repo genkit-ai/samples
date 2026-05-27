@@ -1,0 +1,29 @@
+{
+  "name": "quickstart-sveltekit-ssr",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "genkit:start": "genkit start -- tsx --watch src/lib/genkit/bargainChefFlow.ts"
+  },
+  "dependencies": {
+    "genkit": "1.35.0",
+    "@genkit-ai/google-genai": "1.35.0",
+    "@genkit-ai/fetch": "1.35.0",
+    "@genkit-ai/middleware": "1.35.0"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^3.0.0",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.0",
+    "tsx": "^4.19.2",
+    "genkit-cli": "1.35.0"
+  }
+}

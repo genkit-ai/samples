@@ -1,0 +1,17 @@
+[project]
+name = "quickstart-fastapi"
+version = "0.0.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "genkit",
+    "genkit-plugin-google-genai",
+    "genkit-plugin-fastapi",
+]
+
+[tool.uv.sources]
+genkit = { path = "/Users/chgill/Projects/genkit/py/packages/genkit", editable = true }
+genkit-plugin-google-genai = { path = "/Users/chgill/Projects/genkit/py/plugins/google-genai", editable = true }
+genkit-plugin-fastapi = { path = "/Users/chgill/Projects/genkit/py/plugins/fastapi", editable = true }

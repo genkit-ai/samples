@@ -1,0 +1,8 @@
+packages:
+  - 'backends/js/*'
+  - 'frontends/angular/*'
+  - 'frontends/astro/*'
+  - 'frontends/nextjs/*'
+  - 'frontends/nuxt/*'
+  - 'frontends/react-vite'
+  - 'frontends/sveltekit/*'
