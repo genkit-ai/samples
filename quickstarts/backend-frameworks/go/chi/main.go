@@ -10,7 +10,6 @@ import (
 	"github.com/firebase/genkit/go/ai"
 	"github.com/firebase/genkit/go/genkit"
 	"github.com/firebase/genkit/go/plugins/googlegenai"
-	"github.com/firebase/genkit/go/plugins/middleware"
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -54,7 +53,7 @@ func main() {
 	ctx := context.Background()
 
 	g := genkit.Init(ctx,
-		genkit.WithPlugins(&googlegenai.GoogleAI{}, &middleware.Middleware{}),
+		genkit.WithPlugins(&googlegenai.GoogleAI{}),
 	)
 
 	getIngredientsOnSale := genkit.DefineTool(g, "getIngredientsOnSale",
@@ -93,7 +92,6 @@ func main() {
 				ai.WithModelName("googleai/gemini-flash-latest"),
 				ai.WithPrompt(prompt),
 				ai.WithTools(getIngredientsOnSale),
-				ai.WithUse(&middleware.Retry{MaxRetries: 3}),
 			) {
 				if err != nil {
 					return nil, err

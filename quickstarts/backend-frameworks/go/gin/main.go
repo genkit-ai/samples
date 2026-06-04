@@ -10,7 +10,6 @@ import (
 	"github.com/firebase/genkit/go/core"
 	"github.com/firebase/genkit/go/genkit"
 	"github.com/firebase/genkit/go/plugins/googlegenai"
-	"github.com/firebase/genkit/go/plugins/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -46,7 +45,7 @@ func main() {
 	ctx := context.Background()
 
 	g := genkit.Init(ctx,
-		genkit.WithPlugins(&googlegenai.GoogleAI{}, &middleware.Middleware{}),
+		genkit.WithPlugins(&googlegenai.GoogleAI{}),
 	)
 
 	getIngredientsOnSale := genkit.DefineTool(g, "getIngredientsOnSale",
@@ -84,7 +83,6 @@ Call the getIngredientsOnSale tool with the dayType that matches today. Saturday
 				ai.WithModelName("googleai/gemini-flash-latest"),
 				ai.WithTools(getIngredientsOnSale),
 				ai.WithPrompt(prompt),
-				ai.WithUse(&middleware.Retry{MaxRetries: 3}),
 			)
 
 			for result, err := range stream {
