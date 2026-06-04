@@ -36,9 +36,9 @@ go.work
 go.work.sum
 
 # Dart console projects keep their source in bin/, so don't ignore the shelf sample.
-!quickstarts/backend-frameworks/dart/shelf/bin/
-!quickstarts/backend-frameworks/dart/shelf/bin/my_genkit_shelf.dart
-!quickstarts/backend-frameworks/dart/shelf/bin/my_genkit_shelf.g.dart
+!backend-frameworks/dart/shelf/bin/
+!backend-frameworks/dart/shelf/bin/my_genkit_shelf.dart
+!backend-frameworks/dart/shelf/bin/my_genkit_shelf.g.dart
 
 # Dart / Flutter
 .dart_tool/
