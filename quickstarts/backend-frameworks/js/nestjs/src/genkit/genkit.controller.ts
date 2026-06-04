@@ -1,5 +1,5 @@
 import { Controller, Post, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { fetchHandlers } from '@genkit-ai/fetch';
 import { Readable } from 'node:stream';
 import { bargainChefFlow } from './bargainChefFlow';
@@ -37,7 +37,9 @@ export class GenkitController {
     });
 
     if (webResponse.body) {
-      Readable.fromWeb(webResponse.body as any).pipe(res);
+      Readable.fromWeb(
+        webResponse.body as import('node:stream/web').ReadableStream,
+      ).pipe(res);
     } else {
       res.end();
     }

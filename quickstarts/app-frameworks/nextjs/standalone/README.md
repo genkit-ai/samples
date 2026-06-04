@@ -2,7 +2,7 @@
 
 Browser-only Next.js app that calls a separate Genkit backend over HTTP. **No flow runs inside this app** — it only ships `streamFlow` calls to whichever backend you point it at.
 
-Guide: https://genkit.dev/docs/frameworks/nextjs (Standalone backend tab)
+Guide: https://genkit.dev/docs/js/app-frameworks/nextjs (Standalone backend tab)
 
 ## Run
 
@@ -10,13 +10,14 @@ In two terminals:
 
 ```bash
 # Terminal 1 — any standalone backend in this repo (Express, Chi, Flask, Shelf, …):
-cd backends/js/express && GEMINI_API_KEY=<your-key> pnpm start
+cd backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
 # or:
-cd backends/go/chi && GEMINI_API_KEY=<your-key> go run .
+cd backend-frameworks/go/chi && GEMINI_API_KEY=<your-key> go run .
 
 # Terminal 2 — this frontend:
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install     # once
-cd frontends/nextjs/standalone
+# from the repo's quickstarts directory:
+pnpm install     # once
+cd app-frameworks/nextjs/standalone
 pnpm dev
 ```
 

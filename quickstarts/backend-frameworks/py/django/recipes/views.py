@@ -116,7 +116,7 @@ async def bargain_chef_endpoint(request, payload: GenkitRequest):
             async for chunk in stream_response.stream:
                 yield f'data: {json.dumps({"message": chunk.model_dump()})}\n\n'
             result = await stream_response.response
-            yield f'data: {json.dumps({"result": result.response.model_dump()})}\n\n'
+            yield f'data: {json.dumps({"result": result.model_dump()})}\n\n'
 
         return StreamingHttpResponse(event_stream(), content_type='text/event-stream')
 

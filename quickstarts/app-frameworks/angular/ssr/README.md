@@ -7,7 +7,7 @@ field-by-field and calls a tool mid-generation to look up live grocery sale
 prices.
 
 This is the finished code for the [Angular quickstart
-guide](https://genkit.dev/docs/frameworks/angular).
+guide](https://genkit.dev/docs/js/app-frameworks/angular).
 
 ## Setup
 

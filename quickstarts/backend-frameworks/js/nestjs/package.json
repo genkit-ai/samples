@@ -17,8 +17,7 @@
     "express": "^4.21.1",
     "genkit": "1.35.0",
     "@genkit-ai/google-genai": "1.35.0",
-    "@genkit-ai/fetch": "1.35.0",
-    "@genkit-ai/middleware": "1.35.0"
+    "@genkit-ai/fetch": "^0.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.4.0",

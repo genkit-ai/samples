@@ -2,12 +2,12 @@
 
 Standalone Genkit backend on [Echo](https://echo.labstack.com/). `genkit.Handler` returns a standard `http.Handler`; `echo.WrapHandler` adapts it to Echo's signature.
 
-Guide: https://genkit.dev/docs/frameworks/echo
+Guide: https://genkit.dev/docs/go/backend-frameworks/echo
 
 ## Run
 
 ```bash
-cd backends/go/echo
+cd quickstarts/backend-frameworks/go/echo
 go mod tidy
 GEMINI_API_KEY=<your-key> go run .
 ```
@@ -31,4 +31,4 @@ genkit start -- go run .    # opens http://localhost:4000
 
 ## Local Genkit packages
 
-`go.mod` uses a `replace` directive pointing at `/Users/chgill/Projects/genkit/go`. Edit if your checkout lives elsewhere.
+`go.mod` uses a `replace` directive pointing at a local Genkit Go checkout. Edit the path if your checkout lives elsewhere.

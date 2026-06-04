@@ -2,13 +2,13 @@
 
 Standalone Genkit backend on Fastify. Uses `@genkit-ai/fetch` with a small adapter that converts Fastify's request to a fetch `Request` and pipes the streamed response back through Fastify.
 
-Guide: https://genkit.dev/docs/frameworks/fastify
+Guide: https://genkit.dev/docs/js/backend-frameworks/fastify
 
 ## Run
 
 ```bash
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install   # once
-cd backends/js/fastify
+pnpm install   # once, from quickstarts/
+cd backend-frameworks/js/fastify
 GEMINI_API_KEY=<your-key> pnpm start
 ```
 

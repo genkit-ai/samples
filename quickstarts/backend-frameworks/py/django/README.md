@@ -2,12 +2,12 @@
 
 Standalone Genkit backend on Django, with [Django Ninja](https://django-ninja.dev) handling the HTTP layer. Database and admin middleware are turned off so the app runs without migrations.
 
-Guide: https://genkit.dev/docs/frameworks/django
+Guide: https://genkit.dev/docs/python/backend-frameworks/django
 
 ## Run
 
 ```bash
-cd backends/py/django
+cd backend-frameworks/py/django
 uv sync
 GEMINI_API_KEY=<your-key> uv run uvicorn myproject.asgi:application --port 8000
 ```

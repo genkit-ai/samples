@@ -2,13 +2,13 @@
 
 Standalone Genkit backend on NestJS. A controller (`src/genkit/genkit.controller.ts`) adapts each Express `req`/`res` to a fetch `Request`/`Response` and forwards it to `fetchHandlers`.
 
-Guide: https://genkit.dev/docs/frameworks/nestjs
+Guide: https://genkit.dev/docs/js/backend-frameworks/nestjs
 
 ## Run
 
 ```bash
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install   # once
-cd backends/js/nestjs
+pnpm install   # once, from quickstarts/
+cd backend-frameworks/js/nestjs
 GEMINI_API_KEY=<your-key> pnpm start          # or pnpm start:dev for watch mode
 ```
 

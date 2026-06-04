@@ -2,12 +2,12 @@
 
 Standalone Genkit backend on a [go-chi](https://github.com/go-chi/chi) router. Chi uses `net/http`, so `genkit.Handler` mounts directly.
 
-Guide: https://genkit.dev/docs/frameworks/chi
+Guide: https://genkit.dev/docs/go/backend-frameworks/chi
 
 ## Run
 
 ```bash
-cd backends/go/chi
+cd quickstarts/backend-frameworks/go/chi
 go mod tidy
 GEMINI_API_KEY=<your-key> go run .
 ```
@@ -31,7 +31,7 @@ genkit start -- go run .    # opens http://localhost:4000
 
 ## Local Genkit packages
 
-`go.mod` uses a `replace` directive pointing at `/Users/chgill/Projects/genkit/go`. Edit if your checkout lives elsewhere.
+`go.mod` uses a `replace` directive pointing at a local Genkit Go checkout. Edit the path if your checkout lives elsewhere.
 
 ## Note on a guide bug found here
 

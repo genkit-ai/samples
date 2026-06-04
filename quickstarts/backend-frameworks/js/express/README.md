@@ -2,16 +2,16 @@
 
 Standalone Genkit backend on Express. Streams a recipe field-by-field via Server-Sent Events; the model calls a `getIngredientsOnSale` tool to ground the recipe in mock grocery deals.
 
-Guide: https://genkit.dev/docs/frameworks/express
+Guide: https://genkit.dev/docs/js/backend-frameworks/express
 
 ## Run
 
 ```bash
-# from the repo root, once: install all JS samples
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install
+# from quickstarts/, once: install all JS samples
+pnpm install
 
 # then start the server
-cd backends/js/express
+cd backend-frameworks/js/express
 GEMINI_API_KEY=<your-key> pnpm start
 ```
 
@@ -40,7 +40,7 @@ pnpm genkit:start    # opens http://localhost:4000
 
 ## Pair with a browser frontend
 
-This backend serves any standalone frontend in `frontends/`. Add CORS first:
+This backend serves any standalone frontend in `app-frameworks/`. Add CORS first:
 
 ```ts
 // src/index.ts

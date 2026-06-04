@@ -81,40 +81,36 @@ func main() {
 	)
 
 	bargainChefFlow := genkit.DefineStreamingFlow(g, "bargainChefFlow",
-		func(ctx context.Context, input CravingInput, sendChunk func(context.Context, Recipe) error) (Recipe, error) {
+		func(ctx context.Context, input CravingInput, sendChunk func(context.Context, *Recipe) error) (*Recipe, error) {
 			today := time.Now().Weekday().String()
 
 			prompt := "Today is " + today + ". The user is craving: " + input.Craving + ".\n\n" +
 				"Call the getIngredientsOnSale tool with the dayType that matches today. Saturday and Sunday are weekends; all other days are weekdays. " +
 				"Then propose ONE recipe that takes advantage of those deals. For each ingredient, set onSale=true if it appears in the tool's response, false otherwise."
 
-			var final Recipe
-			for value, err := range genkit.GenerateDataStream[Recipe](ctx, g,
+			var final *Recipe
+			for value, err := range genkit.GenerateDataStream[*Recipe](ctx, g,
 				ai.WithModelName("googleai/gemini-flash-latest"),
 				ai.WithPrompt(prompt),
 				ai.WithTools(getIngredientsOnSale),
 				ai.WithUse(&middleware.Retry{MaxRetries: 3}),
 			) {
 				if err != nil {
-					return Recipe{}, err
+					return nil, err
 				}
 				if value.Done {
-					if value.Response != nil {
-						if outErr := value.Response.Output(&final); outErr != nil {
-							return Recipe{}, outErr
-						}
-					}
+					final = value.Output
 					break
 				}
-				if sendChunk != nil {
+				if value.Chunk != nil {
 					if err := sendChunk(ctx, value.Chunk); err != nil {
-						return Recipe{}, err
+						return nil, err
 					}
 				}
 			}
 
-			if final.Title == "" {
-				return Recipe{}, errors.New("failed to generate recipe")
+			if final == nil {
+				return nil, errors.New("failed to generate recipe")
 			}
 			return final, nil
 		},

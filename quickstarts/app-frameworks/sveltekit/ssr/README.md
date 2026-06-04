@@ -2,13 +2,13 @@
 
 Full-stack SvelteKit app. The Genkit flow lives in `src/lib/genkit/bargainChefFlow.ts` and is exposed as a POST endpoint at `src/routes/api/bargainChefFlow/+server.ts` via `fetchHandler(flow)`. SvelteKit endpoints receive a standard Web `Request`, so no adapter is needed.
 
-Guide: https://genkit.dev/docs/frameworks/sveltekit (SvelteKit SSR tab)
+Guide: https://genkit.dev/docs/js/app-frameworks/sveltekit (SvelteKit SSR tab)
 
 ## Run
 
 ```bash
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install   # once
-cd frontends/sveltekit/ssr
+cd quickstarts && pnpm install   # once, from the repo root
+cd app-frameworks/sveltekit/ssr
 GEMINI_API_KEY=<your-key> pnpm dev
 ```
 

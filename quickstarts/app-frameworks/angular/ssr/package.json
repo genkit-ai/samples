@@ -23,7 +23,6 @@
     "@angular/ssr": "^21.2.12",
     "@genkit-ai/express": "^1.36.0",
     "@genkit-ai/google-genai": "^1.36.0",
-    "@genkit-ai/middleware": "^0.6.0",
     "express": "^5.1.0",
     "genkit": "^1.36.0",
     "rxjs": "~7.8.0",

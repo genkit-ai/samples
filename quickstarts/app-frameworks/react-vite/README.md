@@ -2,7 +2,7 @@
 
 Browser-only React app. **No flow runs inside this app** — it calls a separate Genkit backend over HTTP using `streamFlow` from `genkit/beta/client`.
 
-Guide: https://genkit.dev/docs/frameworks/react
+Guide: https://genkit.dev/docs/js/app-frameworks/react
 
 ## Run
 
@@ -10,12 +10,12 @@ In two terminals:
 
 ```bash
 # Terminal 1 — any standalone backend in this repo:
-cd backends/js/express && GEMINI_API_KEY=<your-key> pnpm start
-# or backends/go/chi, backends/py/flask, backends/dart/shelf, …
+cd backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
+# or backend-frameworks/go/chi, backend-frameworks/py/flask, backend-frameworks/dart/shelf, …
 
 # Terminal 2 — this frontend:
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install     # once
-cd frontends/react-vite
+cd quickstarts && pnpm install     # once, from the quickstarts root
+cd app-frameworks/react-vite
 pnpm dev
 ```
 

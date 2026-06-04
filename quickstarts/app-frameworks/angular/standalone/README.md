@@ -2,6 +2,8 @@
 
 A browser-only Angular app that calls a standalone Genkit backend. Because Angular's `ng new` produces ~30 files that vary by version, this directory holds only the Genkit-relevant snippets (`src/app/app.ts`). Use the Angular CLI to scaffold the rest.
 
+Guide: https://genkit.dev/docs/js/app-frameworks/angular (standalone backend)
+
 ## Setup
 
 ```bash
@@ -11,14 +13,15 @@ cd my-genkit-angular
 npm install genkit
 
 # replace src/app/app.ts with the one from this directory
-cp /Users/chgill/Projects/samples/quickstarts/frontends/angular/standalone/src/app/app.ts ./src/app/app.ts
+# from the repo root, replace <repo> with the path to your local checkout
+cp <repo>/quickstarts/app-frameworks/angular/standalone/src/app/app.ts ./src/app/app.ts
 ```
 
 ## Run
 
 ```bash
 # In one terminal: run a standalone Genkit backend (e.g. Express, Hono, FastAPI, Chi)
-cd /Users/chgill/Projects/samples/quickstarts/backends/js/express && GEMINI_API_KEY=... pnpm start
+cd <repo>/quickstarts/backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
 
 # In another terminal: run Angular
 ng serve

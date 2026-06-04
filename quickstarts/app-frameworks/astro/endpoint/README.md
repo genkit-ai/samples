@@ -2,13 +2,14 @@
 
 Full-stack Astro app running in SSR mode with the Node adapter. The Genkit flow lives in `src/genkit/bargainChefFlow.ts` and is exposed as an API endpoint at `src/pages/api/bargainChefFlow.ts` via `fetchHandler(flow)`.
 
-Guide: https://genkit.dev/docs/frameworks/astro (Astro server endpoint tab)
+Guide: https://genkit.dev/docs/js/app-frameworks/astro (Astro server endpoint tab)
 
 ## Run
 
 ```bash
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install   # once
-cd frontends/astro/endpoint
+# From the repo's quickstarts/ directory:
+pnpm install   # once
+cd app-frameworks/astro/endpoint
 GEMINI_API_KEY=<your-key> pnpm dev
 ```
 

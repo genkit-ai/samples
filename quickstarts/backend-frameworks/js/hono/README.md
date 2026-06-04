@@ -2,13 +2,13 @@
 
 Standalone Genkit backend on Hono. Hono is fetch-native, so `fetchHandlers` plugs in directly with no adapter.
 
-Guide: https://genkit.dev/docs/frameworks/hono
+Guide: https://genkit.dev/docs/js/backend-frameworks/hono
 
 ## Run
 
 ```bash
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install   # once
-cd backends/js/hono
+pnpm install   # once, from quickstarts/
+cd backend-frameworks/js/hono
 GEMINI_API_KEY=<your-key> pnpm start
 ```
 

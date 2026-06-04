@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import { streamFlow } from 'genkit/beta/client';
 import type {
@@ -9,13 +10,17 @@ import type {
 // API route where your bargainChefFlow is served.
 const FLOW_URL = '/api/bargainChefFlow';
 
-export default function Index() {
+export const Route = createFileRoute('/')({
+  component: Home,
+});
+
+function Home() {
   const [craving, setCraving] = useState('something warm with chicken');
   const [recipe, setRecipe] = useState<PartialRecipe | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
 
-  async function generateRecipe(event: React.FormEvent) {
-    event.preventDefault();
+  async function generateRecipe(e: React.FormEvent) {
+    e.preventDefault();
     if (!craving.trim()) return;
     setRecipe(null);
     setIsStreaming(true);
@@ -44,8 +49,8 @@ export default function Index() {
     <main>
       <h1>Bargain Chef</h1>
       <p className="tagline">
-        Tell me what you feel like eating and I'll suggest a recipe built around
-        today's grocery deals.
+        Tell me what you feel like eating and I'll suggest a recipe built
+        around today's grocery deals.
       </p>
 
       <form className="prompt" onSubmit={generateRecipe}>

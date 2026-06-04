@@ -2,13 +2,14 @@
 
 Full-stack Next.js app using the Pages Router. The Genkit flow lives in `src/genkit/bargainChefFlow.ts` and is exposed via a Pages API handler at `src/pages/api/bargainChefFlow.ts` that adapts `req`/`res` to a fetch `Request`/`Response` and delegates to `fetchHandlers`.
 
-Guide: https://genkit.dev/docs/frameworks/nextjs (Pages Router tab)
+Guide: https://genkit.dev/docs/js/app-frameworks/nextjs (Pages Router tab)
 
 ## Run
 
 ```bash
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install   # once
-cd frontends/nextjs/pages
+# from the repo's quickstarts directory:
+pnpm install   # once
+cd app-frameworks/nextjs/pages
 GEMINI_API_KEY=<your-key> pnpm dev
 ```
 

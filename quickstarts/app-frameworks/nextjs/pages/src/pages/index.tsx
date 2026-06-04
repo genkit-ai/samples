@@ -1,23 +1,14 @@
 import { useState } from 'react';
 import { streamFlow } from 'genkit/beta/client';
-
-interface RecipeIngredient {
-  name?: string;
-  quantity?: string;
-  onSale?: boolean;
-}
-
-interface Recipe {
-  title?: string;
-  description?: string;
-  servings?: number;
-  ingredients?: RecipeIngredient[];
-  steps?: string[];
-}
+import type {
+  BargainChefInput,
+  PartialRecipe,
+  Recipe,
+} from '../genkit/bargainChefFlow';
 
 export default function Home() {
   const [craving, setCraving] = useState('something warm with chicken');
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [recipe, setRecipe] = useState<PartialRecipe | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
 
   async function generateRecipe(event: React.FormEvent) {
@@ -26,12 +17,14 @@ export default function Home() {
     setRecipe(null);
     setIsStreaming(true);
     try {
-      const result = streamFlow({
+      const input: BargainChefInput = { craving };
+      // streamFlow's generics are <FinalOutput, StreamChunk>.
+      const result = streamFlow<Recipe, PartialRecipe>({
         url: '/api/bargainChefFlow',
-        input: { craving },
+        input,
       });
       for await (const partial of result.stream) {
-        setRecipe(partial as Recipe);
+        setRecipe(partial);
       }
       await result.output;
     } catch (err) {

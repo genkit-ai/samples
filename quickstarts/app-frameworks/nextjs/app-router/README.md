@@ -2,13 +2,14 @@
 
 Full-stack Next.js app. The Genkit flow lives in `src/genkit/bargainChefFlow.ts` and is mounted as an App Router route handler at `src/app/api/bargainChefFlow/route.ts` via `appRoute(flow)` from `@genkit-ai/next`.
 
-Guide: https://genkit.dev/docs/frameworks/nextjs (App Router tab)
+Guide: https://genkit.dev/docs/js/app-frameworks/nextjs (App Router tab)
 
 ## Run
 
 ```bash
-cd /Users/chgill/Projects/samples/quickstarts && pnpm install   # once
-cd frontends/nextjs/app-router
+# from the repo's quickstarts directory:
+pnpm install   # once
+cd app-frameworks/nextjs/app-router
 GEMINI_API_KEY=<your-key> pnpm dev
 ```
 
