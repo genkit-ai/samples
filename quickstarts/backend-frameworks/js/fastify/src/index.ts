@@ -41,6 +41,14 @@ async function sendWebResponse(reply: FastifyReply, response: Response) {
   reply.hijack();
   reply.raw.statusCode = response.status;
 
+  // Headers set by earlier hooks/plugins (like @fastify/cors) live on the
+  // Fastify reply. hijack() stops Fastify from flushing them, so copy them
+  // onto the raw response first, or the browser rejects the streamed response
+  // for missing CORS headers even though the preflight passed.
+  for (const [key, value] of Object.entries(reply.getHeaders())) {
+    if (value !== undefined) reply.raw.setHeader(key, value);
+  }
+
   response.headers.forEach((value, key) => {
     reply.raw.setHeader(key, value);
   });

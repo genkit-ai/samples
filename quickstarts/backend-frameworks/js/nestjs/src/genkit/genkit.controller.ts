@@ -1,47 +1,14 @@
 import { Controller, Post, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { fetchHandlers } from '@genkit-ai/fetch';
-import { Readable } from 'node:stream';
+import { expressHandler } from '@genkit-ai/express';
 import { bargainChefFlow } from './bargainChefFlow';
 
-const handleFlow = fetchHandlers([bargainChefFlow], '/genkit');
-
-@Controller('genkit')
+@Controller()
 export class GenkitController {
-  @Post('*')
-  async handleGenkit(@Req() req: Request, @Res() res: Response) {
-    const url = new URL(req.url, `${req.protocol}://${req.get('host')}`);
-    const headers = new Headers();
-    for (const [key, value] of Object.entries(req.headers)) {
-      if (value === undefined) continue;
-      if (Array.isArray(value)) {
-        value.forEach((v) => headers.append(key, v));
-      } else {
-        headers.set(key, String(value));
-      }
-    }
+  private readonly handleBargainChef = expressHandler(bargainChefFlow);
 
-    const webRequest = new Request(url, {
-      method: req.method,
-      headers,
-      body:
-        req.method !== 'GET' && req.method !== 'HEAD'
-          ? JSON.stringify(req.body)
-          : undefined,
-    });
-
-    const webResponse = await handleFlow(webRequest);
-    res.status(webResponse.status);
-    webResponse.headers.forEach((value, key) => {
-      res.setHeader(key, value);
-    });
-
-    if (webResponse.body) {
-      Readable.fromWeb(
-        webResponse.body as import('node:stream/web').ReadableStream,
-      ).pipe(res);
-    } else {
-      res.end();
-    }
+  @Post('bargainChefFlow')
+  bargainChef(@Req() req: Request, @Res() res: Response) {
+    return this.handleBargainChef(req, res);
   }
 }
