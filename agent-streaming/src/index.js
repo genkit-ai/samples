@@ -21,14 +21,14 @@ const streamingThoughtsFlow = ai.defineFlow(
   },
   async (prompt, { sendChunk }) => {
     // Generate a stream using the Google AI plugin.
-    // We use gemini-2.5-pro which natively supports thinkingConfig and provides deeper reasoning.
+    // We use gemini-3.5-flash which natively supports thinkingConfig and provides deeper reasoning.
     const { stream, response } = await ai.generateStream({
-      model: googleAI.model('gemini-2.5-pro'),
+      model: googleAI.model('gemini-3.5-flash'),
       prompt,
       config: {
         thinkingConfig: {
           includeThoughts: true,
-          thinkingBudget: 2048,
+          thinkingBudget: -1, // Default thinking budget
         },
       },
     });
@@ -38,14 +38,17 @@ const streamingThoughtsFlow = ai.defineFlow(
     // Consume the stream as it arrives
     for await (const chunk of stream) {
       // Process Thoughts
-      const thoughtText = chunk.custom?.thought || chunk.thoughtSummary?.() || chunk.thought;
+      // Gemini 3.5/2.5 models populate thoughts in `chunk.reasoning`. If using other
+      // model providers or custom adapters, you may need to change this to chunk.thought,
+      // chunk.custom?.thought, or manually iterate over `chunk.content` parts.
+      const thoughtText = chunk.reasoning || '';
 
       if (thoughtText) {
         accumulatedThoughts += thoughtText;
 
         // Extract the most recent thought title wrapped in ** **
-        const matches = [...accumulatedThoughts.matchAll(/\*\*(.*?)\*\*/g)];
-        const lastStep = matches.length > 0 ? matches[matches.length - 1][1] : undefined;
+        const match = accumulatedThoughts.match(/.*\*\*(.*?)\*\*/s);
+        const lastStep = match ? match[1] : undefined;
 
         sendChunk({
           type: 'thought',
