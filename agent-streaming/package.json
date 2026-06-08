@@ -1,0 +1,19 @@
+{
+  "name": "agent-streaming",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "genkit start -- node --env-file=.env --watch src/index.js",
+    "dev": "node --env-file=.env --watch src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@genkit-ai/google-genai": "^1.36.0",
+    "genkit": "^1.36.0"
+  }
+}
