@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "genkit": "1.35.0"
+    "genkit": "^1.36.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",

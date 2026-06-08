@@ -14,7 +14,7 @@
     "nuxt": "^3.13.0",
     "vue": "^3.5.0",
     "vue-router": "^4.4.0",
-    "genkit": "1.35.0"
+    "genkit": "^1.36.0"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

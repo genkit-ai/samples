@@ -1,22 +1,18 @@
 # Remix (Server route) quickstart
 
-This sample is scaffolded with the React Router v7 (Remix) framework template. Because the scaffolder generates many tightly-coupled files (`root.tsx`, `entry.client.tsx`, `entry.server.tsx`, `vite.config.ts`, etc.) that depend on the framework version, this directory only contains the Genkit-specific files (`app/genkit/`, `app/routes/api.bargainChefFlow.$.ts`, `app/routes/_index.tsx`).
+**Bargain Chef** as a full-stack Remix (React Router v7) app: the Genkit flow runs in a Remix resource route (`app/routes/api.bargainChefFlow.$.ts`) in the same project as the UI, so there's no separate backend and no CORS to configure. Gemini streams a recipe into the UI field-by-field and calls a tool mid-generation to look up grocery sale prices.
+
+This is a full, runnable project (scaffolded with `create-react-router`, default config-based routing in `app/routes.ts`), not a snippet.
 
 Guide: https://genkit.dev/docs/js/app-frameworks/remix (full-stack server route)
 
-## Setup
+## Run
 
 ```bash
-# scaffold a fresh Remix (React Router v7) app in a temp dir, then copy the genkit files in
-cd /tmp && npx create-react-router@latest remix-temp && cd remix-temp
-npm install genkit @genkit-ai/google-genai @genkit-ai/fetch
-npm install -D genkit-cli tsx
-
-# from the repo root, replace <repo> with the path to your local checkout
-SRC=<repo>/quickstarts/app-frameworks/remix/server-route
-cp -r "$SRC/app/genkit" ./app/
-cp "$SRC/app/routes/api.bargainChefFlow.\$.ts" ./app/routes/
-cp "$SRC/app/routes/_index.tsx" ./app/routes/_index.tsx
+npm install
+GEMINI_API_KEY=<your-key> npm run dev    # http://localhost:5173
 ```
 
-Then start the dev server with `GEMINI_API_KEY=<your-key> npm run dev` and open the URL it prints.
+Open the printed URL, type a craving, and submit. The recipe streams in field-by-field. The flow is served in-process at `POST /api/bargainChefFlow`.
+
+Get a Gemini API key at https://aistudio.google.com/apikey.

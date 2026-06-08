@@ -34,6 +34,8 @@ bin/
 vendor/
 go.work
 go.work.sum
+# Compiled Go binaries (`go build` emits one named after the sample dir)
+backend-frameworks/go/*/quickstart-*
 
 # Dart console projects keep their source in bin/, so don't ignore the shelf sample.
 !backend-frameworks/dart/shelf/bin/

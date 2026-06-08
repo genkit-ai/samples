@@ -3,7 +3,7 @@ module example/quickstart-echo
 go 1.25.0
 
 require (
-	github.com/firebase/genkit/go v0.0.0
+	github.com/firebase/genkit/go v1.8.0
 	github.com/labstack/echo/v4 v4.12.0
 )
 
@@ -56,5 +56,3 @@ require (
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/firebase/genkit/go => /Users/chgill/Projects/genkit/go

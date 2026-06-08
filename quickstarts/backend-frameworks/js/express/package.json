@@ -11,9 +11,9 @@
   "dependencies": {
     "express": "^4.21.1",
     "cors": "^2.8.5",
-    "genkit": "1.35.0",
-    "@genkit-ai/google-genai": "1.35.0",
-    "@genkit-ai/express": "1.35.0"
+    "genkit": "^1.36.0",
+    "@genkit-ai/google-genai": "^1.36.0",
+    "@genkit-ai/express": "^1.36.0"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
@@ -21,6 +21,6 @@
     "@types/node": "^22.15.3",
     "@types/express": "^4.17.21",
     "@types/cors": "^2.8.17",
-    "genkit-cli": "1.35.0"
+    "genkit-cli": "^1.36.0"
   }
 }

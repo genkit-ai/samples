@@ -1,32 +1,20 @@
 # Angular (Standalone backend) quickstart
 
-A browser-only Angular app that calls a standalone Genkit backend. Because Angular's `ng new` produces ~30 files that vary by version, this directory holds only the Genkit-relevant snippets (`src/app/app.ts`). Use the Angular CLI to scaffold the rest.
+A complete, browser-only Angular app that calls a standalone Genkit backend over HTTP via `streamFlow`. This is a full, runnable project (scaffolded with `ng new --ssr=false`), not a snippet.
 
 Guide: https://genkit.dev/docs/js/app-frameworks/angular (standalone backend)
-
-## Setup
-
-```bash
-# scaffold a fresh Angular project (skip SSR), then copy the genkit-specific files in
-npx -y @angular/cli@latest new my-genkit-angular --routing=false --style=css --ssr=false
-cd my-genkit-angular
-npm install genkit
-
-# replace src/app/app.ts with the one from this directory
-# from the repo root, replace <repo> with the path to your local checkout
-cp <repo>/quickstarts/app-frameworks/angular/standalone/src/app/app.ts ./src/app/app.ts
-```
 
 ## Run
 
 ```bash
-# In one terminal: run a standalone Genkit backend (e.g. Express, Hono, FastAPI, Chi)
+# Terminal 1 — any standalone backend in this repo, e.g. Express:
 cd <repo>/quickstarts/backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
 
-# In another terminal: run Angular
-ng serve
+# Terminal 2 — this Angular app:
+npm install
+npm start            # http://localhost:4200
 ```
 
-Open http://localhost:4200. The frontend will call the standalone backend at `http://localhost:8080/bargainChefFlow`.
+Open http://localhost:4200. The frontend calls the standalone backend at `http://localhost:8080/bargainChefFlow` (set in `src/app/app.ts`).
 
-> ⚠ Make sure the standalone backend has CORS enabled (allow `http://localhost:4200`) or the browser will block the request. The Go samples in this repo already include CORS middleware; for JS samples, add the `cors` package to the Express/Hono/Fastify server.
+> The standalone backend must allow `http://localhost:4200` (CORS). Every backend in this repo enables CORS by default.

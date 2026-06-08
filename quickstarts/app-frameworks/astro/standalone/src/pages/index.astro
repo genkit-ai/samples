@@ -29,52 +29,67 @@ const backendUrl = import.meta.env.PUBLIC_BARGAIN_CHEF_URL ?? 'http://localhost:
       </form>
       <article id="recipe" style="display: none;"></article>
     </main>
-    <script define:vars={{ backendUrl }}>
-      import('genkit/beta/client').then(({ streamFlow }) => {
-        const form = document.getElementById('prompt-form');
-        const btn = document.getElementById('submit-btn');
-        const cravingInput = document.getElementById('craving');
-        const recipeEl = document.getElementById('recipe');
+    <script>
+      // A plain <script> (no define:vars) so Astro bundles it with Vite and the
+      // bare `genkit/beta/client` import resolves in the browser. Vite inlines
+      // import.meta.env.PUBLIC_* at build time.
+      import { streamFlow } from 'genkit/beta/client';
 
-        function render(recipe) {
-          recipeEl.style.display = recipe ? 'block' : 'none';
-          if (!recipe) return;
-          let html = '';
-          if (recipe.title) html += `<h2>${recipe.title}</h2>`;
-          if (recipe.description) html += `<p class="description">${recipe.description}</p>`;
-          if (recipe.ingredients?.length) {
-            html += '<h3>Ingredients</h3><ul class="ingredients">';
-            for (const ing of recipe.ingredients) {
-              html += `<li>${ing.quantity ?? ''} ${ing.name ?? ''}${ing.onSale ? ' <span class="badge">on sale</span>' : ''}</li>`;
-            }
-            html += '</ul>';
+      const backendUrl =
+        import.meta.env.PUBLIC_BARGAIN_CHEF_URL ?? 'http://localhost:8080/bargainChefFlow';
+
+      const form = document.getElementById('prompt-form') as HTMLFormElement;
+      const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+      const cravingInput = document.getElementById('craving') as HTMLInputElement;
+      const recipeEl = document.getElementById('recipe') as HTMLElement;
+
+      interface RecipeIngredient { name?: string; quantity?: string; onSale?: boolean }
+      interface Recipe {
+        title?: string;
+        description?: string;
+        servings?: number;
+        ingredients?: RecipeIngredient[];
+        steps?: string[];
+      }
+
+      function render(recipe: Recipe | null) {
+        recipeEl.style.display = recipe ? 'block' : 'none';
+        if (!recipe) return;
+        let html = '';
+        if (recipe.title) html += `<h2>${recipe.title}</h2>`;
+        if (recipe.description) html += `<p class="description">${recipe.description}</p>`;
+        if (recipe.ingredients?.length) {
+          html += '<h3>Ingredients</h3><ul class="ingredients">';
+          for (const ing of recipe.ingredients) {
+            html += `<li>${ing.quantity ?? ''} ${ing.name ?? ''}${ing.onSale ? ' <span class="badge">on sale</span>' : ''}</li>`;
           }
-          if (recipe.steps?.length) {
-            html += '<h3>Steps</h3><ol class="steps">';
-            for (const step of recipe.steps) html += `<li>${step}</li>`;
-            html += '</ol>';
-          }
-          recipeEl.innerHTML = html;
+          html += '</ul>';
         }
+        if (recipe.steps?.length) {
+          html += '<h3>Steps</h3><ol class="steps">';
+          for (const step of recipe.steps) html += `<li>${step}</li>`;
+          html += '</ol>';
+        }
+        recipeEl.innerHTML = html;
+      }
 
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const craving = cravingInput.value.trim();
-          if (!craving) return;
-          btn.disabled = true;
-          btn.textContent = 'Cooking…';
-          render(null);
-          try {
-            const result = streamFlow({ url: backendUrl, input: { craving } });
-            for await (const partial of result.stream) render(partial);
-            await result.output;
-          } catch (err) {
-            console.error('Failed to generate recipe', err);
-          } finally {
-            btn.disabled = false;
-            btn.textContent = 'Suggest a recipe';
-          }
-        });
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const craving = cravingInput.value.trim();
+        if (!craving) return;
+        btn.disabled = true;
+        btn.textContent = 'Cooking…';
+        render(null);
+        try {
+          const result = streamFlow<Recipe, Recipe>({ url: backendUrl, input: { craving } });
+          for await (const partial of result.stream) render(partial);
+          await result.output;
+        } catch (err) {
+          console.error('Failed to generate recipe', err);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Suggest a recipe';
+        }
       });
     </script>
   </body>

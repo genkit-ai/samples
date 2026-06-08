@@ -1,24 +1,20 @@
 # TanStack Start (API route) quickstart
 
-This directory contains only the Genkit-specific files (`app/genkit/bargainChefFlow.ts`, `app/routes/api/bargainChefFlow/$.ts`, `app/routes/index.tsx`). The TanStack Start scaffold (`app.config.ts`, `app/router.tsx`, `app/routes/__root.tsx`, etc.) is best produced with the official CLI because it tracks the framework's API.
+**Bargain Chef** as a full-stack TanStack Start app: the Genkit flow runs in a server route (`src/routes/api/bargainChefFlow/$.ts`) in the same project as the UI, so there's no separate backend and no CORS to configure. Gemini streams a recipe into the UI field-by-field and calls a tool mid-generation to look up grocery sale prices.
+
+This is a full, runnable project (scaffolded with `@tanstack/cli create`), not a snippet.
+
+> The current TanStack CLI scaffolds routes under `src/routes/` (older versions used `app/routes/`). This project uses `src/routes/`.
 
 Guide: https://genkit.dev/docs/js/app-frameworks/tanstack-start (full-stack API route)
 
-## Setup
+## Run
 
 ```bash
-# scaffold a TanStack Start app with the official CLI, then copy these files in
-npx @tanstack/cli@latest create my-genkit-tanstack
-cd my-genkit-tanstack
-# install Genkit deps
-npm install genkit @genkit-ai/google-genai @genkit-ai/fetch
-npm install -D genkit-cli tsx
-
-# from the repo root, replace <repo> with the path to your local checkout
-SRC=<repo>/quickstarts/app-frameworks/tanstack-start/api-route
-cp -r "$SRC/app/genkit" ./app/
-cp -r "$SRC/app/routes/api" ./app/routes/
-cp "$SRC/app/routes/index.tsx" ./app/routes/index.tsx
+npm install
+GEMINI_API_KEY=<your-key> npm run dev    # http://localhost:3000
 ```
 
-Then start the dev server with `GEMINI_API_KEY=<your-key> npm run dev` and open the URL it prints.
+Open the printed URL, type a craving, and submit. The recipe streams in field-by-field. The flow is served in-process at `POST /api/bargainChefFlow`.
+
+Get a Gemini API key at https://aistudio.google.com/apikey.

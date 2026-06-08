@@ -1,19 +1,10 @@
 # Remix (Standalone backend) quickstart
 
-Remix app whose only route is a client component that calls a separate Genkit backend. **No flow runs inside this app** — there's no `api.bargainChefFlow.$.ts` route. Only the Genkit-specific file (`app/routes/_index.tsx`) lives here; scaffold the surrounding Remix project with the React Router CLI.
+A complete Remix (React Router v7) app whose only route is a client component that calls a separate Genkit backend. **No flow runs inside this app** — there's no `api.bargainChefFlow.$.ts` route. The browser calls the standalone backend over HTTP via `streamFlow`.
+
+This is a full, runnable project (scaffolded with `create-react-router`, default config-based routing), not a snippet.
 
 Guide: https://genkit.dev/docs/js/app-frameworks/remix (standalone backend)
-
-## Setup
-
-```bash
-# scaffold a fresh Remix (React Router v7) app in a temp dir, then copy this _index.tsx in
-cd /tmp && npx create-react-router@latest remix-temp && cd remix-temp
-npm install genkit
-
-# from the repo root, replace <repo> with the path to your local checkout
-cp <repo>/quickstarts/app-frameworks/remix/standalone/app/routes/_index.tsx ./app/routes/_index.tsx
-```
 
 ## Run
 
@@ -21,9 +12,11 @@ cp <repo>/quickstarts/app-frameworks/remix/standalone/app/routes/_index.tsx ./ap
 # Terminal 1 — any standalone backend in this repo, e.g. Express:
 cd <repo>/quickstarts/backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
 
-# Terminal 2 — your Remix app:
-cd /tmp/remix-temp
-npm run dev
+# Terminal 2 — this Remix app:
+npm install
+npm run dev          # http://localhost:5173
 ```
 
-Override the backend URL with `VITE_BARGAIN_CHEF_URL`.
+Open the printed URL. The frontend calls the standalone backend at `http://localhost:8080/bargainChefFlow` by default. Override it with `VITE_BARGAIN_CHEF_URL`.
+
+> The standalone backend must allow this origin (CORS). Every backend in this repo enables CORS by default.

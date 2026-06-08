@@ -6,12 +6,7 @@ dependencies = [
     "flask[async]>=3.0.0",
     "flask-cors>=5.0.0",
     "pydantic>=2.10.0",
-    "genkit",
-    "genkit-plugin-google-genai",
-    "genkit-plugin-flask",
+    "genkit>=0.6.0",
+    "genkit-plugin-google-genai>=0.6.0",
+    "genkit-plugin-flask>=0.6.0",
 ]
-
-[tool.uv.sources]
-genkit = { path = "/Users/chgill/Projects/genkit/py/packages/genkit", editable = true }
-genkit-plugin-google-genai = { path = "/Users/chgill/Projects/genkit/py/plugins/google-genai", editable = true }
-genkit-plugin-flask = { path = "/Users/chgill/Projects/genkit/py/plugins/flask", editable = true }

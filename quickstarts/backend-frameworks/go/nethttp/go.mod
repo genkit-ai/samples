@@ -2,7 +2,7 @@ module example/quickstart-nethttp
 
 go 1.25.0
 
-require github.com/firebase/genkit/go v0.0.0
+require github.com/firebase/genkit/go v1.8.0
 
 require (
 	cloud.google.com/go v0.120.0 // indirect
@@ -46,5 +46,3 @@ require (
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/firebase/genkit/go => /Users/chgill/Projects/genkit/go

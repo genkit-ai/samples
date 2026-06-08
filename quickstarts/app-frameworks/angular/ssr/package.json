@@ -1,5 +1,5 @@
 {
-  "name": "my-genkit-angular",
+  "name": "quickstart-angular-ssr",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

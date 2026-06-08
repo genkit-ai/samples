@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "astro": "^5.0.0",
-    "genkit": "1.35.0"
+    "genkit": "^1.36.0"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
