@@ -20,8 +20,8 @@ const StreamChunkSchema = z.object({
 const streamingThoughtsFlow = ai.defineFlow(
   {
     name: 'streamingThoughtsFlow',
-    inputSchema: z.string(),
-    outputSchema: z.string(),
+    inputSchema: z.string().describe('The prompt for the agent'),
+    outputSchema: z.string().describe('The final text response'),
     streamSchema: StreamChunkSchema,
   },
   async (prompt, { sendChunk }) => {
@@ -40,6 +40,7 @@ const streamingThoughtsFlow = ai.defineFlow(
 
     let accumulatedThoughts = "";
 
+    // Consume the stream as it arrives
     for await (const chunk of stream) {
       // Process Thoughts
       // Gemini 3.5/2.5 models populate thoughts in `chunk.reasoning`. If using other
