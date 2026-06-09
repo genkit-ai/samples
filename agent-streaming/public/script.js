@@ -108,10 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeTextMessageContent) {
           activeTextMessageContent.textContent += content;
         }
-      } else if (chunk.type === 'done') {
-        if (activeThoughtBody) {
-          activeThoughtBody.textContent = activeThoughtBody.textContent.trim();
-        }
       } else if (chunk.type === 'error') {
         appendErrorMessage(chunk.content);
       }

@@ -100,7 +100,7 @@ body {
 .user-message .message-content {
   background-color: #e8f0fe;
   /* Google Chat user bubble (light blue) */
-  color: #1a73e8;
+  color: #1967d2;
   border-radius: 18px 18px 0 18px;
 }
 
@@ -115,7 +115,7 @@ body {
 .thought-message .message-content {
   background-color: #f1f3f4;
   /* Gray reasoning bubble */
-  color: #202124;
+  color: #3c4043;
   border-radius: 18px 18px 18px 0;
   width: 100%;
 }
@@ -157,12 +157,11 @@ body {
 .thought-body {
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px dashed #dadce0;
+  /* border-top: 1px solid #dadce0; */
   font-size: 13.5px;
   color: #5f6368;
   white-space: pre-wrap;
   font-family: monospace;
-  /* Monospace for raw reasoning looks distinct */
   max-height: 250px;
   overflow-y: auto;
 }
@@ -202,7 +201,7 @@ body {
 }
 
 .chat-input-form button:hover {
-  filter: brightness(0.9);
+  background-color: #1557b0;
 }
 
 .chat-input-form button:active {
