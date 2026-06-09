@@ -17,8 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Append User Message Safely
     appendUserMessage(prompt);
 
-    // Setup streaming state
+    // Setup streaming state for unified thinking card
     let activeThoughtElement = null;
+    let activeThoughtStepLabel = null;
+    let activeThoughtIndicator = null;
     let activeThoughtBody = null;
     let activeStepName = null;
 
@@ -81,23 +83,33 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleStreamChunk(chunk) {
       if (chunk.type === 'thought') {
         const stepName = chunk.currentStep || 'Thinking';
-        const content = chunk.content;
+        const content = chunk.content || '';
 
-        // If the step changed or we don't have an active thought bubble, create a new one
-        if (stepName !== activeStepName || !activeThoughtElement) {
-          if (activeThoughtBody) {
-            activeThoughtBody.textContent = activeThoughtBody.textContent.trim();
-          }
+        // If we don't have an active thought card yet, create one
+        if (!activeThoughtElement) {
           activeStepName = stepName;
-          createThoughtBubble(stepName);
+          createThoughtContainer(stepName);
+        } else if (stepName !== activeStepName) {
+          // Update existing thought card for NEW THINKING animation
+          activeStepName = stepName;
+          if (activeThoughtStepLabel && activeThoughtIndicator) {
+            activeThoughtStepLabel.textContent = `Thinking: ${stepName}`;
+            
+            // Re-trigger new thinking animation
+            activeThoughtStepLabel.classList.remove('step-animate');
+            activeThoughtIndicator.classList.remove('indicator-animate');
+            void activeThoughtStepLabel.offsetWidth; // trigger reflow
+            activeThoughtStepLabel.classList.add('step-animate');
+            activeThoughtIndicator.classList.add('indicator-animate');
+          }
         }
 
-        // Append content to the current thought bubble's body
+        // Append content to the thought body safely
         if (activeThoughtBody) {
           activeThoughtBody.textContent += content;
         }
       } else if (chunk.type === 'text') {
-        const content = chunk.content;
+        const content = chunk.content || '';
         
         // If we don't have an active text bubble yet, create one
         if (!activeTextMessageElement) {
@@ -107,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
           createTextBubble();
         }
 
-        // Append text to the text bubble
+        // Append text to the text bubble safely
         if (activeTextMessageContent) {
           activeTextMessageContent.textContent += content;
         }
@@ -120,19 +132,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Helper functions to safely manipulate DOM to prevent XSS
-    function createThoughtBubble(stepName) {
+    function createThoughtContainer(stepName) {
       const messageDiv = document.createElement('div');
       messageDiv.className = 'message thought-message';
 
       const contentDiv = document.createElement('div');
-      contentDiv.className = 'message-content';
+      contentDiv.className = 'thought-box';
+
+      const headerDiv = document.createElement('div');
+      headerDiv.className = 'thought-header';
+
+      const indicatorDiv = document.createElement('div');
+      indicatorDiv.className = 'thought-indicator indicator-animate';
+
+      const stepLabelDiv = document.createElement('div');
+      stepLabelDiv.className = 'thought-step-label step-animate';
+      stepLabelDiv.textContent = `Thinking: ${stepName}`;
+
+      headerDiv.appendChild(indicatorDiv);
+      headerDiv.appendChild(stepLabelDiv);
 
       const details = document.createElement('details');
       details.className = 'thought-details';
 
       const summary = document.createElement('summary');
       summary.className = 'thought-summary';
-      summary.textContent = `Thinking: ${stepName}`;
+
+      const summaryText = document.createElement('span');
+      summaryText.className = 'summary-text';
+      summaryText.textContent = 'Show Full Reasoning';
+
+      summary.appendChild(summaryText);
 
       const body = document.createElement('div');
       body.className = 'thought-body';
@@ -140,11 +170,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       details.appendChild(summary);
       details.appendChild(body);
+
+      details.addEventListener('toggle', () => {
+        summaryText.textContent = details.open ? 'Hide Full Reasoning' : 'Show Full Reasoning';
+      });
+
+      contentDiv.appendChild(headerDiv);
       contentDiv.appendChild(details);
       messageDiv.appendChild(contentDiv);
       chatMessages.appendChild(messageDiv);
 
       activeThoughtElement = messageDiv;
+      activeThoughtStepLabel = stepLabelDiv;
+      activeThoughtIndicator = indicatorDiv;
       activeThoughtBody = body;
     }
 
