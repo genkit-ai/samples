@@ -129,11 +129,112 @@ body {
 /* Model text bubble */
 .model-message .message-content {
   background-color: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    border-radius: 20px 20px 20px 4px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  white-space: pre-wrap;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 20px 20px 20px 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.model-message .message-content p {
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.model-message .message-content p:last-child {
+  margin-bottom: 0;
+}
+
+.model-message .message-content h1,
+.model-message .message-content h2,
+.model-message .message-content h3 {
+  color: var(--text-primary);
+  margin-top: 10px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.model-message .message-content code {
+  background-color: var(--bg-surface-inset);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 13.5px;
+  color: #93c5fd;
+  border: 1px solid var(--border-color);
+}
+
+.model-message .message-content pre {
+  background-color: var(--bg-surface-inset);
+  padding: 12px 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  margin: 8px 0;
+}
+.model-message .message-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* Markdown Lists */
+.model-message .message-content ul {
+  margin-left: 12px;
+  margin-bottom: 12px;
+  padding-left: 12px;
+  list-style-type: disc !important;
+  list-style-position: inside !important;
+}
+.model-message .message-content ol {
+  margin-left: 12px;
+  margin-bottom: 12px;
+  padding-left: 12px;
+  list-style-type: decimal !important;
+  list-style-position: inside !important;
+}
+.model-message .message-content li {
+  margin-bottom: 6px;
+  line-height: 1.6;
+  display: list-item !important;
+}
+.model-message .message-content li:last-child {
+  margin-bottom: 0;
+}
+.model-message .message-content li p {
+  display: inline;
+}
+
+/* Markdown Tables */
+.model-message .message-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+  background-color: var(--bg-surface-inset);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.model-message .message-content th,
+.model-message .message-content td {
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  line-height: 1.5;
+}
+
+.model-message .message-content th {
+  background-color: var(--border-color);
+  color: var(--accent-blue-light);
+  font-weight: 600;
+}
+
+.model-message .message-content tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+.model-message .message-content tr:hover {
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 /* Model Thinking Card */

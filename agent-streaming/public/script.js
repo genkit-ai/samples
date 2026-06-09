@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let activeTextMessageElement = null;
     let activeTextMessageContent = null;
+    let accumulatedModelText = '';
 
     try {
       const response = await fetch('/api/chat', {
@@ -110,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else if (chunk.type === 'text') {
         const content = chunk.content || '';
+        accumulatedModelText += content;
         
         // If we don't have an active text bubble yet, create one
         if (!activeTextMessageElement) {
@@ -119,9 +121,19 @@ document.addEventListener('DOMContentLoaded', () => {
           createTextBubble();
         }
 
-        // Append text to the text bubble safely
-        if (activeTextMessageContent) {
-          activeTextMessageContent.textContent += content;
+        // STRICT SECURE PIPELINE: 1. Parse MD -> 2. Sanitize HTML -> 3. Render via innerHTML
+        if (activeTextMessageContent && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+          try {
+            const parseMd = typeof marked.parse === 'function' ? marked.parse : marked;
+            const rawHtml = parseMd(accumulatedModelText, { breaks: true });
+            const safeHtml = DOMPurify.sanitize(rawHtml);
+            activeTextMessageContent.innerHTML = safeHtml;
+          } catch (err) {
+            console.error('Markdown runtime parsing error:', err);
+            activeTextMessageContent.textContent = accumulatedModelText;
+          }
+        } else if (activeTextMessageContent) {
+          activeTextMessageContent.textContent = accumulatedModelText;
         }
       } else if (chunk.type === 'error') {
         appendErrorMessage(chunk.content);
