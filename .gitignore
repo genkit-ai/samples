@@ -3,3 +3,7 @@
 .genkit
 .dart_tool
 pubspec.lock
+GENKIT.md
+agent-streaming/node_modules/
+dist/
+.env
