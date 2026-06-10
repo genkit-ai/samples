@@ -1,3 +1,4 @@
+<<<<<<< feat/agent-streaming-2-server
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
@@ -5,18 +6,30 @@ const { genkit, z } = require('genkit');
 const { googleAI } = require('@genkit-ai/google-genai');
 
 // Initialize Genkit AI
+=======
+const { genkit, z } = require('genkit');
+const { googleAI } = require('@genkit-ai/google-genai');
+
+>>>>>>> main
 const ai = genkit({
   plugins: [googleAI()],
 });
 
+<<<<<<< feat/agent-streaming-2-server
 // Define schema for streaming chunks
+=======
+// Define the schema for the streaming chunks
+>>>>>>> main
 const StreamChunkSchema = z.object({
   type: z.enum(['thought', 'text']),
   content: z.string(),
   currentStep: z.string().optional(),
 });
 
+<<<<<<< feat/agent-streaming-2-server
 // Define streaming flow
+=======
+>>>>>>> main
 const streamingThoughtsFlow = ai.defineFlow(
   {
     name: 'streamingThoughtsFlow',
@@ -71,11 +84,16 @@ const streamingThoughtsFlow = ai.defineFlow(
       }
     }
 
+<<<<<<< feat/agent-streaming-2-server
+=======
+    // Wait for the full response and return the complete text
+>>>>>>> main
     const finalResponse = await response;
     return finalResponse.text;
   }
 );
 
+<<<<<<< feat/agent-streaming-2-server
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -134,3 +152,6 @@ if (require.main === module) {
 }
 
 module.exports = { ai, streamingThoughtsFlow, app };
+=======
+module.exports = { ai, streamingThoughtsFlow };
+>>>>>>> main
