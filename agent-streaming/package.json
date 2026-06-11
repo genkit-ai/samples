@@ -5,11 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-<<<<<<< feat/agent-streaming-2-server
     "start": "node --env-file=.env --watch src/index.js",
-=======
-    "start": "genkit start -- node --env-file=.env --watch src/index.js",
->>>>>>> main
     "dev": "node --env-file=.env --watch src/index.js"
   },
   "keywords": [],
@@ -18,12 +14,8 @@
   "type": "commonjs",
   "dependencies": {
     "@genkit-ai/google-genai": "^1.36.0",
-<<<<<<< feat/agent-streaming-2-server
     "express": "^5.2.1",
     "genkit": "^1.36.0",
     "helmet": "^8.2.0"
-=======
-    "genkit": "^1.36.0"
->>>>>>> main
   }
 }

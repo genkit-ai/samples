@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+
+# Production builds
+dist/
+
+# Local environment variables
+.env
+.env.*
+
+# Genkit runtime telemetry and logs
+.genkit/
