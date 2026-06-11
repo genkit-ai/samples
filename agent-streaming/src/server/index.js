@@ -96,7 +96,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../../public')));
 
 // API Endpoint to stream the chat response (Server-Sent Events)
 app.post('/api/chat', async (req, res) => {
