@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --env-file=.env --watch src/server/index.js",
-    "dev": "node --env-file=.env --watch src/server/index.js"
+    "dev:client": "vite",
+    "dev:server": "node --env-file=.env --watch src/server/index.js",
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",
