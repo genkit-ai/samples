@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:client": "vite",
     "dev:server": "node --env-file=.env --watch src/server/index.js",
-    "build": "vite build"
+    "build": "vite build",
+    "start": "node --env-file=.env src/server/index.js"
   },
   "keywords": [],
   "author": "",
