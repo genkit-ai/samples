@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --env-file=.env --watch src/index.js",
-    "dev": "node --env-file=.env --watch src/index.js"
+    "dev:client": "vite",
+    "dev:server": "node --env-file=.env --watch src/server/index.js",
+    "build": "vite build",
+    "start": "node --env-file=.env src/server/index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +16,13 @@
   "type": "commonjs",
   "dependencies": {
     "@genkit-ai/google-genai": "^1.36.0",
+    "dompurify": "^3.4.9",
     "express": "^5.2.1",
     "genkit": "^1.36.0",
-    "helmet": "^8.2.0"
+    "helmet": "^8.2.0",
+    "marked": "^18.0.5"
+  },
+  "devDependencies": {
+    "vite": "^8.0.16"
   }
 }
