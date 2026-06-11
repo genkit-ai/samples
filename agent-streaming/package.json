@@ -14,8 +14,13 @@
   "type": "commonjs",
   "dependencies": {
     "@genkit-ai/google-genai": "^1.36.0",
+    "dompurify": "^3.4.9",
     "express": "^5.2.1",
     "genkit": "^1.36.0",
-    "helmet": "^8.2.0"
+    "helmet": "^8.2.0",
+    "marked": "^18.0.5"
+  },
+  "devDependencies": {
+    "vite": "^8.0.16"
   }
 }
