@@ -13,6 +13,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"google.golang.org/genai"
 )
 
 type DayType string
@@ -90,6 +91,11 @@ func main() {
 			var final *Recipe
 			for value, err := range genkit.GenerateDataStream[*Recipe](ctx, g,
 				ai.WithModelName("googleai/gemini-flash-latest"),
+				ai.WithConfig(&genai.GenerateContentConfig{
+					ThinkingConfig: &genai.ThinkingConfig{
+						ThinkingLevel: genai.ThinkingLevelMinimal,
+					},
+				}),
 				ai.WithPrompt(prompt),
 				ai.WithTools(getIngredientsOnSale),
 			) {

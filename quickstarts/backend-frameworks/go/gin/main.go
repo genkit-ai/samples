@@ -12,6 +12,7 @@ import (
 	"github.com/firebase/genkit/go/plugins/googlegenai"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/genai"
 )
 
 type SaleItem struct {
@@ -81,6 +82,11 @@ Call the getIngredientsOnSale tool with the dayType that matches today. Saturday
 
 			stream := genkit.GenerateDataStream[*Recipe](ctx, g,
 				ai.WithModelName("googleai/gemini-flash-latest"),
+				ai.WithConfig(&genai.GenerateContentConfig{
+					ThinkingConfig: &genai.ThinkingConfig{
+						ThinkingLevel: genai.ThinkingLevelMinimal,
+					},
+				}),
 				ai.WithTools(getIngredientsOnSale),
 				ai.WithPrompt(prompt),
 			)
