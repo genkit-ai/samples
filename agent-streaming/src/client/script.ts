@@ -1,13 +1,19 @@
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const chatForm = document.getElementById('chat-form');
-  const promptInput = document.getElementById('prompt-input');
-  const chatMessages = document.getElementById('chat-messages');
-  const sendButton = document.getElementById('send-button');
+interface StreamChunk {
+  type: 'thought' | 'text' | 'error';
+  content: string;
+  currentStep?: string;
+}
 
-  chatForm.addEventListener('submit', async (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+  const chatForm = document.getElementById('chat-form') as HTMLFormElement;
+  const promptInput = document.getElementById('prompt-input') as HTMLInputElement;
+  const chatMessages = document.getElementById('chat-messages') as HTMLDivElement;
+  const sendButton = document.getElementById('send-button') as HTMLButtonElement;
+
+  chatForm.addEventListener('submit', async (e: Event) => {
     e.preventDefault();
     const prompt = promptInput.value.trim();
     if (!prompt) return;
@@ -21,15 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
     appendUserMessage(prompt);
 
     // Setup streaming state for unified thinking card
-    let activeThoughtElement = null;
-    let activeThoughtStepLabel = null;
-    let activeThoughtIndicator = null;
-    let activeThoughtBody = null;
-    let activeStepName = null;
+    let activeThoughtElement: HTMLDivElement | null = null;
+    let activeThoughtStepLabel: HTMLDivElement | null = null;
+    let activeThoughtIndicator: HTMLDivElement | null = null;
+    let activeThoughtBody: HTMLDivElement | null = null;
+    let activeStepName: string | null = null;
 
-    let activeTextMessageElement = null;
-    let activeTextMessageContent = null;
-    let accumulatedModelText = '';
+    let activeTextMessageElement: HTMLDivElement | null = null;
+    let activeTextMessageContent: HTMLDivElement | null = null;
+    let accumulatedModelText: string = '';
 
     try {
       const response = await fetch('/api/chat', {
@@ -59,14 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const lines = buffer.split('\n');
 
         // Keep the last partial line in the buffer
-        buffer = lines.pop();
+        buffer = lines.pop() || '';
 
         for (const line of lines) {
           const trimmed = line.trim();
           if (trimmed.startsWith('data: ')) {
             const jsonStr = trimmed.slice(6);
             try {
-              const chunk = JSON.parse(jsonStr);
+              const chunk = JSON.parse(jsonStr) as StreamChunk;
               handleStreamChunk(chunk);
             } catch (err) {
               console.error('Failed to parse SSE JSON:', err);
@@ -84,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle each chunk type safely using standard elements & textContent
-    function handleStreamChunk(chunk) {
+    function handleStreamChunk(chunk: StreamChunk) {
       if (chunk.type === 'thought') {
         const stepName = chunk.currentStep || 'Thinking';
         const content = chunk.content || '';
@@ -127,8 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // STRICT SECURE PIPELINE: 1. Parse MD -> 2. Sanitize HTML -> 3. Render via innerHTML
         if (activeTextMessageContent && typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
           try {
+            // @ts-ignore: marked typing compatibility
             const parseMd = typeof marked.parse === 'function' ? marked.parse : marked;
-            const rawHtml = parseMd(accumulatedModelText, { breaks: true });
+            const rawHtml = parseMd(accumulatedModelText, { breaks: true }) as string;
             const safeHtml = DOMPurify.sanitize(rawHtml);
             activeTextMessageContent.innerHTML = safeHtml;
           } catch (err) {
@@ -147,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Helper functions to safely manipulate DOM to prevent XSS
-    function createThoughtContainer(stepName) {
+    function createThoughtContainer(stepName: string) {
       const messageDiv = document.createElement('div');
       messageDiv.className = 'message thought-message';
 
@@ -218,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   });
 
-  function appendUserMessage(text) {
+  function appendUserMessage(text: string) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message user-message';
 
@@ -231,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  function appendErrorMessage(text) {
+  function appendErrorMessage(text: string) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message system-message error';
 
