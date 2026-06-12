@@ -1,8 +1,13 @@
-const express = require('express');
-const helmet = require('helmet');
-const path = require('path');
-const { genkit, z } = require('genkit');
-const { googleAI } = require('@genkit-ai/google-genai');
+import express, { Request, Response } from 'express';
+import helmet from 'helmet';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { genkit, z } from 'genkit';
+import { googleAI } from '@genkit-ai/google-genai';
+import process from 'process';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Initialize Genkit AI
 const ai = genkit({
@@ -78,7 +83,7 @@ const streamingThoughtsFlow = ai.defineFlow(
 );
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 // Security: Enable Helmet for strict security headers, including CSP.
 app.use(
@@ -99,7 +104,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../dist')));
 
 // API Endpoint to stream the chat response (Server-Sent Events)
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chat', async (req: Request, res: Response) => {
   const { prompt } = req.body;
 
   if (typeof prompt !== 'string' || prompt.trim() === '') {
@@ -128,10 +133,10 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // Security: Bind exclusively to 127.0.0.1 for local testing
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   app.listen(PORT, '127.0.0.1', () => {
     console.log(`Server is running at http://127.0.0.1:${PORT}`);
   });
 }
 
-module.exports = { ai, streamingThoughtsFlow, app };
+export { ai, streamingThoughtsFlow, app };
