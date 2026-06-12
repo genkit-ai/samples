@@ -12,7 +12,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         // Target is the backend Express server port
-        target: 'http://127.0.0.1:3000',
+        target: 'http://127.0.0.1:' + (process.env.PORT || 3000),
         changeOrigin: true,
         secure: false,
       },
