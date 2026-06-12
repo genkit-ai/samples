@@ -1,3 +1,6 @@
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+
 document.addEventListener('DOMContentLoaded', () => {
   const chatForm = document.getElementById('chat-form');
   const promptInput = document.getElementById('prompt-input');

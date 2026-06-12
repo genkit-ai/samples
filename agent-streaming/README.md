@@ -4,7 +4,7 @@ This sample demonstrates a chatbot application that uses [Genkit](https://genkit
 
 ![Agent Streaming Chat Screenshot](screenshot.png)
 
-The Genkit code for the streaming flow can be found in `src/index.js`.
+The Genkit code for the streaming flow can be found in `src/server/index.js`.
 
 ## How it works
 
@@ -12,7 +12,7 @@ The Genkit code for the streaming flow can be found in `src/index.js`.
 - **Genkit Flow:** Uses `googleAI.model('gemini-3.5-flash')` with `thinkingConfig` (`includeThoughts: true`) to stream reasoning details. The flow yields custom chunk objects with `type: 'thought'` or `type: 'text'`.
 - **Frontend (Vanilla JS):** Reads the Server-Sent Events stream, updates a collapsible "Thinking" card with step labels, and renders the model's Markdown text in real-time.
 
-## Running the App
+## Running the app
 
 To run the app, follow these steps:
 
@@ -27,10 +27,36 @@ To run the app, follow these steps:
     GEMINI_API_KEY="your-api-key"
     ```
 
-3.  **Start the development server:**
+### a) Running in development
+
+To run the app with hot reloading for development:
+
+1.  **Start the backend server** in one terminal:
     ```bash
-    npm run dev
+    npm run dev:server
     ```
 
-4.  **Open the application:**
-    Open your browser and navigate to `http://127.0.0.1:3000`.
+2.  **Start the frontend Vite server** in a second terminal:
+    ```bash
+    npm run dev:client
+    ```
+
+3.  **Open the application:**
+    Open your browser and navigate to `http://localhost:5173`.
+
+### b) Running in production
+
+To run the app in production:
+
+1.  **Build the client application:**
+    ```bash
+    npm run build
+    ```
+
+2.  **Start the production server:**
+    ```bash
+    npm start
+    ```
+
+3.  **Open the application:**
+    Open your browser and navigate to `http://localhost:3000`.
