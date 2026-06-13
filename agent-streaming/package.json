@@ -6,14 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:client": "vite",
-    "dev:server": "node --env-file=.env --watch src/server/index.js",
+    "dev:server": "tsx --env-file=.env --watch src/server/index.ts",
     "build": "vite build",
-    "start": "node --env-file=.env src/server/index.js"
+    "start": "tsx --env-file=.env src/server/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@genkit-ai/google-genai": "^1.36.0",
     "dompurify": "^3.4.9",
@@ -23,6 +23,11 @@
     "marked": "^18.0.5"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.5",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
     "vite": "^8.0.16"
   }
 }
