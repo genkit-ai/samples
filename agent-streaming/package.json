@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:client": "vite",
     "dev:server": "tsx --env-file=.env --watch src/server/index.ts",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "start": "tsx --env-file=.env src/server/index.ts"
   },
   "keywords": [],
