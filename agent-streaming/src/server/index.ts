@@ -112,9 +112,9 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 
 // API Endpoint to stream the chat response (Server-Sent Events)
 app.post('/api/chat', async (req: Request, res: Response) => {
-  const { prompt } = req.body;
+  const { data } = req.body;
 
-  if (typeof prompt !== 'string' || prompt.trim() === '') {
+  if (typeof data !== 'string' || data.trim() === '') {
     return res.status(400).json({ error: 'Prompt must be a non-empty string' });
   }
 
@@ -124,20 +124,24 @@ app.post('/api/chat', async (req: Request, res: Response) => {
   res.setHeader('Connection', 'keep-alive');
 
   try {
-    const responseStream = streamingThoughtsFlow.stream(prompt);
+    const responseStream = streamingThoughtsFlow.stream(data);
 
     // Stream the chunks as they arrive
     for await (const chunk of responseStream.stream) {
-      res.write(`data: ${JSON.stringify(chunk)}\n\n`);
+      res.write(`data: ${JSON.stringify({ message: chunk })}\n\n`);
     }
+
+    // Write the final result to the stream to satisfy the streamFlow client expectations
+    const finalResult = await responseStream.output;
+    res.write(`data: ${JSON.stringify({ result: finalResult })}\n\n`);
 
     res.end();
   } catch (error) {
     console.error('Error in stream processing:', error);
     if (!res.headersSent) {
       res.status(500).json({ error: 'An error occurred while generating response.' });
-    } else {
-      res.write(`data: ${JSON.stringify({ messageId: crypto.randomUUID(), type: 'error', content: 'An error occurred while generating response.' })}\n\n`);
+    } else if (res.writable) {
+      res.write(`data: ${JSON.stringify({ error: { status: 'INTERNAL', message: 'An error occurred while generating response.', details: error instanceof Error ? error.message : String(error) } })}\n\n`);
       res.end();
     }
   }

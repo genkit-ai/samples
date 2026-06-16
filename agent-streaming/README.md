@@ -8,9 +8,9 @@ The Genkit code for the streaming flow can be found in `src/server/index.ts`.
 
 ## How it works
 
-- **Backend (Express):** Exposes an endpoint `/api/chat` using Server-Sent Events (SSE). It invokes the Genkit flow `streamingThoughtsFlow`, which streams both intermediate thoughts and the final text chunks.
+- **Backend (Express):** Exposes an endpoint `/api/chat` using Server-Sent Events (SSE) compatible with the Genkit flow streaming protocol. It invokes the Genkit flow `streamingThoughtsFlow`, which streams both intermediate thoughts and the final text chunks.
 - **Genkit Flow:** Uses `googleAI.model('gemini-3.5-flash')` with `thinkingConfig` (`includeThoughts: true`) to stream reasoning details. The flow yields custom chunk objects with `type: 'thought'` or `type: 'text'`.
-- **Frontend (React + TypeScript):** Reads the Server-Sent Events stream, updates a collapsible "Thinking" card with step labels, and renders the model's Markdown text in real-time.
+- **Frontend (React + TypeScript):** Uses the [Genkit Beta Client library](https://js.api.genkit.dev/modules/genkit.beta_client.html) to consume the flow's SSE chunks asynchronously, updates a collapsible "Thinking" card with step labels, and renders the model's Markdown text in real-time.
 
 ## Running the app
 
