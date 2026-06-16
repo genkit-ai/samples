@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:client": "vite",
     "dev:server": "tsx --env-file=.env --watch src/server/index.ts",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "start": "tsx --env-file=.env src/server/index.ts"
   },
   "keywords": [],
@@ -20,12 +20,17 @@
     "express": "^5.2.1",
     "genkit": "^1.36.0",
     "helmet": "^8.2.0",
-    "marked": "^18.0.5"
+    "marked": "^18.0.5",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "vite": "^8.0.16"

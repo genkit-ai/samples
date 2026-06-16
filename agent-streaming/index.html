@@ -12,28 +12,8 @@
 </head>
 
 <body>
-  <div class="chat-container">
-    <div class="chat-messages" id="chat-messages">
-      <!-- Welcome Message -->
-      <div class="message system-message">
-        <div class="message-content">
-          Agent will think out loud and show reasoning
-        </div>
-      </div>
-    </div>
-
-    <form class="chat-input-form" id="chat-form">
-      <input type="text" id="prompt-input" placeholder="Type a message..." autocomplete="off" required />
-      <button type="submit" id="send-button" aria-label="Send message">
-        <!-- SVG Send Icon -->
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
-        </svg>
-      </button>
-    </form>
-  </div>
-
-  <script type="module" src="/src/client/script.js"></script>
+  <div id="root" class="chat-container"></div>
+  <script type="module" src="/src/client/main.tsx"></script>
 </body>
 
 </html>
