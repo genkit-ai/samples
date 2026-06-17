@@ -3,6 +3,7 @@ import { ChatInput } from './components/ChatInput.js';
 import { ThoughtBox } from './components/ThoughtBox.js';
 import { MessageBubble } from './components/MessageBubble.js';
 import { Message, StreamChunk } from './types.js';
+import { streamFlow } from 'genkit/beta/client';
 
 export const App: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -40,46 +41,16 @@ export const App: React.FC = () => {
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt }),
-        signal: controller.signal,
+      // Use the Genkit Beta Client helper to consume the stream.
+      // See: https://js.api.genkit.dev/modules/genkit.beta_client.html
+      const response = streamFlow<string, StreamChunk>({
+        url: '/api/chat',
+        input: prompt,
+        abortSignal: controller.signal,
       });
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok (Status: ${response.status})`);
-      }
-      if (!response.body) {
-        throw new Error(`Response body is empty (Status: ${response.status})`);
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-
-        // Store the last partial line in the buffer to prevent parsing
-        // errors if a chunk is split mid-line
-        buffer = lines.pop() || '';
-
-        const dataPrefix = 'data: ';
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (trimmed.startsWith(dataPrefix)) {
-            const jsonStr = trimmed.slice(dataPrefix.length);
-            const chunk = JSON.parse(jsonStr) as StreamChunk;
-            handleStreamChunk(chunk);
-          }
-        }
+      for await (const chunk of response.stream) {
+        handleStreamChunk(chunk);
       }
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
