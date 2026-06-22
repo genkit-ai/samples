@@ -43,6 +43,47 @@ app.get('/api/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', message: 'Express + Genkit server initialized successfully' });
 });
 
+// POST /api/chat generation route
+app.post('/api/chat', async (req: Request, res: Response) => {
+  const { messages } = req.body;
+
+  if (!Array.isArray(messages)) {
+    return res.status(400).json({ error: 'Messages array is required' });
+  }
+
+  // Set Server-Sent Events headers
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  try {
+    const { stream } = await ai.generateStream({
+      model: googleAI.model('gemini-3.5-flash'),
+      messages,
+      config: {
+        thinkingConfig: {
+          thinkingLevel: 'MINIMAL',
+        },
+      },
+    });
+
+    for await (const chunk of stream) {
+      if (chunk.text) {
+        res.write(`data: ${JSON.stringify({ text: chunk.text })}\n\n`);
+      }
+    }
+    res.end();
+  } catch (error) {
+    console.error('Error generating stream:', error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`);
+      res.end();
+    }
+  }
+});
+
 // Security: Bind to configurable host (defaults to 127.0.0.1 for local testing)
 const HOST = process.env.HOST || '127.0.0.1';
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
