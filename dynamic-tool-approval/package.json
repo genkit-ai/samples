@@ -1,0 +1,23 @@
+{
+  "name": "dynamic-tool-approval",
+  "version": "1.0.0",
+  "description": "Sample demonstrating dynamic user approval for tool use using Genkit.",
+  "main": "src/server/index.ts",
+  "scripts": {
+    "dev:server": "tsx --env-file=.env --watch src/server/index.ts",
+    "start": "tsx --env-file=.env src/server/index.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "@genkit-ai/google-genai": "^1.36.0",
+    "express": "^5.2.1",
+    "genkit": "^1.36.0",
+    "helmet": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
