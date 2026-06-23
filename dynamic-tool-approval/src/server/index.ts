@@ -4,6 +4,7 @@ import { genkit } from 'genkit';
 import { googleAI } from '@genkit-ai/google-genai';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { z } from 'zod';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,6 +12,31 @@ const __dirname = path.dirname(__filename);
 const ai = genkit({
   plugins: [googleAI()],
 });
+
+// Define mock tools
+const readCoffeeMenu = ai.defineTool(
+  {
+    name: 'readCoffeeMenu',
+    description: 'Read the coffee menu to see available drinks and prices',
+    inputSchema: z.object({}),
+    outputSchema: z.string(),
+  },
+  async () => {
+    return 'Menu: Espresso ($3.99), Latte ($4.99), Kopi Luwak Pour-Over ($99.99)';
+  }
+);
+
+const orderCoffee = ai.defineTool(
+  {
+    name: 'orderCoffee',
+    description: 'Order a coffee drink',
+    inputSchema: z.object({ drink: z.string() }),
+    outputSchema: z.string(),
+  },
+  async (input) => {
+    return `Successfully ordered a ${input.drink}!`;
+  }
+);
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -60,6 +86,7 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     const { stream } = await ai.generateStream({
       model: googleAI.model('gemini-3.5-flash'),
       messages,
+      tools: [readCoffeeMenu, orderCoffee], // Register tools
       config: {
         thinkingConfig: {
           thinkingLevel: 'MINIMAL',
@@ -68,8 +95,14 @@ app.post('/api/chat', async (req: Request, res: Response) => {
     });
 
     for await (const chunk of stream) {
-      if (chunk.text) {
-        res.write(`data: ${JSON.stringify({ text: chunk.text })}\n\n`);
+      for (const part of chunk.content) {
+        if (part.text) {
+          res.write(`data: ${JSON.stringify({ text: part.text })}\n\n`);
+        } else if (part.toolRequest) {
+          res.write(`data: ${JSON.stringify({ toolRequest: part.toolRequest })}\n\n`);
+        } else if (part.toolResponse) {
+          res.write(`data: ${JSON.stringify({ toolResponse: part.toolResponse })}\n\n`);
+        }
       }
     }
     res.end();
