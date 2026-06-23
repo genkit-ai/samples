@@ -23,7 +23,8 @@ quickstarts/
     ├── remix/{server-route, standalone}            # self-contained npm projects
     ├── sveltekit/{ssr, standalone}
     ├── tanstack-start/{api-route, standalone}      # self-contained npm projects
-    └── react-vite/                                 # browser-only → any backend
+    ├── react-vite/                                 # browser-only → any backend
+    └── flutter/                                    # Flutter web → any backend
 ```
 
 Each framework with a `standalone` variant has a paired bundled variant (the framework's own server hosts the flow in-process). The `standalone` variants and `react-vite` are browser-only and call an external backend over HTTP — pair them with any backend in this repo.
@@ -36,7 +37,7 @@ The pnpm workspace is at the root, so a single `pnpm install` covers every JS sa
 - **JS**: Node.js ≥ 20, pnpm.
 - **Go**: Go ≥ 1.25.
 - **Python**: Python ≥ 3.11, [`uv`](https://docs.astral.sh/uv/).
-- **Dart**: Dart SDK ≥ 3.10.
+- **Dart / Flutter**: Dart SDK ≥ 3.10. The Flutter web sample also requires Flutter.
 
 Every sample installs Genkit from the public registries, so no local Genkit checkout is required. The JS backends and the Vite/Next/Nuxt/Astro/SvelteKit frontends are a single pnpm workspace (`pnpm install` at this directory covers them all). The CLI-scaffolded frameworks — **Angular, Remix, and TanStack Start** — are self-contained npm projects with their own lockfiles; install and run those with `npm install && npm run dev` (or `npm start`) inside each project directory.
 
