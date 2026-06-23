@@ -1,0 +1,128 @@
+:root {
+  --bg-main: #121214;
+  --bg-surface: #18181b;
+  --border-color: #27272a;
+  --text-primary: #f4f4f5;
+  --accent-blue: #3b82f6;
+  --accent-blue-light: #60a5fa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  height: 100vh;
+  height: 100dvh;
+}
+
+#root {
+  height: 100%;
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 32px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+}
+
+.message.user-message {
+  align-self: flex-end;
+}
+
+.message.model-message {
+  align-self: flex-start;
+}
+
+.message-content {
+  padding: 14px 20px;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.user-message .message-content {
+  background-color: var(--accent-blue);
+  border-radius: 20px 20px 4px 20px;
+}
+
+.model-message .message-content {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 20px 20px 20px 4px;
+}
+
+.chat-input-form {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 14px;
+}
+
+.chat-input-form input {
+  flex: 1;
+  padding: 15px 22px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: inherit;
+  border-radius: 30px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.chat-input-form input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+.chat-input-form button {
+  background-color: var(--accent-blue);
+  color: var(--text-primary);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.chat-input-form button:hover:not(:disabled) {
+  background-color: var(--accent-blue-light);
+}
+
+.chat-input-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.chat-input-form button svg {
+  margin-left: 2px;
+}
