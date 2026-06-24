@@ -5,15 +5,27 @@ export default function App() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Abort request on component unmount
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || loading) return;
+
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
     const userMsg = { role: 'user', text: input.trim() };
     const nextMessages = [...messages, userMsg, { role: 'model', text: '' }];
@@ -25,6 +37,7 @@ export default function App() {
       const res = await fetch('/api/chat?stream=true', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           data: {
             messages: [...messages, userMsg].map(m => ({
@@ -78,8 +91,12 @@ export default function App() {
           }
         }
       }
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        console.log('Fetch aborted.');
+      } else {
+        console.error(err);
+      }
     } finally {
       setLoading(false);
     }
