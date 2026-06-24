@@ -44,6 +44,10 @@ export default function Home() {
       <p className="tagline">
         Backend: <code>{BACKEND_URL}</code>
       </p>
+      <p className="tagline">
+        Tell me what you feel like eating and I&apos;ll suggest a recipe built
+        around today&apos;s grocery deals.
+      </p>
       <form className="prompt" onSubmit={generateRecipe}>
         <input
           value={craving}

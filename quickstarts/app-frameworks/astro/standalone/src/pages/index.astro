@@ -5,7 +5,7 @@ const backendUrl = import.meta.env.PUBLIC_BARGAIN_CHEF_URL ?? 'http://localhost:
   <head>
     <meta charset="utf-8" />
     <title>Bargain Chef (standalone)</title>
-    <style>
+    <style is:global>
       body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: #1a1a1a; background: #fafafa; margin: 0; padding: 3rem 1.5rem; }
       main { max-width: 640px; margin: 0 auto; }
       h1 { font-size: 2rem; margin: 0 0 0.25rem; }
@@ -23,6 +23,7 @@ const backendUrl = import.meta.env.PUBLIC_BARGAIN_CHEF_URL ?? 'http://localhost:
     <main>
       <h1>Bargain Chef</h1>
       <p class="tagline">Backend: <code>{backendUrl}</code></p>
+      <p class="tagline" style="font-size: 1rem">Tell me what you feel like eating and I'll suggest a recipe built around today's grocery deals.</p>
       <form class="prompt" id="prompt-form">
         <input type="text" id="craving" value="something warm with chicken" />
         <button type="submit" id="submit-btn">Suggest a recipe</button>

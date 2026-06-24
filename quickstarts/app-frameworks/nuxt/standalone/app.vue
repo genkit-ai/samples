@@ -42,6 +42,7 @@ async function generateRecipe() {
   <main>
     <h1>Bargain Chef</h1>
     <p class="tagline">Backend: <code>{{ backendUrl }}</code></p>
+    <p class="tagline" style="font-size: 1rem">Tell me what you feel like eating and I'll suggest a recipe built around today's grocery deals.</p>
     <form class="prompt" @submit.prevent="generateRecipe">
       <input type="text" v-model="craving" :disabled="isStreaming" />
       <button type="submit" :disabled="isStreaming">

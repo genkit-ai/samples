@@ -41,6 +41,7 @@
 <main>
   <h1>Bargain Chef</h1>
   <p class="tagline">Backend: <code>{BACKEND_URL}</code></p>
+  <p class="tagline" style="font-size: 1rem">Tell me what you feel like eating and I'll suggest a recipe built around today's grocery deals.</p>
   <form class="prompt" onsubmit={generateRecipe}>
     <input type="text" bind:value={craving} disabled={isStreaming} />
     <button type="submit" disabled={isStreaming}>
