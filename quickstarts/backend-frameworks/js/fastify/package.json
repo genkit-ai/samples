@@ -9,16 +9,16 @@
     "genkit:start": "genkit start -- tsx --watch src/index.ts"
   },
   "dependencies": {
-    "fastify": "^5.2.0",
     "@fastify/cors": "^10.0.1",
-    "genkit": "^1.36.0",
-    "@genkit-ai/google-genai": "^1.36.0",
-    "@genkit-ai/fetch": "^0.1.1"
+    "@genkit-ai/fastify": "^0.1.1",
+    "@genkit-ai/google-genai": "^1.38.0",
+    "fastify": "^5.2.0",
+    "genkit": "^1.38.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "tsx": "^4.19.2",
     "@types/node": "^22.15.3",
-    "genkit-cli": "^1.36.0"
+    "genkit-cli": "^1.38.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3"
   }
 }

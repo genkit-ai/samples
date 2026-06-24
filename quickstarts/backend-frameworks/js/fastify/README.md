@@ -1,6 +1,6 @@
 # Fastify quickstart
 
-Standalone Genkit backend on Fastify. Uses `@genkit-ai/fetch` with a small adapter that converts Fastify's request to a fetch `Request` and pipes the streamed response back through Fastify.
+Standalone Genkit backend on Fastify. Uses the `@genkit-ai/fastify` plugin's `fastifyHandler` to mount the flow as a Fastify route with one line, including server-sent events for streaming.
 
 Guide: https://genkit.dev/docs/js/backend-frameworks/fastify
 
@@ -12,12 +12,12 @@ cd backend-frameworks/js/fastify
 GEMINI_API_KEY=<your-key> pnpm start
 ```
 
-Listens on `http://localhost:3000`. The flow is mounted at `/api/bargainChefFlow`.
+Listens on `http://localhost:3000`. The flow is mounted at `/bargainChefFlow`.
 
 ## Test
 
 ```bash
-curl -N -X POST http://localhost:3000/api/bargainChefFlow \
+curl -N -X POST http://localhost:3000/bargainChefFlow \
   -H "Content-Type: application/json" \
   -H "Accept: text/event-stream" \
   -d '{"data":{"craving":"something warm with chicken"}}'

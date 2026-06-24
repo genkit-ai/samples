@@ -345,25 +345,25 @@ importers:
       '@fastify/cors':
         specifier: ^10.0.1
         version: 10.1.0
-      '@genkit-ai/fetch':
+      '@genkit-ai/fastify':
         specifier: ^0.1.1
-        version: 0.1.1(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
+        version: 0.1.1(fastify@5.8.5)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
       '@genkit-ai/google-genai':
-        specifier: ^1.36.0
-        version: 1.36.0(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
+        specifier: ^1.38.0
+        version: 1.38.0(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
       fastify:
         specifier: ^5.2.0
         version: 5.8.5
       genkit:
-        specifier: ^1.36.0
-        version: 1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
+        specifier: ^1.38.0
+        version: 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
     devDependencies:
       '@types/node':
         specifier: ^22.15.3
         version: 22.19.20
       genkit-cli:
-        specifier: ^1.36.0
-        version: 1.36.0(@cfworker/json-schema@4.1.1)(@types/node@22.19.20)(zod@3.25.76)
+        specifier: ^1.38.0
+        version: 1.38.0(@cfworker/json-schema@4.1.1)(@types/node@22.19.20)(zod@3.25.76)
       tsx:
         specifier: ^4.19.2
         version: 4.22.4
@@ -1376,14 +1376,26 @@ packages:
   '@genkit-ai/ai@1.36.0':
     resolution: {integrity: sha512-xMDfclS4sMLEl4YQP92XlxnPxuehz+90iuysg2gRGfHXXz6iRSGjWVq7QycBWqMmZ7OYHfgTgYz4CgL63Ezl0A==}
 
+  '@genkit-ai/ai@1.38.0':
+    resolution: {integrity: sha512-+6X+bArGoBmrEtoGePfFxPiGts4RFv/cB+XQ3dx7XpmlnGnV1wPBECAAOAighxA7EiyUdCFpClGHswDiECepxg==}
+
   '@genkit-ai/core@1.36.0':
     resolution: {integrity: sha512-kkWzROCNPz8Ol2OtBDjsNk2zaS32axIomuR3wm0iHjkR8NdFYPk9Ab4J80EKiUEGdhXiIwvO+4RhqOgy7zYm1A==}
+
+  '@genkit-ai/core@1.38.0':
+    resolution: {integrity: sha512-vZz5tFHgvT8t3e3A4gg/xQMoe2eQ8pNRgBUI7I5dt5n45SsY10F8SoNqR70OACDsPxoSg0Sdl7Qo5C0BuLXTMA==}
 
   '@genkit-ai/express@1.36.0':
     resolution: {integrity: sha512-0An9I7t5iixmQTN2Ulom5a1Y5MxXXR8XjIFPatYkLTrxNbQ8Z0Jdc9VheETbM8ehMrqO/6BouaSL/6v4bO9l2Q==}
     peerDependencies:
       express: ^4.21.1 || ^5
       genkit: ^1.36.0
+
+  '@genkit-ai/fastify@0.1.1':
+    resolution: {integrity: sha512-HenjqWFSEv61UormvpTegsgDb5hPiz/ZZeAwgWc/MLXC66ZX1oLbYot8eF4+OveKUoKXTrq5mHOqFYLy1BoZ/Q==}
+    peerDependencies:
+      fastify: ^4.0.0 || ^5.0.0
+      genkit: ^1.38.0
 
   '@genkit-ai/fetch@0.1.1':
     resolution: {integrity: sha512-P9yBCJKen0KqH45HPSjgThxnJBPrP/sRN/ffPP2hM7hoZ8ZUcVeqCNXlHIDRscznYVx57+hv0ZG8tShWqKj3cg==}
@@ -1411,6 +1423,11 @@ packages:
     peerDependencies:
       genkit: ^1.36.0
 
+  '@genkit-ai/google-genai@1.38.0':
+    resolution: {integrity: sha512-h1ni3KPcORSTTLKuC0pNr4Lgyg3OuxkG3YLLOLZI5r1nGUywNTpFazW47bMNqBfvUJeFO0al4/rsW/lxvvo9Hw==}
+    peerDependencies:
+      genkit: ^1.38.0
+
   '@genkit-ai/next@1.36.0':
     resolution: {integrity: sha512-9/IoE1jccj6MHGFVx3zLFgJdmfVCZiRj/u0q9hNxBDw/WfMHk6AG0Zt48MeNqOLDSFx88LsLCSybbj+lde361Q==}
     peerDependencies:
@@ -1421,8 +1438,14 @@ packages:
   '@genkit-ai/telemetry-server@1.36.0':
     resolution: {integrity: sha512-a2TLl6XN/q9uaSXhBB5JT+F9VmFuB2xy5kRYtPUa3xyIK8fxs/JBaq+/8687/WVofKxu9q7GAcGl+T6qpBbrdw==}
 
+  '@genkit-ai/telemetry-server@1.38.0':
+    resolution: {integrity: sha512-gqrlPB9kcpzhC1P44Ej7gV84a+gbZ8Ko+tgRYVYSVxzxNAP5no0mqxQ4aNbA3WbUKQiVVaH48hoiAir6/n1o4g==}
+
   '@genkit-ai/tools-common@1.36.0':
     resolution: {integrity: sha512-Yly048TUxBFoIOlaKQgNVrI7voSmgSGdOyRzFWF6MyjYfLbkny9jlgtm5s1AtNtnPstB5v1MVIR6wSd/VTAhzA==}
+
+  '@genkit-ai/tools-common@1.38.0':
+    resolution: {integrity: sha512-s8dBdL56cwFfJlwhSTAmIX3drIKKEWymJ9b/poJfsTpYj7q02g1Mz0AyvPUYFXkXyfRbNBQV4Ds45Sp5Sv5LUg==}
 
   '@google-cloud/common@5.0.2':
     resolution: {integrity: sha512-V7bmBKYQyu0eVG2BFejuUjlBt+zrya6vtsKdY+JxMM/dNntPF41vZ9+LhOshEUH01zOHEqBSvI7Dad7ZS6aUeA==}
@@ -5062,8 +5085,15 @@ packages:
     resolution: {integrity: sha512-BDZQVMQEf6CLIstHgOjFQI+ypwV87Yr984RBq6E17J6vAm0X0BzMpKssJk+auhO5SolV4HD4nod71HGM6Wn5Gw==}
     hasBin: true
 
+  genkit-cli@1.38.0:
+    resolution: {integrity: sha512-VIvqk5br/EeadIQw17QKtMtXseLBneR8u25HcA5SIYfRlLMgMueT0WzzAmnXHPs0jVhUMf4sUqQx7Z7NtrwIjA==}
+    hasBin: true
+
   genkit@1.36.0:
     resolution: {integrity: sha512-5kwpWAOiIusWKOrYlUpuU60SSjxuyzcAqJTwM8c89NHWj0AsUqJKcgHAmm2JTbfJRAMXlPfgOLxNi1qGyqI+yQ==}
+
+  genkit@1.38.0:
+    resolution: {integrity: sha512-4gKhUtugtWP1pU5ux1NF/QW6kbjqawkw4zL6Ul88WS2jphZbUwZ85H8AgdgefWA1h4AmiebEwRPFK7/KBJ51IA==}
 
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
@@ -8939,6 +8969,29 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@genkit-ai/ai@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
+    dependencies:
+      '@genkit-ai/core': 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
+      '@opentelemetry/api': 1.9.1
+      '@types/node': 20.19.42
+      colorette: 2.0.20
+      dotprompt: 1.1.2
+      handlebars: 4.7.9
+      json5: 2.2.3
+      node-fetch: 3.3.2
+      partial-json: 0.1.7
+      uri-templates: 0.2.0
+      uuid: 10.0.0
+    transitivePeerDependencies:
+      - '@google-cloud/firestore'
+      - bufferutil
+      - encoding
+      - firebase
+      - firebase-admin
+      - genkit
+      - supports-color
+      - utf-8-validate
+
   '@genkit-ai/core@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
     dependencies:
       '@opentelemetry/api': 1.9.1
@@ -8974,6 +9027,41 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@genkit-ai/core@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
+    dependencies:
+      '@opentelemetry/api': 1.9.1
+      '@opentelemetry/api-logs': 0.52.1
+      '@opentelemetry/context-async-hooks': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/core': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-logs': 0.52.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-metrics': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-node': 0.52.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-trace-base': 1.25.1(@opentelemetry/api@1.9.1)
+      '@types/json-schema': 7.0.15
+      ajv: 8.20.0
+      ajv-formats: 3.0.1(ajv@8.20.0)
+      async-mutex: 0.5.0
+      cors: 2.8.6
+      dotprompt: 1.1.2
+      express: 4.22.2
+      get-port: 5.1.1
+      json-schema: 0.4.0
+      ws: 8.21.0
+      zod: 3.25.76
+      zod-to-json-schema: 3.25.2(zod@3.25.76)
+    optionalDependencies:
+      '@cfworker/json-schema': 4.1.1
+      '@genkit-ai/firebase': 1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
+    transitivePeerDependencies:
+      - '@google-cloud/firestore'
+      - bufferutil
+      - encoding
+      - firebase
+      - firebase-admin
+      - genkit
+      - supports-color
+      - utf-8-validate
+
   '@genkit-ai/express@1.36.0(express@4.22.2)(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
     dependencies:
       body-parser: 1.20.5
@@ -8982,6 +9070,11 @@ snapshots:
       genkit: 1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
     transitivePeerDependencies:
       - supports-color
+
+  '@genkit-ai/fastify@0.1.1(fastify@5.8.5)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
+    dependencies:
+      fastify: 5.8.5
+      genkit: 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
 
   '@genkit-ai/fetch@0.1.1(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
     dependencies:
@@ -8993,6 +9086,17 @@ snapshots:
       '@google-cloud/firestore': 7.11.6
       firebase-admin: 13.10.0
       genkit: 1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    optional: true
+
+  '@genkit-ai/firebase@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
+    dependencies:
+      '@genkit-ai/google-cloud': 1.36.0(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
+      '@google-cloud/firestore': 7.11.6
+      firebase-admin: 13.10.0
+      genkit: 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -9024,9 +9128,44 @@ snapshots:
       - supports-color
     optional: true
 
+  '@genkit-ai/google-cloud@1.36.0(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
+    dependencies:
+      '@google-cloud/logging-winston': 6.0.2(winston@3.19.0)
+      '@google-cloud/modelarmor': 0.4.1
+      '@google-cloud/opentelemetry-cloud-monitoring-exporter': 0.19.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@1.25.1(@opentelemetry/api@1.9.1))(@opentelemetry/resources@1.25.1(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-metrics@1.25.1(@opentelemetry/api@1.9.1))
+      '@google-cloud/opentelemetry-cloud-trace-exporter': 2.4.1(@opentelemetry/api@1.9.1)(@opentelemetry/core@1.25.1(@opentelemetry/api@1.9.1))(@opentelemetry/resources@1.25.1(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@1.25.1(@opentelemetry/api@1.9.1))
+      '@google-cloud/opentelemetry-resource-util': 2.4.0(@opentelemetry/resources@1.25.1(@opentelemetry/api@1.9.1))
+      '@opentelemetry/api': 1.9.1
+      '@opentelemetry/auto-instrumentations-node': 0.49.2(@opentelemetry/api@1.9.1)
+      '@opentelemetry/core': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/instrumentation': 0.52.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/instrumentation-pino': 0.41.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/instrumentation-winston': 0.39.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/resources': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-metrics': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-node': 0.52.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-trace-base': 1.25.1(@opentelemetry/api@1.9.1)
+      genkit: 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
+      google-auth-library: 9.15.1
+      node-fetch: 3.3.2
+      winston: 3.19.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    optional: true
+
   '@genkit-ai/google-genai@1.36.0(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
     dependencies:
       genkit: 1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
+      google-auth-library: 9.15.1
+      jsonpath-plus: 10.4.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@genkit-ai/google-genai@1.38.0(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))':
+    dependencies:
+      genkit: 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)
       google-auth-library: 9.15.1
       jsonpath-plus: 10.4.0
     transitivePeerDependencies:
@@ -9063,7 +9202,68 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@genkit-ai/telemetry-server@1.38.0(@types/node@22.19.20)':
+    dependencies:
+      '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
+      '@genkit-ai/tools-common': 1.38.0(@types/node@22.19.20)
+      '@google-cloud/firestore': 7.11.6
+      '@opentelemetry/api': 1.9.1
+      '@opentelemetry/context-async-hooks': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/core': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-metrics': 1.25.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-node': 0.52.1(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-trace-base': 1.25.1(@opentelemetry/api@1.9.1)
+      async-mutex: 0.5.0
+      cors: 2.8.6
+      express: 4.22.2
+      lockfile: 1.0.4
+      zod: 3.25.76
+    transitivePeerDependencies:
+      - '@types/node'
+      - bufferutil
+      - debug
+      - encoding
+      - supports-color
+      - utf-8-validate
+
   '@genkit-ai/tools-common@1.36.0(@types/node@22.19.20)':
+    dependencies:
+      '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
+      '@inquirer/prompts': 7.10.1(@types/node@22.19.20)
+      '@trpc/server': 10.45.4
+      adm-zip: 0.5.17
+      ajv: 8.20.0
+      ajv-formats: 3.0.1(ajv@8.20.0)
+      axios: 1.17.0
+      body-parser: 1.20.5
+      chokidar: 3.6.0
+      colorette: 2.0.20
+      commander: 11.1.0
+      configstore: 5.0.1
+      cors: 2.8.6
+      events: 3.3.0
+      express: 4.22.2
+      get-port: 5.1.1
+      glob: 10.5.0
+      js-yaml: 4.2.0
+      json-2-csv: 5.5.11
+      json-schema: 0.4.0
+      terminate: 2.8.0
+      tsx: 4.22.4
+      uuid: 9.0.1
+      winston: 3.19.0
+      ws: 8.21.0
+      yaml: 2.9.0
+      zod: 3.25.76
+      zod-to-json-schema: 3.25.2(zod@3.25.76)
+    transitivePeerDependencies:
+      - '@types/node'
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+
+  '@genkit-ai/tools-common@1.38.0(@types/node@22.19.20)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.4(zod@3.25.76)
       '@inquirer/prompts': 7.10.1(@types/node@22.19.20)
@@ -13602,10 +13802,49 @@ snapshots:
       - utf-8-validate
       - zod
 
+  genkit-cli@1.38.0(@cfworker/json-schema@4.1.1)(@types/node@22.19.20)(zod@3.25.76):
+    dependencies:
+      '@genkit-ai/telemetry-server': 1.38.0(@types/node@22.19.20)
+      '@genkit-ai/tools-common': 1.38.0(@types/node@22.19.20)
+      '@inquirer/prompts': 7.10.1(@types/node@22.19.20)
+      '@modelcontextprotocol/sdk': 1.29.0(@cfworker/json-schema@4.1.1)(zod@3.25.76)
+      axios: 1.17.0
+      colorette: 2.0.20
+      commander: 11.1.0
+      extract-zip: 2.0.1
+      get-port: 5.1.1
+      open: 6.4.0
+      ora: 5.4.1
+      semver: 7.8.3
+      yaml: 2.9.0
+    transitivePeerDependencies:
+      - '@cfworker/json-schema'
+      - '@types/node'
+      - bufferutil
+      - debug
+      - encoding
+      - supports-color
+      - utf-8-validate
+      - zod
+
   genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0):
     dependencies:
       '@genkit-ai/ai': 1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
       '@genkit-ai/core': 1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.36.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
+      uuid: 10.0.0
+    transitivePeerDependencies:
+      - '@google-cloud/firestore'
+      - bufferutil
+      - encoding
+      - firebase
+      - firebase-admin
+      - supports-color
+      - utf-8-validate
+
+  genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0):
+    dependencies:
+      '@genkit-ai/ai': 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
+      '@genkit-ai/core': 1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0)(genkit@1.38.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.10.0))
       uuid: 10.0.0
     transitivePeerDependencies:
       - '@google-cloud/firestore'
