@@ -356,20 +356,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-ninja"
-version = "1.6.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django", version = "5.2.15", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
-    { name = "django", version = "6.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-    { name = "pydantic" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/d5/7c/3307e17b872f545c88314b2737a22f965785dfb5a120d739b0131d0492c3/django_ninja-1.6.2.tar.gz", hash = "sha256:d56ae5aa4791068ef4ac9a66cfdf2fc11f507413ded35abb79c51d0d52ad6412", size = 3685599, upload-time = "2026-03-18T20:06:47.284Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/21/0c/25f72060a39632fbd2d90e9c8b6052a09cd45b0598fc06c0758d313f0052/django_ninja-1.6.2-py3-none-any.whl", hash = "sha256:20095f5900bada22ea00cf1a58af50bdb285b2354c61a9d9b47d0dc89ac462d6", size = 2374994, upload-time = "2026-03-18T20:06:45.676Z" },
-]
-
-[[package]]
 name = "dnspython"
 version = "2.8.0"
 source = { registry = "https://pypi.org/simple" }
@@ -496,6 +482,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/1b/34/3d729d2c878beca5ba2aa760992252ddf294091a660aa3d9b29db5646dfc/genkit-0.6.0.tar.gz", hash = "sha256:68640f0cca0ae00fffb38ae4dcf44ae9e5fdfc96aba7a08d12705193866d7e8b", size = 183207, upload-time = "2026-05-21T19:13:11.509Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c9/14/1c8e10ee6821f9c3607cb95dccaaec8fbdb61363597aede632c5aad06a3d/genkit-0.6.0-py3-none-any.whl", hash = "sha256:a8cfc48f77d21e212e15ddf93f57440cec2cc43e76cc8d3b1b3b5d353d7724b0", size = 153406, upload-time = "2026-05-21T19:12:58.496Z" },
+]
+
+[[package]]
+name = "genkit-plugin-django"
+version = "0.7.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django", version = "5.2.15", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "django", version = "6.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "genkit" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0c/69/6e70ecf0b78570beed9be0b020f4e92bcebe6d369c968ef268baec4999b9/genkit_plugin_django-0.7.0.tar.gz", hash = "sha256:f58b7e20d8c6477ecaaa39e5d7c82e8fc3ec7ca5998f85aff0dab238ce409c81", size = 11630, upload-time = "2026-06-10T15:53:05.145Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5a/f3/43d5494fc72b45e70bf5e4d363ae99e9d33a8709d7b133a38ca4e8a27a11/genkit_plugin_django-0.7.0-py3-none-any.whl", hash = "sha256:1d46084d9754abfb8134ca602eb91bb8c256a3d85cf2a157a5537d12b5f8a95f", size = 10880, upload-time = "2026-06-10T15:53:02.117Z" },
 ]
 
 [[package]]
@@ -1401,8 +1402,8 @@ dependencies = [
     { name = "django", version = "5.2.15", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "django", version = "6.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "django-cors-headers" },
-    { name = "django-ninja" },
     { name = "genkit" },
+    { name = "genkit-plugin-django" },
     { name = "genkit-plugin-google-genai" },
     { name = "pydantic" },
     { name = "uvicorn", extra = ["standard"] },
@@ -1412,8 +1413,8 @@ dependencies = [
 requires-dist = [
     { name = "django", specifier = ">=5.1" },
     { name = "django-cors-headers", specifier = ">=4.6" },
-    { name = "django-ninja", specifier = ">=1.3" },
     { name = "genkit", specifier = ">=0.6.0" },
+    { name = "genkit-plugin-django", specifier = ">=0.7.0" },
     { name = "genkit-plugin-google-genai", specifier = ">=0.6.0" },
     { name = "pydantic", specifier = ">=2.10.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32.0" },

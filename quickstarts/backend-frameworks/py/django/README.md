@@ -1,6 +1,6 @@
 # Django quickstart
 
-Standalone Genkit backend on Django, with [Django Ninja](https://django-ninja.dev) handling the HTTP layer. Database and admin middleware are turned off so the app runs without migrations.
+Standalone Genkit backend on Django, with the [`genkit-plugin-django`](https://pypi.org/project/genkit-plugin-django/) handler exposing the flow as a JSON/SSE endpoint. Database and admin middleware are turned off so the app runs without migrations.
 
 Guide: https://genkit.dev/docs/python/backend-frameworks/django
 
@@ -12,7 +12,7 @@ uv sync
 GEMINI_API_KEY=<your-key> uv run uvicorn myproject.asgi:application --port 8000
 ```
 
-Uvicorn is required because Django Ninja's streaming response uses `async def`. Listens on `http://localhost:8000`. The flow is mounted at `/bargainChefFlow`.
+Uvicorn is required because the streaming response uses `async def`. Listens on `http://localhost:8000`. The flow is mounted at `/bargainChefFlow`.
 
 ## Test
 
@@ -33,7 +33,7 @@ genkit start -- uv run uvicorn myproject.asgi:application --reload    # opens ht
 
 ```
 myproject/    Django project (settings.py, urls.py, asgi.py)
-recipes/      Django app — contains the flow + Ninja endpoint in views.py
+recipes/      Django app — contains the flow + Genkit handler in views.py
 ```
 
 ## Local Genkit packages

@@ -1,12 +1,10 @@
-import json
 from datetime import datetime
 from typing import Literal
 
-from django.http import StreamingHttpResponse
-from ninja import NinjaAPI, Schema
 from pydantic import BaseModel, Field
 
 from genkit import ActionRunContext, Genkit
+from genkit.plugins.django import genkit_django_handler
 from genkit.plugins.google_genai import GoogleAI
 
 ai = Genkit(plugins=[GoogleAI()])
@@ -69,6 +67,7 @@ class BargainChefInput(BaseModel):
     craving: str = Field(description='What the user feels like eating right now.')
 
 
+@genkit_django_handler(ai)
 @ai.flow(name='bargainChefFlow', chunk_type=Recipe)
 async def bargain_chef_flow(
     input: BargainChefInput,
@@ -99,26 +98,3 @@ async def bargain_chef_flow(
     if not response.output:
         raise ValueError('Failed to generate recipe')
     return response.output
-
-
-api = NinjaAPI()
-
-
-class GenkitRequest(Schema):
-    data: BargainChefInput
-
-
-@api.post('/bargainChefFlow')
-async def bargain_chef_endpoint(request, payload: GenkitRequest):
-    if request.headers.get('Accept') == 'text/event-stream':
-        async def event_stream():
-            stream_response = bargain_chef_flow.stream(payload.data)
-            async for chunk in stream_response.stream:
-                yield f'data: {json.dumps({"message": chunk.model_dump()})}\n\n'
-            result = await stream_response.response
-            yield f'data: {json.dumps({"result": result.model_dump()})}\n\n'
-
-        return StreamingHttpResponse(event_stream(), content_type='text/event-stream')
-
-    result = await bargain_chef_flow(payload.data)
-    return {'result': result.model_dump()}
