@@ -1,7 +1,54 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+function ToolCallBox({ tc, onDecision }: { tc: any, onDecision?: (approved: boolean) => void }) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="message tool-message">
+      <div className="tool-box">
+        <div className="tool-header">
+          <div key={`indicator-${tc.name}`} className="tool-indicator indicator-animate" />
+          <div key={`label-${tc.name}`} className="tool-step-label step-animate">
+            Used tool: <code>{tc.name}</code>
+          </div>
+        </div>
+        <details
+          className="tool-details"
+          onToggle={(e) => setIsOpen(e.currentTarget.open)}
+        >
+          <summary className="tool-summary">
+            <span className="summary-text">
+              {isOpen ? 'Hide Tool Details' : 'Show Tool Details'}
+            </span>
+            {tc.state === 'running' && (
+              <span className="tool-status running">Running...</span>
+            )}
+            {tc.state === 'approval-required' && (
+              <span className="tool-status approval">Needs Approval</span>
+            )}
+          </summary>
+          <div className="tool-body">
+            <div>Input: {JSON.stringify(tc.input, null, 2)}</div>
+            {tc.state === 'approval-required' && onDecision && (
+              <ApprovalPrompt onDecision={onDecision} />
+            )}
+            {tc.output && (
+              <div style={{ marginTop: '12px', borderTop: '1px solid #27272a', paddingTop: '12px', whiteSpace: 'pre-wrap' }}>
+                Result: {typeof tc.output === 'object' ? JSON.stringify(tc.output, null, 2) : String(tc.output)}
+              </div>
+            )}
+          </div>
+        </details>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
-  const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<{
+    role: string;
+    text: string;
+    toolCalls?: ToolCall[];
+  }[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -83,7 +130,34 @@ export default function App() {
               setMessages(prev => {
                 if (prev.length === 0) return prev;
                 const last = prev[prev.length - 1];
-                return [...prev.slice(0, -1), { ...last, text: last.text + (payload.text || '') }];
+                if (payload.text) {
+                  return [...prev.slice(0, -1), { ...last, text: last.text + (payload.text || '') }];
+                }
+
+                if (payload.toolRequest) {
+                  const tc = {
+                    name: payload.toolRequest.name,
+                    input: payload.toolRequest.input,
+                    state: 'running' as const
+                  };
+                  const toolCalls = [...(last.toolCalls || []), tc];
+                  return [...prev.slice(0, -1), { ...last, toolCalls }];
+                }
+
+                if (payload.toolResponse) {
+                  const toolCalls = (last.toolCalls || []).map(tc => {
+                    const isMatch = payload.toolResponse.ref
+                      ? tc.ref === payload.toolResponse.ref
+                      : (tc.name === payload.toolResponse.name && tc.state === 'running');
+                    if (isMatch) {
+                      return { ...tc, output: payload.toolResponse.output, state: 'completed' as const };
+                    }
+                    return tc;
+                  });
+                  return [...prev.slice(0, -1), { ...last, toolCalls }];
+                }
+
+                return prev;
               });
             } catch (parseErr) {
               console.error('Failed to parse SSE line:', line, parseErr);
@@ -105,12 +179,29 @@ export default function App() {
   return (
     <div className="chat-container">
       <div className="chat-messages">
-        {messages.map((m, i) => (
-          <div key={i} className={`message ${m.role}-message`}>
-            <div className="message-content">
-              {m.text || '...'}
-            </div>
+        {/* Welcome Message */}
+        <div className="message system-message">
+          <div className="message-content">
+            Hint: Ask to read the menu or order a coffee.
           </div>
+        </div>
+        {messages.map((m, i) => (
+          <React.Fragment key={i}>
+            {m.toolCalls && m.toolCalls.map((tc, idx) => (
+              <ToolCallBox 
+                key={tc.ref || `tc-${i}-${idx}`} 
+                tc={tc} 
+                onDecision={(approved) => console.log('Decision:', approved)} 
+              />
+            ))}
+            {(m.text || (!m.toolCalls || m.toolCalls.length === 0)) && (
+              <div className={`message ${m.role}-message`}>
+                <div className="message-content">
+                  {m.text ? <div className="message-text">{m.text}</div> : '...'}
+                </div>
+              </div>
+            )}
+          </React.Fragment>
         ))}
         <div ref={messagesEndRef} />
       </div>
