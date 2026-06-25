@@ -4,13 +4,37 @@ import { genkit, z } from 'genkit';
 import { googleAI } from '@genkit-ai/google-genai';
 import { fileURLToPath } from 'url';
 import path from 'path';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // Initialize Genkit AI
 const ai = genkit({
   plugins: [googleAI()],
 });
+
+// Define mock tools
+const readCoffeeMenu = ai.defineTool(
+  {
+    name: 'readCoffeeMenu',
+    description: 'Read the coffee menu to see available drinks and prices',
+    inputSchema: z.object({}),
+    outputSchema: z.string(),
+  },
+  async () => {
+    return 'Menu: Espresso ($3.99), Latte ($4.99), Kopi Luwak Pour-Over ($99.99)';
+  }
+);
+
+const orderCoffee = ai.defineTool(
+  {
+    name: 'orderCoffee',
+    description: 'Order a coffee drink',
+    inputSchema: z.object({ drink: z.string() }),
+    outputSchema: z.string(),
+  },
+  async (input) => {
+    return `Successfully ordered a ${input.drink}!`;
+  }
+);
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -51,12 +75,15 @@ export const chatFlow = ai.defineFlow({
     messages: z.array(z.any()),
   }),
   streamSchema: z.object({
-    text: z.string(),
+    text: z.string().optional(),
+    toolRequest: z.any().optional(),
+    toolResponse: z.any().optional(),
   }),
 }, async (input, { sendChunk }) => {
   const { stream, response } = await ai.generateStream({
     model: googleAI.model('gemini-3.5-flash'),
     messages: input.messages,
+    tools: [readCoffeeMenu, orderCoffee], // Register tools
     config: {
       thinkingConfig: {
         thinkingLevel: 'MINIMAL',
@@ -65,8 +92,8 @@ export const chatFlow = ai.defineFlow({
   });
 
   for await (const chunk of stream) {
-    if (chunk.text) {
-      sendChunk({ text: chunk.text });
+    for (const part of chunk.content || []) {
+      sendChunk(part);
     }
   }
 
