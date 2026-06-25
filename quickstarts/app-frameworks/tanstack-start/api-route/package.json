@@ -10,7 +10,8 @@
     "generate-routes": "tsr generate",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "genkit:start": "genkit start -- tsx --watch src/genkit/bargainChefFlow.ts"
   },
   "dependencies": {
     "@genkit-ai/fetch": "^0.1.1",
@@ -38,7 +39,9 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "genkit-cli": "^1.36.0",
     "jsdom": "^28.1.0",
+    "tsx": "^4.19.2",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "vitest": "^4.1.5"

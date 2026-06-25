@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:genkit/client.dart';
 
-const backendUrl = String.fromEnvironment(
+// Set BARGAIN_CHEF_URL with --dart-define to point at a different backend.
+const flowUrl = String.fromEnvironment(
   'BARGAIN_CHEF_URL',
   defaultValue: 'http://localhost:8080/bargainChefFlow',
 );
@@ -41,7 +42,7 @@ class _BargainChefPageState extends State<BargainChefPage> {
   );
   final RemoteAction<Map<String, dynamic>, Recipe, Recipe, void>
       _bargainChefFlow = defineRemoteAction(
-    url: backendUrl,
+    url: flowUrl,
     fromResponse: Recipe.fromJson,
     fromStreamChunk: Recipe.fromJson,
   );
@@ -106,22 +107,6 @@ class _BargainChefPageState extends State<BargainChefPage> {
                 style: textTheme.headlineMedium
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 8),
-              Text.rich(
-                TextSpan(
-                  text: 'Backend: ',
-                  children: [
-                    TextSpan(
-                      text: backendUrl,
-                      style: const TextStyle(fontFamily: 'monospace'),
-                    ),
-                  ],
-                ),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontSize: 13,
-                ),
-              ),
               const SizedBox(height: 16),
               Text(
                 "Tell me what you feel like eating and I'll suggest a recipe "
@@ -182,6 +167,10 @@ class _BargainChefPageState extends State<BargainChefPage> {
                         if (recipe.description?.isNotEmpty ?? false) ...[
                           const SizedBox(height: 8),
                           Text(recipe.description!),
+                        ],
+                        if (recipe.servings != null) ...[
+                          const SizedBox(height: 8),
+                          Text('Serves: ${recipe.servings}'),
                         ],
                         if (recipe.ingredients.isNotEmpty) ...[
                           const SizedBox(height: 20),

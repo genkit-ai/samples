@@ -29,10 +29,6 @@ curl -N -X POST http://localhost:8080/bargainChefFlow \
 genkit start -- go run .    # opens http://localhost:4000
 ```
 
-## Local Genkit packages
-
-`go.mod` uses a `replace` directive pointing at a local Genkit Go checkout. Edit the path if your checkout lives elsewhere.
-
 ## Note on a guide bug found here
 
 The published flow ended with `if (final == Recipe{}) { ... }`, which doesn't compile because `Recipe` has slice fields. Fixed to `if final.Title == ""` — both in this sample and the docsite guide.

@@ -8,4 +8,5 @@ h1 { font-size: 2rem; margin: 0 0 0.25rem; }
 .prompt button:disabled { background: #999; cursor: not-allowed; }
 article { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.5rem 1.75rem; }
 .badge { display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem; font-size: 0.75rem; background: #e8f5e9; color: #2e7d32; border-radius: 999px; }
+.serves { color: #555; margin: 0; font-size: 0.95rem; }
 .ingredients, .steps { padding-left: 1.25rem; line-height: 1.6; }

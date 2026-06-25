@@ -7,7 +7,7 @@ Guide: https://genkit.dev/docs/python/backend-frameworks/django
 ## Run
 
 ```bash
-cd backend-frameworks/py/django
+cd quickstarts/backend-frameworks/py/django
 uv sync
 GEMINI_API_KEY=<your-key> uv run uvicorn myproject.asgi:application --port 8000
 ```

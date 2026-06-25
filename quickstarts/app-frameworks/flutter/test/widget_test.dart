@@ -8,10 +8,6 @@ void main() {
     await tester.pumpWidget(const BargainChefApp());
 
     expect(find.text('Bargain Chef'), findsOneWidget);
-    expect(
-      find.textContaining('http://localhost:8080/bargainChefFlow'),
-      findsOneWidget,
-    );
     expect(find.text('Suggest a recipe'), findsOneWidget);
     expect(find.byType(TextField), findsOneWidget);
   });

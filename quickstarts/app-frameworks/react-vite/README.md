@@ -2,7 +2,7 @@
 
 Browser-only React app. **No flow runs inside this app** — it calls a separate Genkit backend over HTTP using `streamFlow` from `genkit/beta/client`.
 
-Guide: https://genkit.dev/docs/js/app-frameworks/react
+Guide: https://genkit.dev/docs/app-frameworks/react
 
 ## Run
 

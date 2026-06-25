@@ -7,10 +7,13 @@ from genkit import ActionRunContext, Genkit
 from genkit.plugins.django import genkit_django_handler
 from genkit.plugins.google_genai import GoogleAI
 
-ai = Genkit(plugins=[GoogleAI()])
+ai = Genkit(
+    plugins=[GoogleAI()],
+    model='googleai/gemini-flash-latest',
+)
 
 
-class IngredientOnSale(BaseModel):
+class SaleItem(BaseModel):
     name: str
     price: str
 
@@ -30,22 +33,22 @@ class GetIngredientsInput(BaseModel):
 )
 async def get_ingredients_on_sale(
     input: GetIngredientsInput,
-) -> list[IngredientOnSale]:
+) -> list[SaleItem]:
     if input.day_type == 'weekend':
         return [
-            IngredientOnSale(name='chicken breast', price='$2.99/lb'),
-            IngredientOnSale(name='pasta', price='$0.79'),
-            IngredientOnSale(name='canned tomatoes', price='$0.99'),
-            IngredientOnSale(name='garlic', price='$0.50 / head'),
-            IngredientOnSale(name='olive oil', price='$6.99'),
+            SaleItem(name='chicken breast', price='$2.99/lb'),
+            SaleItem(name='pasta', price='$0.79'),
+            SaleItem(name='canned tomatoes', price='$0.99'),
+            SaleItem(name='garlic', price='$0.50 / head'),
+            SaleItem(name='olive oil', price='$6.99'),
         ]
     return [
-        IngredientOnSale(name='eggs', price='$3.49 / dozen'),
-        IngredientOnSale(name='spinach', price='$1.99'),
-        IngredientOnSale(name='parmesan', price='$4.99'),
-        IngredientOnSale(name='lemons', price='$0.50 each'),
-        IngredientOnSale(name='rice', price='$2.49'),
-        IngredientOnSale(name='butter', price='$3.99'),
+        SaleItem(name='eggs', price='$3.49 / dozen'),
+        SaleItem(name='spinach', price='$1.99'),
+        SaleItem(name='parmesan', price='$4.99'),
+        SaleItem(name='lemons', price='$0.50 each'),
+        SaleItem(name='rice', price='$2.49'),
+        SaleItem(name='butter', price='$3.99'),
     ]
 
 
@@ -76,7 +79,6 @@ async def bargain_chef_flow(
     today = datetime.now().strftime('%A')
 
     stream_response = ai.generate_stream(
-        model='googleai/gemini-flash-latest',
         prompt=(
             f'Today is {today}. The user is craving: {input.craving}.\n\n'
             'Call the get_ingredients_on_sale tool with the day_type that matches '
@@ -85,7 +87,7 @@ async def bargain_chef_flow(
             "ingredient, set on_sale=true if it appears in the tool's response, "
             'false otherwise.'
         ),
-        tools=['get_ingredients_on_sale'],
+        tools=[get_ingredients_on_sale],
         output_schema=Recipe,
         config={'temperature': 0.7, 'thinkingConfig': {'thinkingLevel': 'MINIMAL'}},
     )

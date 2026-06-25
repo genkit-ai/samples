@@ -1,5 +1,5 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import { Controller, Post, Req, Res, Next } from '@nestjs/common';
+import type { Request, Response, NextFunction } from 'express';
 import { expressHandler } from '@genkit-ai/express';
 import { bargainChefFlow } from './bargainChefFlow';
 
@@ -8,7 +8,7 @@ export class GenkitController {
   private readonly handleBargainChef = expressHandler(bargainChefFlow);
 
   @Post('bargainChefFlow')
-  bargainChef(@Req() req: Request, @Res() res: Response) {
-    return this.handleBargainChef(req, res);
+  bargainChef(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+    return this.handleBargainChef(req, res, next);
   }
 }

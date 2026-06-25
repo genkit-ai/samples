@@ -2,12 +2,12 @@
 
 Standalone Genkit backend on FastAPI. The `@genkit_fastapi_handler` decorator turns the flow into an async route that handles both JSON and SSE responses.
 
-Guide: https://genkit.dev/docs/frameworks/fastapi
+Guide: https://genkit.dev/docs/python/backend-frameworks/fastapi
 
 ## Run
 
 ```bash
-cd backends/py/fastapi
+cd quickstarts/backend-frameworks/py/fastapi
 uv sync
 GEMINI_API_KEY=<your-key> uv run uvicorn main:app --port 8000
 ```

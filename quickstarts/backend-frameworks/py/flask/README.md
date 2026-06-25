@@ -5,16 +5,16 @@ Standalone Genkit backend on Flask. Three stacked decorators wire it up:
 ```python
 @app.post('/bargainChefFlow')   # mount the route
 @genkit_flask_handler(ai)       # adapt the flow into a Flask view (JSON + SSE)
-@ai.flow()                      # register as a Genkit flow
+@ai.flow(name='bargainChefFlow', chunk_type=Recipe)   # register as a Genkit flow
 async def bargain_chef_flow(input, ctx): ...
 ```
 
-Guide: https://genkit.dev/docs/frameworks/flask
+Guide: https://genkit.dev/docs/python/backend-frameworks/flask
 
 ## Run
 
 ```bash
-cd backends/py/flask
+cd quickstarts/backend-frameworks/py/flask
 uv sync
 GEMINI_API_KEY=<your-key> uv run python main.py
 ```

@@ -6,7 +6,8 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "genkit:start": "genkit start -- tsx --watch app/genkit/bargainChefFlow.ts"
   },
   "dependencies": {
     "@genkit-ai/fetch": "^0.1.1",
@@ -24,6 +25,8 @@
     "@types/node": "^22",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "genkit-cli": "^1.36.0",
+    "tsx": "^4.19.2",
     "typescript": "^5.9.3",
     "vite": "^8.0.3"
   }

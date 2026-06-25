@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -105,6 +106,9 @@ Call the getIngredientsOnSale tool with the dayType that matches today. Saturday
 				}
 			}
 
+			if final == nil {
+				return nil, errors.New("failed to generate recipe")
+			}
 			return final, nil
 		},
 	)

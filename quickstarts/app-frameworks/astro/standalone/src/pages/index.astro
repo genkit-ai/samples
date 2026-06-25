@@ -1,50 +1,48 @@
 ---
-const backendUrl = import.meta.env.PUBLIC_BARGAIN_CHEF_URL ?? 'http://localhost:8080/bargainChefFlow';
+// No server-side logic needed for this page.
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Bargain Chef (standalone)</title>
-    <style is:global>
-      body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: #1a1a1a; background: #fafafa; margin: 0; padding: 3rem 1.5rem; }
-      main { max-width: 640px; margin: 0 auto; }
-      h1 { font-size: 2rem; margin: 0 0 0.25rem; }
-      .tagline { color: #555; margin: 0 0 2rem; font-size: 0.85rem; }
-      .prompt { display: flex; gap: 0.5rem; margin-bottom: 2.5rem; }
-      .prompt input { flex: 1; font: inherit; padding: 0.75rem 1rem; border: 1px solid #d0d0d0; border-radius: 8px; }
-      .prompt button { font: inherit; font-weight: 500; padding: 0.75rem 1.25rem; border: 0; border-radius: 8px; background: #1a1a1a; color: #fff; cursor: pointer; }
-      .prompt button:disabled { background: #999; cursor: not-allowed; }
-      article { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.5rem 1.75rem; }
-      .badge { display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem; font-size: 0.75rem; background: #e8f5e9; color: #2e7d32; border-radius: 999px; }
-      .ingredients, .steps { padding-left: 1.25rem; line-height: 1.6; }
-    </style>
+    <title>Bargain Chef</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <main>
       <h1>Bargain Chef</h1>
-      <p class="tagline">Backend: <code>{backendUrl}</code></p>
-      <p class="tagline" style="font-size: 1rem">Tell me what you feel like eating and I'll suggest a recipe built around today's grocery deals.</p>
-      <form class="prompt" id="prompt-form">
-        <input type="text" id="craving" value="something warm with chicken" />
-        <button type="submit" id="submit-btn">Suggest a recipe</button>
+      <p class="tagline">
+        Tell me what you feel like eating and I'll suggest a recipe built around today's grocery deals.
+      </p>
+
+      <form id="prompt-form" class="prompt">
+        <input
+          id="craving"
+          type="text"
+          name="craving"
+          value="something warm with chicken"
+          placeholder="What are you in the mood for?"
+        />
+        <button id="submit" type="submit">Suggest a recipe</button>
       </form>
-      <article id="recipe" style="display: none;"></article>
+
+      <div id="recipe"></div>
     </main>
+
     <script>
-      // A plain <script> (no define:vars) so Astro bundles it with Vite and the
-      // bare `genkit/beta/client` import resolves in the browser. Vite inlines
-      // import.meta.env.PUBLIC_* at build time.
       import { streamFlow } from 'genkit/beta/client';
 
-      const backendUrl =
-        import.meta.env.PUBLIC_BARGAIN_CHEF_URL ?? 'http://localhost:8080/bargainChefFlow';
+      // Set PUBLIC_BARGAIN_CHEF_URL to point at a different backend.
+      const FLOW_URL =
+        import.meta.env.PUBLIC_BARGAIN_CHEF_URL ??
+        'http://localhost:8080/bargainChefFlow';
 
-      const form = document.getElementById('prompt-form') as HTMLFormElement;
-      const btn = document.getElementById('submit-btn') as HTMLButtonElement;
-      const cravingInput = document.getElementById('craving') as HTMLInputElement;
-      const recipeEl = document.getElementById('recipe') as HTMLElement;
+      interface RecipeIngredient {
+        name?: string;
+        quantity?: string;
+        onSale?: boolean;
+      }
 
-      interface RecipeIngredient { name?: string; quantity?: string; onSale?: boolean }
       interface Recipe {
         title?: string;
         description?: string;
@@ -53,43 +51,76 @@ const backendUrl = import.meta.env.PUBLIC_BARGAIN_CHEF_URL ?? 'http://localhost:
         steps?: string[];
       }
 
-      function render(recipe: Recipe | null) {
-        recipeEl.style.display = recipe ? 'block' : 'none';
-        if (!recipe) return;
-        let html = '';
-        if (recipe.title) html += `<h2>${recipe.title}</h2>`;
-        if (recipe.description) html += `<p class="description">${recipe.description}</p>`;
-        if (recipe.ingredients?.length) {
-          html += '<h3>Ingredients</h3><ul class="ingredients">';
-          for (const ing of recipe.ingredients) {
-            html += `<li>${ing.quantity ?? ''} ${ing.name ?? ''}${ing.onSale ? ' <span class="badge">on sale</span>' : ''}</li>`;
-          }
-          html += '</ul>';
-        }
-        if (recipe.steps?.length) {
-          html += '<h3>Steps</h3><ol class="steps">';
-          for (const step of recipe.steps) html += `<li>${step}</li>`;
-          html += '</ol>';
-        }
-        recipeEl.innerHTML = html;
+      const form = document.getElementById('prompt-form') as HTMLFormElement;
+      const cravingInput = document.getElementById('craving') as HTMLInputElement;
+      const submitButton = document.getElementById('submit') as HTMLButtonElement;
+      const recipeEl = document.getElementById('recipe') as HTMLElement;
+
+      let isStreaming = false;
+
+      function setStreaming(value: boolean) {
+        isStreaming = value;
+        cravingInput.disabled = value;
+        submitButton.disabled = value;
+        submitButton.textContent = value ? 'Cooking…' : 'Suggest a recipe';
       }
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+      function render(recipe: Recipe | null) {
+        if (!recipe) {
+          recipeEl.innerHTML = '';
+          return;
+        }
+
+        const parts: string[] = ['<article>'];
+        if (recipe.title) parts.push(`<h2>${recipe.title}</h2>`);
+        if (recipe.description)
+          parts.push(`<p class="description">${recipe.description}</p>`);
+        if (recipe.servings)
+          parts.push(
+            `<p class="serves"><strong>Serves:</strong> ${recipe.servings}</p>`,
+          );
+
+        if (recipe.ingredients?.length) {
+          parts.push('<h3>Ingredients</h3><ul class="ingredients">');
+          for (const ing of recipe.ingredients) {
+            const badge = ing.onSale ? ' <span class="badge">on sale</span>' : '';
+            parts.push(`<li>${ing.quantity ?? ''} ${ing.name ?? ''}${badge}</li>`);
+          }
+          parts.push('</ul>');
+        }
+
+        if (recipe.steps?.length) {
+          parts.push('<h3>Steps</h3><ol class="steps">');
+          for (const step of recipe.steps) {
+            parts.push(`<li>${step}</li>`);
+          }
+          parts.push('</ol>');
+        }
+
+        parts.push('</article>');
+        recipeEl.innerHTML = parts.join('');
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
         const craving = cravingInput.value.trim();
         if (!craving) return;
-        btn.disabled = true;
-        btn.textContent = 'Cooking…';
+
         render(null);
+        setStreaming(true);
         try {
-          const result = streamFlow<Recipe, Recipe>({ url: backendUrl, input: { craving } });
-          for await (const partial of result.stream) render(partial);
+          const result = streamFlow({
+            url: FLOW_URL,
+            input: { craving },
+          });
+          for await (const partial of result.stream) {
+            render(partial as Recipe);
+          }
           await result.output;
         } catch (err) {
           console.error('Failed to generate recipe', err);
         } finally {
-          btn.disabled = false;
-          btn.textContent = 'Suggest a recipe';
+          setStreaming(false);
         }
       });
     </script>

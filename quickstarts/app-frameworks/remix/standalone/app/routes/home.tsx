@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { streamFlow } from 'genkit/beta/client';
 
-const BACKEND_URL =
+// Set VITE_BARGAIN_CHEF_URL to point at a different backend.
+const FLOW_URL =
   import.meta.env.VITE_BARGAIN_CHEF_URL ?? 'http://localhost:8080/bargainChefFlow';
 
 interface RecipeIngredient {
@@ -28,7 +29,7 @@ export default function Home() {
     setRecipe(null);
     setIsStreaming(true);
     try {
-      const result = streamFlow({ url: BACKEND_URL, input: { craving } });
+      const result = streamFlow({ url: FLOW_URL, input: { craving } });
       for await (const partial of result.stream) setRecipe(partial as Recipe);
       await result.output;
     } catch (err) {
@@ -42,16 +43,15 @@ export default function Home() {
     <main>
       <h1>Bargain Chef</h1>
       <p className="tagline">
-        Backend: <code>{BACKEND_URL}</code>
-      </p>
-      <p className="tagline">
         Tell me what you feel like eating and I&apos;ll suggest a recipe built
         around today&apos;s grocery deals.
       </p>
       <form className="prompt" onSubmit={generateRecipe}>
         <input
+          type="text"
           value={craving}
           onChange={(e) => setCraving(e.target.value)}
+          name="craving"
           disabled={isStreaming}
           placeholder="What are you in the mood for?"
         />

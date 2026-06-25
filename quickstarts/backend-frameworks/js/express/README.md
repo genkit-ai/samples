@@ -11,7 +11,7 @@ Guide: https://genkit.dev/docs/js/backend-frameworks/express
 pnpm install
 
 # then start the server
-cd backend-frameworks/js/express
+cd quickstarts/backend-frameworks/js/express
 GEMINI_API_KEY=<your-key> pnpm start
 ```
 

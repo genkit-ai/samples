@@ -28,7 +28,3 @@ curl -N -X POST http://localhost:8080/bargainChefFlow \
 ```bash
 genkit start -- go run .    # opens http://localhost:4000
 ```
-
-## Local Genkit packages
-
-`go.mod` uses a `replace` directive pointing at a local Genkit Go checkout. Edit the path if your checkout lives elsewhere.

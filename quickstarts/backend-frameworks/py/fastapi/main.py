@@ -20,19 +20,20 @@ class SaleItem(BaseModel):
     price: str
 
 
-class DayType(BaseModel):
+class GetIngredientsInput(BaseModel):
     day_type: Literal['weekday', 'weekend'] = Field(
         description='Whether to fetch weekday or weekend sale prices.',
     )
 
 
 @ai.tool(
+    name='get_ingredients_on_sale',
     description=(
         'Returns the ingredients on sale at the local grocery store, with prices. '
         'The sale set differs between weekdays and weekends.'
     ),
 )
-async def get_ingredients_on_sale(input: DayType) -> list[SaleItem]:
+async def get_ingredients_on_sale(input: GetIngredientsInput) -> list[SaleItem]:
     if input.day_type == 'weekend':
         return [
             SaleItem(name='chicken breast', price='$2.99/lb'),
@@ -65,12 +66,12 @@ class Recipe(BaseModel):
     steps: list[str]
 
 
-class CravingInput(BaseModel):
+class BargainChefInput(BaseModel):
     craving: str = Field(description='What the user feels like eating right now.')
 
 
-@ai.flow(chunk_type=Recipe)
-async def bargain_chef_flow(input: CravingInput, ctx: ActionRunContext) -> Recipe:
+@ai.flow(name='bargainChefFlow', chunk_type=Recipe)
+async def bargain_chef_flow(input: BargainChefInput, ctx: ActionRunContext) -> Recipe:
     today = datetime.now().strftime('%A')
 
     stream_response = ai.generate_stream(

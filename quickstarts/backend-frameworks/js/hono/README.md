@@ -8,7 +8,7 @@ Guide: https://genkit.dev/docs/js/backend-frameworks/hono
 
 ```bash
 pnpm install   # once, from quickstarts/
-cd backend-frameworks/js/hono
+cd quickstarts/backend-frameworks/js/hono
 GEMINI_API_KEY=<your-key> pnpm start
 ```
 

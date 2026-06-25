@@ -2,12 +2,12 @@
 
 Standalone Genkit backend on Dart [Shelf](https://pub.dev/packages/shelf). Schemas are generated from `@Schema()`-annotated classes via [`schemantic`](https://pub.dev/packages/schemantic) and `build_runner`.
 
-Guide: https://genkit.dev/docs/frameworks/shelf
+Guide: https://genkit.dev/docs/dart/backend-frameworks/shelf
 
 ## Run
 
 ```bash
-cd backends/dart/shelf
+cd quickstarts/backend-frameworks/dart/shelf
 dart pub get
 dart run build_runner build       # generates bin/my_genkit_shelf.g.dart
 GEMINI_API_KEY=<your-key> dart run
@@ -29,10 +29,6 @@ curl -N -X POST http://localhost:8080/bargainChefFlow \
 ```bash
 genkit start -- dart run    # opens http://localhost:4000
 ```
-
-## Local Genkit packages
-
-`pubspec.yaml` uses `dependency_overrides` to point every `genkit*` package at `/Users/chgill/Projects/genkit-dart/packages/...`. Without the overrides the `genkit_shelf` dep would pull `genkit` from pub.dev and conflict with the local one. Edit the paths if your checkout lives elsewhere.
 
 ## Note on a guide bug found here
 

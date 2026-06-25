@@ -23,7 +23,7 @@ Open `http://localhost:4321`.
 
 ## Point at a different backend
 
-The page reads `PUBLIC_BARGAIN_CHEF_URL` at build time; defaults to `http://localhost:8080/bargainChefFlow`.
+The page reads `PUBLIC_BARGAIN_CHEF_URL` at build time; defaults to `http://localhost:8080/bargainChefFlow`. (Astro exposes only `PUBLIC_`-prefixed variables to client code.)
 
 ```bash
 PUBLIC_BARGAIN_CHEF_URL=http://localhost:3780/api/bargainChefFlow pnpm dev   # hono

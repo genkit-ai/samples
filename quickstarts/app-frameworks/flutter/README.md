@@ -2,7 +2,7 @@
 
 Browser-only Flutter web app. **No flow runs inside this app** — it calls a separate Genkit backend over HTTP using `defineRemoteAction` from `package:genkit/client.dart`.
 
-Guide: https://genkit.dev/docs/dart/frontend/flutter
+Guide: https://genkit.dev/docs/app-frameworks/flutter
 
 ## Run
 
@@ -10,8 +10,8 @@ In two terminals:
 
 ```bash
 # Terminal 1 — any standalone backend in this repo:
-cd backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
-# or backend-frameworks/go/chi, backend-frameworks/py/flask, backend-frameworks/dart/shelf, …
+cd quickstarts/backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
+# or quickstarts/backend-frameworks/go/chi, quickstarts/backend-frameworks/py/flask, quickstarts/backend-frameworks/dart/shelf, …
 
 # Terminal 2 — this frontend:
 cd quickstarts/app-frameworks/flutter

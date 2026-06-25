@@ -16,6 +16,9 @@ interface Recipe {
   steps?: string[];
 }
 
+// Point this at the URL where your bargainChefFlow is served
+const FLOW_URL = 'http://localhost:8080/bargainChefFlow';
+
 @Component({
   selector: 'app-root',
   imports: [FormsModule],
@@ -33,7 +36,7 @@ export class App {
     this.isStreaming.set(true);
     try {
       const result = streamFlow({
-        url: 'http://localhost:8080/bargainChefFlow',
+        url: FLOW_URL,
         input: { craving: this.craving() },
       });
       for await (const partial of result.stream) {

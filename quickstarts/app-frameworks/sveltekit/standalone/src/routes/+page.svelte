@@ -1,7 +1,8 @@
 <script lang="ts">
   import { streamFlow } from 'genkit/beta/client';
 
-  const BACKEND_URL =
+  // Set VITE_BARGAIN_CHEF_URL to point at a different backend.
+  const FLOW_URL =
     import.meta.env.VITE_BARGAIN_CHEF_URL ?? 'http://localhost:8080/bargainChefFlow';
 
   interface RecipeIngredient {
@@ -27,7 +28,7 @@
     recipe = null;
     isStreaming = true;
     try {
-      const result = streamFlow({ url: BACKEND_URL, input: { craving } });
+      const result = streamFlow({ url: FLOW_URL, input: { craving } });
       for await (const partial of result.stream) recipe = partial as Recipe;
       await result.output;
     } catch (err) {
@@ -40,10 +41,15 @@
 
 <main>
   <h1>Bargain Chef</h1>
-  <p class="tagline">Backend: <code>{BACKEND_URL}</code></p>
-  <p class="tagline" style="font-size: 1rem">Tell me what you feel like eating and I'll suggest a recipe built around today's grocery deals.</p>
+  <p class="tagline">Tell me what you feel like eating and I'll suggest a recipe built around today's grocery deals.</p>
   <form class="prompt" onsubmit={generateRecipe}>
-    <input type="text" bind:value={craving} disabled={isStreaming} />
+    <input
+      type="text"
+      bind:value={craving}
+      name="craving"
+      placeholder="What are you in the mood for?"
+      disabled={isStreaming}
+    />
     <button type="submit" disabled={isStreaming}>
       {isStreaming ? 'Cooking…' : 'Suggest a recipe'}
     </button>
@@ -52,6 +58,7 @@
     <article>
       {#if recipe.title}<h2>{recipe.title}</h2>{/if}
       {#if recipe.description}<p class="description">{recipe.description}</p>{/if}
+      {#if recipe.servings}<p class="serves"><strong>Serves:</strong> {recipe.servings}</p>{/if}
       {#if recipe.ingredients?.length}
         <h3>Ingredients</h3>
         <ul class="ingredients">
@@ -72,7 +79,8 @@
   :global(body) { font-family: -apple-system, sans-serif; color: #1a1a1a; background: #fafafa; margin: 0; }
   main { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem; }
   h1 { font-size: 2rem; margin: 0 0 0.25rem; }
-  .tagline { color: #555; margin: 0 0 2rem; font-size: 0.85rem; }
+  .tagline { color: #555; margin: 0 0 2rem; }
+  .serves { color: #555; margin: 0; font-size: 0.95rem; }
   .prompt { display: flex; gap: 0.5rem; margin-bottom: 2.5rem; }
   .prompt input { flex: 1; font: inherit; padding: 0.75rem 1rem; border: 1px solid #d0d0d0; border-radius: 8px; }
   .prompt button { font: inherit; font-weight: 500; padding: 0.75rem 1.25rem; border: 0; border-radius: 8px; background: #1a1a1a; color: #fff; cursor: pointer; }

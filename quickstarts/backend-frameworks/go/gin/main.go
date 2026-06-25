@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/firebase/genkit/go/ai"
-	"github.com/firebase/genkit/go/core"
 	"github.com/firebase/genkit/go/genkit"
 	"github.com/firebase/genkit/go/plugins/googlegenai"
 	"github.com/gin-contrib/cors"
@@ -73,7 +72,7 @@ func main() {
 	)
 
 	bargainChefFlow := genkit.DefineStreamingFlow(g, "bargainChefFlow",
-		func(ctx context.Context, input BargainChefInput, sendChunk core.StreamCallback[*Recipe]) (*Recipe, error) {
+		func(ctx context.Context, input BargainChefInput, sendChunk func(context.Context, *Recipe) error) (*Recipe, error) {
 			today := time.Now().Weekday().String()
 
 			prompt := fmt.Sprintf(`Today is %s. The user is craving: %s.
@@ -99,7 +98,9 @@ Call the getIngredientsOnSale tool with the dayType that matches today. Saturday
 					return result.Output, nil
 				}
 				if result.Chunk != nil {
-					sendChunk(ctx, result.Chunk)
+					if err := sendChunk(ctx, result.Chunk); err != nil {
+						return nil, err
+					}
 				}
 			}
 

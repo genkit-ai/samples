@@ -18,7 +18,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-class SaleIngredient(BaseModel):
+class SaleItem(BaseModel):
     name: str
     price: str
 
@@ -29,26 +29,29 @@ class GetIngredientsInput(BaseModel):
     )
 
 
-@ai.tool()
-async def get_ingredients_on_sale(input: GetIngredientsInput) -> list[SaleIngredient]:
-    """Returns the ingredients on sale at the local grocery store, with prices.
-    The sale set differs between weekdays and weekends.
-    """
+@ai.tool(
+    name='get_ingredients_on_sale',
+    description=(
+        'Returns the ingredients on sale at the local grocery store, with prices. '
+        'The sale set differs between weekdays and weekends.'
+    ),
+)
+async def get_ingredients_on_sale(input: GetIngredientsInput) -> list[SaleItem]:
     if input.day_type == 'weekend':
         return [
-            SaleIngredient(name='chicken breast', price='$2.99/lb'),
-            SaleIngredient(name='pasta', price='$0.79'),
-            SaleIngredient(name='canned tomatoes', price='$0.99'),
-            SaleIngredient(name='garlic', price='$0.50 / head'),
-            SaleIngredient(name='olive oil', price='$6.99'),
+            SaleItem(name='chicken breast', price='$2.99/lb'),
+            SaleItem(name='pasta', price='$0.79'),
+            SaleItem(name='canned tomatoes', price='$0.99'),
+            SaleItem(name='garlic', price='$0.50 / head'),
+            SaleItem(name='olive oil', price='$6.99'),
         ]
     return [
-        SaleIngredient(name='eggs', price='$3.49 / dozen'),
-        SaleIngredient(name='spinach', price='$1.99'),
-        SaleIngredient(name='parmesan', price='$4.99'),
-        SaleIngredient(name='lemons', price='$0.50 each'),
-        SaleIngredient(name='rice', price='$2.49'),
-        SaleIngredient(name='butter', price='$3.99'),
+        SaleItem(name='eggs', price='$3.49 / dozen'),
+        SaleItem(name='spinach', price='$1.99'),
+        SaleItem(name='parmesan', price='$4.99'),
+        SaleItem(name='lemons', price='$0.50 each'),
+        SaleItem(name='rice', price='$2.49'),
+        SaleItem(name='butter', price='$3.99'),
     ]
 
 
@@ -72,7 +75,7 @@ class BargainChefInput(BaseModel):
 
 @app.post('/bargainChefFlow')
 @genkit_flask_handler(ai)
-@ai.flow()
+@ai.flow(name='bargainChefFlow', chunk_type=Recipe)
 async def bargain_chef_flow(input: BargainChefInput, ctx: ActionRunContext) -> Recipe:
     today = datetime.now().strftime('%A')
 
@@ -85,7 +88,7 @@ async def bargain_chef_flow(input: BargainChefInput, ctx: ActionRunContext) -> R
             "ingredient, set on_sale=true if it appears in the tool's response, "
             'false otherwise.'
         ),
-        tools=['get_ingredients_on_sale'],
+        tools=[get_ingredients_on_sale],
         output_schema=Recipe,
         config={'temperature': 0.7, 'thinkingConfig': {'thinkingLevel': 'MINIMAL'}},
     )

@@ -2,7 +2,7 @@
 
 Nuxt app that calls a separate Genkit backend over HTTP. **No flow runs inside this app** — there's no `server/` directory.
 
-Guide: https://genkit.dev/docs/go/app-frameworks/nuxt (or the dart / python variant — standalone backend)
+Guide: https://genkit.dev/docs/js/app-frameworks/nuxt (or the dart / python variant — standalone backend)
 
 ## Run
 
@@ -23,8 +23,9 @@ Open `http://localhost:3000`.
 
 ## Point at a different backend
 
-The page reads `runtimeConfig.public.bargainChefUrl`; override with the `NUXT_PUBLIC_BARGAIN_CHEF_URL` env var:
+The page reads `VITE_BARGAIN_CHEF_URL` at build time; defaults to `http://localhost:8080/bargainChefFlow`.
 
 ```bash
-NUXT_PUBLIC_BARGAIN_CHEF_URL=http://localhost:3780/api/bargainChefFlow pnpm dev   # hono
+VITE_BARGAIN_CHEF_URL=http://localhost:3780/api/bargainChefFlow pnpm dev   # hono
+VITE_BARGAIN_CHEF_URL=http://localhost:8000/bargainChefFlow pnpm dev       # fastapi/django
 ```
