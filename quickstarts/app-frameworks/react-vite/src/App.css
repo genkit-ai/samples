@@ -1,0 +1,12 @@
+body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: #1a1a1a; background: #fafafa; margin: 0; padding: 3rem 1.5rem; }
+main { max-width: 640px; margin: 0 auto; }
+h1 { font-size: 2rem; margin: 0 0 0.25rem; }
+.tagline { color: #555; margin: 0 0 2rem; font-size: 0.85rem; }
+.prompt { display: flex; gap: 0.5rem; margin-bottom: 2.5rem; }
+.prompt input { flex: 1; font: inherit; padding: 0.75rem 1rem; border: 1px solid #d0d0d0; border-radius: 8px; }
+.prompt button { font: inherit; font-weight: 500; padding: 0.75rem 1.25rem; border: 0; border-radius: 8px; background: #1a1a1a; color: #fff; cursor: pointer; }
+.prompt button:disabled { background: #999; cursor: not-allowed; }
+article { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.5rem 1.75rem; }
+.badge { display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem; font-size: 0.75rem; background: #e8f5e9; color: #2e7d32; border-radius: 999px; }
+.serves { color: #555; margin: 0; font-size: 0.95rem; }
+.ingredients, .steps { padding-left: 1.25rem; line-height: 1.6; }

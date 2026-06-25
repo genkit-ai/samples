@@ -1,0 +1,19 @@
+{
+  "name": "quickstart-astro-standalone",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "genkit": "^1.36.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

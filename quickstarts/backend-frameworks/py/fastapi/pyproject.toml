@@ -1,0 +1,12 @@
+[project]
+name = "quickstart-fastapi"
+version = "0.0.0"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "genkit>=0.6.0",
+    "genkit-plugin-google-genai>=0.6.0",
+    "genkit-plugin-fastapi>=0.6.0",
+]

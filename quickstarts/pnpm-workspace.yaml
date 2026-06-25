@@ -1,0 +1,11 @@
+# JS backends and the Vite/Next/Nuxt/Astro/SvelteKit frontends are managed as a
+# single pnpm workspace. The CLI-scaffolded frameworks (Angular, Remix, TanStack
+# Start) are self-contained npm projects with their own lockfiles, so they are
+# intentionally NOT listed here — install and run those with npm in their own dir.
+packages:
+  - 'backend-frameworks/js/*'
+  - 'app-frameworks/astro/*'
+  - 'app-frameworks/nextjs/*'
+  - 'app-frameworks/nuxt/*'
+  - 'app-frameworks/react-vite'
+  - 'app-frameworks/sveltekit/*'

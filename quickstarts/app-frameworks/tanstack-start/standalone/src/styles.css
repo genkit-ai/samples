@@ -1,0 +1,170 @@
+
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+/* Bargain Chef styles */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  color: #1a1a1a;
+  background: #fafafa;
+  padding: 3rem 1.5rem;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.tagline {
+  color: #555;
+  margin: 0 0 2rem;
+}
+
+.prompt {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.prompt input {
+  flex: 1;
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  background: #fff;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.prompt input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.prompt input:disabled {
+  background: #f1f1f1;
+  color: #888;
+}
+
+.prompt button {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1.25rem;
+  border: 0;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  cursor: pointer;
+  transition: background 120ms ease;
+  white-space: nowrap;
+}
+
+.prompt button:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.prompt button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+article {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+}
+
+article h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+}
+
+article h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #666;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.description {
+  color: #444;
+  margin: 0 0 1rem;
+}
+
+.serves {
+  color: #555;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.ingredients,
+.steps {
+  padding-left: 1.25rem;
+  line-height: 1.6;
+}
+
+/* Tailwind's Preflight resets list markers, so restore them explicitly. */
+.ingredients {
+  list-style: disc;
+}
+
+.steps {
+  list-style: decimal;
+}
+
+.ingredients li {
+  margin-bottom: 0.25rem;
+}
+
+.steps li {
+  margin-bottom: 0.5rem;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 999px;
+}
+
+@media (max-width: 480px) {
+  .prompt {
+    flex-direction: column;
+  }
+  .prompt button {
+    width: 100%;
+  }
+}
+

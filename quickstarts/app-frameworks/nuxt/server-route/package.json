@@ -1,0 +1,26 @@
+{
+  "name": "quickstart-nuxt-server-route",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.13.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0",
+    "genkit": "^1.36.0",
+    "@genkit-ai/google-genai": "^1.36.0",
+    "@genkit-ai/fetch": "^0.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "tsx": "^4.19.2",
+    "genkit-cli": "^1.36.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "quickstart-astro-endpoint",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "genkit:start": "genkit start -- tsx --watch src/genkit/bargainChefFlow.ts"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "@astrojs/node": "^9.0.0",
+    "genkit": "^1.36.0",
+    "@genkit-ai/google-genai": "^1.36.0",
+    "@genkit-ai/fetch": "^0.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "tsx": "^4.19.2",
+    "genkit-cli": "^1.36.0"
+  }
+}

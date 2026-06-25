@@ -1,0 +1,24 @@
+{
+  "name": "quickstart-fastify",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "genkit:start": "genkit start -- tsx --watch src/index.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@genkit-ai/fastify": "^0.1.1",
+    "@genkit-ai/google-genai": "^1.38.0",
+    "fastify": "^5.2.0",
+    "genkit": "^1.38.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "genkit-cli": "^1.38.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3"
+  }
+}

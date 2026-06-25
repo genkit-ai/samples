@@ -1,0 +1,12 @@
+[project]
+name = "quickstart-flask"
+version = "0.0.0"
+requires-python = ">=3.10"
+dependencies = [
+    "flask[async]>=3.0.0",
+    "flask-cors>=5.0.0",
+    "pydantic>=2.10.0",
+    "genkit>=0.6.0",
+    "genkit-plugin-google-genai>=0.6.0",
+    "genkit-plugin-flask>=0.6.0",
+]
