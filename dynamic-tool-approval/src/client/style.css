@@ -1,8 +1,10 @@
 :root {
   --bg-main: #121214;
   --bg-surface: #18181b;
+  --bg-surface-inset: #141417;
   --border-color: #27272a;
   --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
   --accent-blue: #3b82f6;
   --accent-blue-light: #60a5fa;
 }
@@ -43,10 +45,24 @@ body {
   gap: 20px;
 }
 
+/* (Optional) Adds an entrance animation to new chat bubbles */
 .message {
   display: flex;
   flex-direction: column;
   max-width: 80%;
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
 }
 
 .message.user-message {
@@ -57,6 +73,19 @@ body {
   align-self: flex-start;
 }
 
+.message.system-message {
+  align-self: center;
+  max-width: 90%;
+}
+
+.message.system-message .message-content {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 20px;
+  padding: 8px 16px;
+}
 .message-content {
   padding: 14px 20px;
   font-size: 15px;
@@ -125,4 +154,153 @@ body {
 
 .chat-input-form button svg {
   margin-left: 2px;
+}
+/* Tool execution styling */
+.tool-message {
+  width: 100%;
+  max-width: 85%;
+  margin-bottom: 8px;
+}
+
+.tool-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 16px 16px 16px 4px;
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.3s ease;
+}
+
+.tool-box:hover {
+  border-color: #3f3f46;
+}
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* (Optional) Adds an animated blue accent bar next to the tool name */
+.tool-indicator {
+  width: 4px;
+  height: 18px;
+  background-color: var(--accent-blue-light);
+  border-radius: 4px;
+  flex-shrink: 0;
+  transform-origin: bottom;
+}
+
+.tool-indicator.indicator-animate {
+  animation: growUpBar 0.25s ease-out forwards;
+}
+
+@keyframes growUpBar {
+  0% {
+    transform: scaleY(0);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.tool-step-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-blue-light);
+  letter-spacing: 0.2px;
+  transform-origin: bottom left;
+}
+
+.tool-step-label code {
+  font-family: monospace;
+  font-size: 13px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: inherit;
+}
+
+/* (Optional) Adds an entrance animation to the tool name text */
+.tool-step-label.step-animate {
+  animation: flipUpText 0.25s ease-out forwards;
+}
+
+@keyframes flipUpText {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scaleY(0.6);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+
+.tool-summary {
+  list-style: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  transition: color 0.2s;
+}
+
+.tool-summary:hover {
+  color: var(--text-primary);
+}
+
+.tool-summary::-webkit-details-marker {
+  display: none;
+}
+
+.tool-summary::before {
+  content: '▶';
+  display: inline-block;
+  font-size: 10px;
+  color: var(--accent-blue-light);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tool-details[open] .tool-summary::before {
+  transform: rotate(90deg);
+}
+
+.tool-body {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background-color: var(--bg-surface-inset);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  font-family: 'Chivo Mono', 'Fira Code', Consolas, Monaco, monospace;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.tool-status {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.tool-status.running {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--accent-blue);
 }
