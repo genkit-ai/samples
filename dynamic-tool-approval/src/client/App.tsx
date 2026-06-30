@@ -5,7 +5,6 @@ export interface ToolCall {
   name: string;
   input: any;
   state: 'running' | 'completed';
-  output?: any;
   ref?: string;
 }
 
@@ -38,12 +37,6 @@ function ToolCallBox({ tc }: { tc: ToolCall }) {
           </summary>
           <div className="tool-body">
             <div>Input: {JSON.stringify(tc.input, null, 2)}</div>
-
-            {tc.output && (
-              <div style={{ marginTop: '12px', borderTop: '1px solid #27272a', paddingTop: '12px', whiteSpace: 'pre-wrap' }}>
-                Result: {typeof tc.output === 'object' ? JSON.stringify(tc.output, null, 2) : String(tc.output)}
-              </div>
-            )}
           </div>
         </details>
       </div>
