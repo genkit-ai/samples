@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import { genkit } from 'genkit';
+import { genkit, z } from 'genkit';
 import { googleAI } from '@genkit-ai/google-genai';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -42,6 +42,40 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', message: 'Express + Genkit server initialized successfully' });
 });
+
+import { expressHandler } from '@genkit-ai/express';
+
+export const chatFlow = ai.defineFlow({
+  name: 'chatFlow',
+  inputSchema: z.object({
+    messages: z.array(z.any()),
+  }),
+  streamSchema: z.object({
+    text: z.string(),
+  }),
+}, async (input, { sendChunk }) => {
+  const { stream, response } = await ai.generateStream({
+    model: googleAI.model('gemini-3.5-flash'),
+    messages: input.messages,
+    config: {
+      thinkingConfig: {
+        thinkingLevel: 'MINIMAL',
+      },
+    },
+  });
+
+  for await (const chunk of stream) {
+    if (chunk.text) {
+      sendChunk({ text: chunk.text });
+    }
+  }
+
+  const finalResponse = await response;
+  return finalResponse.text;
+});
+
+// POST /api/chat generation route
+app.post('/api/chat', expressHandler(chatFlow));
 
 // Security: Bind to configurable host (defaults to 127.0.0.1 for local testing)
 const HOST = process.env.HOST || '127.0.0.1';

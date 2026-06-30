@@ -11,6 +11,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@genkit-ai/express": "^1.38.0",
     "@genkit-ai/google-genai": "^1.36.0",
     "express": "^5.2.1",
     "genkit": "^1.36.0",
