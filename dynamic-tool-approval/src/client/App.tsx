@@ -23,7 +23,6 @@ export default function App() {
     e.preventDefault();
     if (!input.trim() || loading) return;
 
-    abortControllerRef.current?.abort();
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
@@ -91,14 +90,16 @@ export default function App() {
           }
         }
       }
-    } catch (err: any) {
-      if (err.name === 'AbortError') {
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
         console.log('Fetch aborted.');
       } else {
         console.error(err);
       }
     } finally {
-      setLoading(false);
+      if (!controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   };
 
