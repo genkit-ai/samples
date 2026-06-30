@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { remoteAgent } from 'genkit/beta/client';
+import { remoteAgent, AgentChat } from 'genkit/beta/client';
+import { ApprovalPrompt } from './ApprovalPrompt';
 
 export interface ToolCall {
   name: string;
@@ -70,7 +71,7 @@ export default function App() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   // Instantiate a stateful AgentChat instance
-  const agentRef = useRef<any>(null);
+  const agentRef = useRef<AgentChat | null>(null);
   if (!agentRef.current) {
     agentRef.current = remoteAgent({ url: '/api/agent' }).chat({ sessionId });
   }
@@ -161,7 +162,7 @@ export default function App() {
 
     try {
       // 1. sendStream creates a turn and automatically manages passing message history
-      const turn = agentRef.current.sendStream(input.trim(), {
+      const turn = agentRef.current!.sendStream(input.trim(), {
         abortSignal: controller.signal
       });
 
@@ -178,6 +179,53 @@ export default function App() {
       }
     }
   };
+
+  const handleDecision = async (tc: ToolCall, approved: boolean, autoApprove?: boolean) => {
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+    setLoading(true);
+
+    try {
+      const resumePayload = approved
+        ? {
+            restart: [{
+              toolRequest: {
+                name: tc.name,
+                ref: tc.ref,
+                input: tc.input
+              },
+              metadata: { resumed: { toolApproved: true, autoApprove } }
+            }]
+          }
+        : {
+            respond: [{
+              toolResponse: {
+                name: tc.name,
+                ref: tc.ref,
+                output: 'Error: User rejected the action.'
+              }
+            }]
+          };
+
+      const turn = agentRef.current!.resumeStream(resumePayload, {
+        abortSignal: controller.signal
+      });
+
+      await consumeTurn(turn);
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        console.log('Fetch aborted.');
+      } else {
+        console.error(err);
+      }
+    } finally {
+      if (!controller.signal.aborted) {
+        setLoading(false);
+      }
+    }
+  };
+
+  const pendingTool = messages.at(-1)?.toolCalls?.find(tc => tc.state === 'running');
 
   return (
     <div className="chat-container">
@@ -205,6 +253,13 @@ export default function App() {
             )}
           </React.Fragment>
         ))}
+        {!loading && pendingTool && (
+          <ApprovalPrompt
+            toolName={pendingTool.name}
+            toolInput={pendingTool.input}
+            onDecision={(approved, autoApprove) => handleDecision(pendingTool, approved, autoApprove)}
+          />
+        )}
         <div ref={messagesEndRef} />
       </div>
       <form className="chat-input-form" onSubmit={handleSubmit}>
