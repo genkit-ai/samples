@@ -183,29 +183,6 @@ body {
   gap: 12px;
 }
 
-/* (Optional) Adds an animated blue accent bar next to the tool name */
-.tool-indicator {
-  width: 4px;
-  height: 18px;
-  background-color: var(--accent-blue-light);
-  border-radius: 4px;
-  flex-shrink: 0;
-  transform-origin: bottom;
-}
-
-.tool-indicator.indicator-animate {
-  animation: growUpBar 0.25s ease-out forwards;
-}
-
-@keyframes growUpBar {
-  0% {
-    transform: scaleY(0);
-  }
-
-  100% {
-    transform: scaleY(1);
-  }
-}
 
 .tool-step-label {
   font-size: 15px;
@@ -289,18 +266,4 @@ body {
   font-family: 'Chivo Mono', 'Fira Code', Consolas, Monaco, monospace;
   max-height: 300px;
   overflow-y: auto;
-}
-
-.tool-status {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-left: 8px;
-}
-
-.tool-status.running {
-  background-color: rgba(59, 130, 246, 0.15);
-  color: var(--accent-blue);
 }
