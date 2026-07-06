@@ -9,27 +9,28 @@ export interface ToolCall {
 }
 
 function ToolCallBox({ tc }: { tc: ToolCall }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(tc.state === 'running');
+
+  useEffect(() => {
+    setIsOpen(tc.state === 'running');
+  }, [tc.state]);
   return (
     <div className="message tool-message">
       <div className="tool-box">
         <div className="tool-header">
-          <div key={`indicator-${tc.name}`} className="tool-indicator indicator-animate" />
           <div key={`label-${tc.name}`} className="tool-step-label step-animate">
-            Used tool: <code>{tc.name}</code>
+            {tc.state === 'running' ? 'Using' : 'Used'} tool: <code>{tc.name}</code>
           </div>
         </div>
         <details
           className="tool-details"
+          open={isOpen}
           onToggle={(e) => setIsOpen(e.currentTarget.open)}
         >
           <summary className="tool-summary">
             <span className="summary-text">
               {isOpen ? 'Hide Tool Details' : 'Show Tool Details'}
             </span>
-            {tc.state === 'running' && (
-              <span className="tool-status running">Running...</span>
-            )}
           </summary>
           <div className="tool-body">
             <div>Input: {JSON.stringify(tc.input, null, 2)}</div>
