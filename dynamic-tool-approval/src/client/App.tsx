@@ -11,9 +11,12 @@ export interface ToolCall {
 function ToolCallBox({ tc }: { tc: ToolCall }) {
   const [isOpen, setIsOpen] = useState(tc.state === 'running');
 
-  useEffect(() => {
+  const [prevTcState, setPrevTcState] = useState(tc.state);
+
+  if (tc.state !== prevTcState) {
+    setPrevTcState(tc.state);
     setIsOpen(tc.state === 'running');
-  }, [tc.state]);
+  }
   return (
     <div className="message tool-message">
       <div className="tool-box">
