@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { remoteAgent } from 'genkit/beta/client';
 
 export interface ToolCall {
   name: string;
@@ -50,7 +51,22 @@ function ToolCallBox({ tc }: { tc: ToolCall }) {
   );
 }
 
+// In a production app, you would save session IDs in a database 
+// and retrieve them from the server to persist history across devices.
+function useSessionId() {
+  const [sessionId] = useState(() => {
+    let id = sessionStorage.getItem('chat_session_id');
+    if (!id) {
+      id = crypto.randomUUID();
+      sessionStorage.setItem('chat_session_id', id);
+    }
+    return id;
+  });
+  return sessionId;
+}
+
 export default function App() {
+  const sessionId = useSessionId();
   const [messages, setMessages] = useState<{
     role: string;
     text: string;
@@ -60,6 +76,11 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  // Instantiate a stateful AgentChat instance
+  const agentRef = useRef<any>(null);
+  if (!agentRef.current) {
+    agentRef.current = remoteAgent({ url: '/api/agent' }).chat({ sessionId });
+  }
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -72,6 +93,65 @@ export default function App() {
       abortControllerRef.current?.abort();
     };
   }, []);
+
+  const consumeTurn = async (turn: any) => {
+    // 2. Consume the AsyncIterable stream of AgentChunks incrementally
+    for await (const chunk of turn.stream) {
+      setMessages(prev => {
+        if (prev.length === 0) return prev;
+        const last = prev[prev.length - 1];
+        let updated = { ...last };
+
+        // chunk.text contains the delta (new characters) for this chunk
+        if (chunk.text) {
+          updated.text = (updated.text || '') + chunk.text;
+        }
+        // chunk.toolRequests contains newly yielded ToolRequestParts
+        if (chunk.toolRequests && chunk.toolRequests.length > 0) {
+          const newToolCalls = chunk.toolRequests
+            .filter((tr: any) => !(updated.toolCalls || []).some((tc: any) => tc.ref === tr.toolRequest.ref))
+            .map((tr: any) => ({
+              name: tr.toolRequest.name,
+              input: tr.toolRequest.input,
+              ref: tr.toolRequest.ref,
+              state: 'running' as const
+            }));
+          updated.toolCalls = [...(updated.toolCalls || []), ...newToolCalls];
+        }
+
+        return [...prev.slice(0, -1), updated];
+      });
+    }
+
+    // 3. Wait for AgentResponse
+    const res = await turn.response;
+
+    // 4. Update UI with final completed tool responses
+    if (res.message && res.message.content) {
+      setMessages(prev => {
+        if (prev.length === 0) return prev;
+        const last = prev[prev.length - 1];
+        // Since turn.response has resolved, any tools that were 'running' during this turn are now 'completed'
+        let toolCalls: ToolCall[] = [...(last.toolCalls || [])].map(tc => ({
+          ...tc,
+          state: res.finishReason === 'interrupted' ? tc.state : 'completed'
+        }));
+
+        // Iterate over the raw message parts to find toolRequests
+        for (const part of res.message!.content) {
+          if (part.toolRequest && !toolCalls.some(tc => tc.ref === part.toolRequest!.ref)) {
+            toolCalls.push({
+              name: part.toolRequest.name,
+              input: part.toolRequest.input,
+              ref: part.toolRequest.ref,
+              state: res.finishReason === 'interrupted' ? 'running' : 'completed' // if it bypassed stream, it's also already completed unless interrupted
+            });
+          }
+        }
+        return [...prev.slice(0, -1), { ...last, toolCalls }];
+      });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,91 +167,12 @@ export default function App() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/chat?stream=true', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({
-          data: {
-            messages: [...messages, userMsg].map(m => ({
-              role: m.role,
-              content: [{ text: m.text }]
-            }))
-          }
-        }),
+      // 1. sendStream creates a turn and automatically manages passing message history
+      const turn = agentRef.current.sendStream(input.trim(), {
+        abortSignal: controller.signal
       });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      // Parse the Server-Sent Events (SSE) stream
-      const reader = res.body?.getReader();
-      if (!reader) {
-        throw new Error('Response body is not readable');
-      }
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (reader) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-
-        // Keep the last partial chunk in the buffer in case it was split mid-JSON
-        buffer = lines.pop() || '';
-
-        const dataPrefix = 'data: ';
-        for (const line of lines) {
-          if (line.startsWith(dataPrefix)) {
-            try {
-              // Append the newly streamed text to the active model message
-              const data = JSON.parse(line.slice(dataPrefix.length));
-              // Genkit's express plugin wraps the stream chunks under "message"
-              const payload = data.message;
-              if (!payload) continue;
-
-              setMessages(prev => {
-                if (prev.length === 0) return prev;
-                const last = prev[prev.length - 1];
-                if (payload.text) {
-                  return [...prev.slice(0, -1), { ...last, text: last.text + (payload.text || '') }];
-                }
-
-                if (payload.toolRequest) {
-                  const tc = {
-                    name: payload.toolRequest.name,
-                    input: payload.toolRequest.input,
-                    ref: payload.toolRequest.ref,
-                    state: 'running' as const
-                  };
-                  const toolCalls = [...(last.toolCalls || []), tc];
-                  return [...prev.slice(0, -1), { ...last, toolCalls }];
-                }
-
-                if (payload.toolResponse) {
-                  const toolCalls = (last.toolCalls || []).map(tc => {
-                    const isMatch = payload.toolResponse.ref
-                      ? tc.ref === payload.toolResponse.ref
-                      : (tc.name === payload.toolResponse.name && tc.state === 'running');
-                    if (isMatch) {
-                      return { ...tc, output: payload.toolResponse.output, state: 'completed' as const };
-                    }
-                    return tc;
-                  });
-                  return [...prev.slice(0, -1), { ...last, toolCalls }];
-                }
-
-                return prev;
-              });
-            } catch (parseErr) {
-              console.error('Failed to parse SSE line:', line, parseErr);
-            }
-          }
-        }
-      }
+      await consumeTurn(turn);
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') {
         console.log('Fetch aborted.');
