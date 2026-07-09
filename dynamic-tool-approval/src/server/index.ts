@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import { genkit, z } from 'genkit';
+import { z } from 'genkit';
+import { genkit, InMemorySessionStore } from 'genkit/beta';
 import { googleAI } from '@genkit-ai/google-genai';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -31,10 +32,22 @@ const orderCoffee = ai.defineTool(
     inputSchema: z.object({ drink: z.string() }),
     outputSchema: z.string(),
   },
-  async (input) => {
-    return `Successfully ordered a ${input.drink}!`;
+  async ({ drink }) => {
+    return `Successfully ordered a ${drink}!`;
   }
 );
+// IMPORTANT: For local testing, we use InMemorySessionStore to store agent memory
+// If deploying to production, you must use a persistent database plugin (like Firestore) instead
+// to ensure agent state is not lost between chat messages.
+const store = new InMemorySessionStore();
+
+// Note: `defineAgent` requires a Genkit version of v1.39.0 or higher
+export const coffeeAgent = ai.defineAgent({
+  name: 'coffeeAgent',
+  model: googleAI.model('gemini-3.5-flash'),
+  tools: [readCoffeeMenu, orderCoffee],
+  store: store,
+});
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -103,6 +116,9 @@ export const chatFlow = ai.defineFlow({
 
 // POST /api/chat generation route
 app.post('/api/chat', expressHandler(chatFlow));
+
+// POST /api/agent native genkit agent route
+app.post('/api/agent', expressHandler(coffeeAgent));
 
 // Security: Bind to configurable host (defaults to 127.0.0.1 for local testing)
 const HOST = process.env.HOST || '127.0.0.1';
