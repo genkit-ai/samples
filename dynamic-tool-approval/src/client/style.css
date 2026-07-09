@@ -278,3 +278,116 @@ body {
   max-height: 300px;
   overflow-y: auto;
 }
+/* Approval Chat Bubble */
+.message.approval-message {
+  align-self: flex-start;
+  max-width: 480px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.approval-bubble {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.approval-body {
+  padding: 14px;
+}
+
+.approval-warning {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.tool-args-preview {
+  background-color: var(--bg-surface-inset);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 12px;
+  max-height: 120px;
+  overflow-y: auto;
+  font-family: 'Chivo Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.approval-options-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.approval-option-card {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 6px 8px;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.15s ease;
+}
+
+.approval-option-card:hover {
+  background: none;
+  color: var(--text-primary);
+}
+
+.option-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--bg-surface-inset);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--accent-blue);
+  margin-right: 12px;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.approval-option-card:hover .option-key {
+  border-color: var(--accent-blue);
+  background-color: var(--bg-surface);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.25);
+}
+
+.option-label {
+  font-weight: 500;
+}
+
+/* Slide up entry animation */
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
