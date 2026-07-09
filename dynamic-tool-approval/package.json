@@ -11,10 +11,11 @@
   },
   "type": "module",
   "dependencies": {
-    "@genkit-ai/express": "^1.38.0",
-    "@genkit-ai/google-genai": "^1.36.0",
+    "@genkit-ai/express": "^1.39.0",
+    "@genkit-ai/google-genai": "^1.39.0",
+    "@genkit-ai/middleware": "^0.7.0",
     "express": "^5.2.1",
-    "genkit": "^1.36.0",
+    "genkit": "^1.39.0",
     "helmet": "^8.2.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
