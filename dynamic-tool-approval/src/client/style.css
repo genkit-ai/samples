@@ -7,6 +7,14 @@
   --text-secondary: #a1a1aa;
   --accent-blue: #3b82f6;
   --accent-blue-light: #60a5fa;
+/* Spacing */
+  --space-xxs: 2px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
 }
 
 * {
@@ -32,17 +40,25 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   height: 100%;
+  /* Used to set a vertical macro layout for the chat area */
   display: flex;
   flex-direction: column;
 }
 
 .chat-messages {
   flex: 1;
-  padding: 32px 24px;
+  padding: var(--space-xxl) var(--space-xl);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-lg);
+}
+
+.message-content {
+  padding: var(--space-md) var(--space-lg);
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 /* (Optional) Adds an entrance animation to new chat bubbles */
@@ -51,136 +67,131 @@ body {
   flex-direction: column;
   max-width: 80%;
   animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  &.user-message {
+    align-self: flex-end;
+    
+    .message-content {
+      background-color: var(--accent-blue);
+      border-radius: 20px 20px 4px 20px;
+    }
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
+
+  &.model-message {
+    align-self: flex-start;
+    
+    .message-content {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px 20px 20px 4px;
     }
-  
-    to {
-      opacity: 1;
-      transform: translateY(0);
+  }
+
+  &.system-message {
+    align-self: center;
+    max-width: 90%;
+    
+    .message-content {
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+      border-radius: 20px;
+      padding: var(--space-xs) var(--space-md);
     }
+  }
 }
 
-.message.user-message {
-  align-self: flex-end;
-}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-sm));
+  }
 
-.message.model-message {
-  align-self: flex-start;
-}
-
-.message.system-message {
-  align-self: center;
-  max-width: 90%;
-}
-
-.message.system-message .message-content {
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 500;
-  text-align: center;
-  border-radius: 20px;
-  padding: 8px 16px;
-}
-.message-content {
-  padding: 14px 20px;
-  font-size: 15px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-
-.user-message .message-content {
-  background-color: var(--accent-blue);
-  border-radius: 20px 20px 4px 20px;
-}
-
-.model-message .message-content {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: 20px 20px 20px 4px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .chat-input-form {
-  padding: 20px 24px;
+  padding: var(--space-lg) var(--space-xl);
   border-top: 1px solid var(--border-color);
   display: flex;
-  gap: 14px;
-}
+  gap: var(--space-md);
 
-.chat-input-form input {
-  flex: 1;
-  padding: 15px 22px;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  color: inherit;
-  border-radius: 30px;
-  font-size: 15px;
-  font-family: inherit;
-  transition: border-color 0.2s;
-}
+  input {
+    flex: 1;
+    padding: var(--space-md) var(--space-xl);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: inherit;
+    border-radius: 30px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.2s;
 
-.chat-input-form input:focus {
-  outline: none;
-  border-color: var(--accent-blue);
-}
+    &:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+  }
 
-.chat-input-form button {
-  background-color: var(--accent-blue);
-  color: var(--text-primary);
-  border: none;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background-color 0.2s;
-}
+  button {
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    /* Used to center the SVG icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s;
 
-.chat-input-form button:hover:not(:disabled) {
-  background-color: var(--accent-blue-light);
-}
+    &:hover:not(:disabled) {
+      background-color: var(--accent-blue-light);
+    }
 
-.chat-input-form button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
-.chat-input-form button svg {
-  margin-left: 2px;
+    svg {
+      margin-left: var(--space-xxs);
+    }
+  }
 }
 /* Tool execution styling */
 .tool-message {
   width: 100%;
   max-width: 85%;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-xs);
 }
 
 .tool-box {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 16px 16px 16px 4px;
-  padding: 16px 22px;
+  padding: var(--space-md) var(--space-xl);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-sm);
   transition: border-color 0.3s ease;
-}
 
-.tool-box:hover {
-  border-color: #3f3f46;
+  &:hover {
+    border-color: #3f3f46;
+  }
 }
 
 .tool-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-sm);
 }
 
 
@@ -190,20 +201,20 @@ body {
   color: var(--accent-blue-light);
   letter-spacing: 0.2px;
   transform-origin: bottom left;
-}
 
-.tool-step-label code {
-  font-family: monospace;
-  font-size: 13px;
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: inherit;
-}
+  code {
+    font-family: monospace;
+    font-size: 13px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: 4px;
+    color: inherit;
+  }
 
-/* (Optional) Adds an entrance animation to the tool name text */
-.tool-step-label.step-animate {
-  animation: flipUpText 0.25s ease-out forwards;
+  /* (Optional) Adds an entrance animation to the tool name text */
+  &.step-animate {
+    animation: flipUpText 0.25s ease-out forwards;
+  }
 }
 
 @keyframes flipUpText {
@@ -226,27 +237,27 @@ body {
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
   user-select: none;
   color: var(--text-secondary);
   font-size: 13.5px;
   transition: color 0.2s;
-}
 
-.tool-summary:hover {
-  color: var(--text-primary);
-}
+  &:hover {
+    color: var(--text-primary);
+  }
 
-.tool-summary::-webkit-details-marker {
-  display: none;
-}
+  &::-webkit-details-marker {
+    display: none;
+  }
 
-.tool-summary::before {
-  content: '▶';
-  display: inline-block;
-  font-size: 10px;
-  color: var(--accent-blue-light);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  &::before {
+    content: '▶';
+    display: inline-block;
+    font-size: 10px;
+    color: var(--accent-blue-light);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 }
 
 .tool-details[open] .tool-summary::before {
@@ -254,8 +265,8 @@ body {
 }
 
 .tool-body {
-  margin-top: 12px;
-  padding: 14px 16px;
+  margin-top: var(--space-sm);
+    padding: var(--space-md);
   background-color: var(--bg-surface-inset);
   border: 1px solid var(--border-color);
   border-radius: 10px;
