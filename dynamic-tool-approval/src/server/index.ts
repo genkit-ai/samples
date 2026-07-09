@@ -32,7 +32,33 @@ const orderCoffee = ai.defineTool(
     inputSchema: z.object({ drink: z.string() }),
     outputSchema: z.string(),
   },
-  async ({ drink }) => {
+  async ({ drink }, ctx) => {
+    const session = ai.currentSession<{ autoApprovedTools?: string[] }>();
+    const isAutoApproved = session?.getCustom()?.autoApprovedTools?.includes('orderCoffee');
+    // `ctx.resumed` contains the payload sent by the client when it resumes an interrupted stream.
+    // When the user approves the tool call, the client passes this metadata to bypass the interrupt.
+    // The `autoApprove` flag is also passed here if the user opted to remember their decision.
+    const resumed = ctx.resumed as { toolApproved?: boolean, autoApprove?: boolean } | undefined;
+
+    if (!isAutoApproved && !resumed?.toolApproved) {
+      // Note: ctx.interrupt() throws a ToolInterruptError to suspend execution,
+      // so it never reaches the success return statement at the end.
+      ctx.interrupt({ reason: 'User approval is required to order coffee.' });
+    }
+
+    if (resumed?.autoApprove && !isAutoApproved) {
+      await session?.updateCustom((prev) => {
+        const autoApprovedTools = [...(prev?.autoApprovedTools || [])];
+        if (!autoApprovedTools.includes('orderCoffee')) {
+          autoApprovedTools.push('orderCoffee');
+        }
+        return { ...prev, autoApprovedTools };
+      });
+    }
+
+    // Simulate API delay like a real coffee ordering system would have
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     return `Successfully ordered a ${drink}!`;
   }
 );
