@@ -82,40 +82,7 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 import { expressHandler } from '@genkit-ai/express';
 
-export const chatFlow = ai.defineFlow({
-  name: 'chatFlow',
-  inputSchema: z.object({
-    messages: z.array(z.any()),
-  }),
-  streamSchema: z.object({
-    text: z.string().optional(),
-    toolRequest: z.any().optional(),
-    toolResponse: z.any().optional(),
-  }),
-}, async (input, { sendChunk }) => {
-  const { stream, response } = await ai.generateStream({
-    model: googleAI.model('gemini-3.5-flash'),
-    messages: input.messages,
-    tools: [readCoffeeMenu, orderCoffee], // Register tools
-    config: {
-      thinkingConfig: {
-        thinkingLevel: 'MINIMAL',
-      },
-    },
-  });
 
-  for await (const chunk of stream) {
-    for (const part of chunk.content || []) {
-      sendChunk(part);
-    }
-  }
-
-  const finalResponse = await response;
-  return finalResponse.text;
-});
-
-// POST /api/chat generation route
-app.post('/api/chat', expressHandler(chatFlow));
 
 // POST /api/agent native genkit agent route
 app.post('/api/agent', expressHandler(coffeeAgent));
