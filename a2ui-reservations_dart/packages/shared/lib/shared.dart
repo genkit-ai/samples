@@ -12,20 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// Values shared by the server (`lib/agent.dart`, `bin/server.dart`) and the
-/// Flutter client (`lib/main.dart`).
+/// Values shared by the server (`packages/server`) and the Flutter client
+/// (`packages/app`).
 ///
-/// This file has no server-only or Flutter-only imports so it is safe to
-/// include from either side. It exists mainly so the custom catalog id is
-/// defined in exactly one place: the server catalog and the client renderer
-/// MUST agree on it, otherwise a surface created by the agent won't resolve to
-/// the client's widgets.
+/// This package has no server-only (`dart:io`) or Flutter-only imports so it is
+/// safe to depend on from both the Dart VM server and the Flutter Web client.
+/// It ensures the custom catalog id is defined in a single place: the server
+/// catalog and the client renderer MUST agree on it, otherwise a surface
+/// created by the agent won't resolve to the client's widgets.
 library;
 
 /// The id of the app's custom A2UI catalog.
 ///
 /// The server registers a catalog under this id (see `bistroCatalog` in
-/// `lib/agent.dart`) and the client registers a matching set of widgets under
-/// the same id (see `_catalog` in `lib/main.dart`). Reverse-domain notation is
-/// recommended to avoid clashes with other catalogs.
+/// `package:a2ui_reservations_server/agent.dart`) and the client registers a
+/// matching set of widgets under the same id (see `bistroClientCatalog` in
+/// `package:a2ui_reservations_app/src/catalog.dart`). Reverse-domain notation
+/// is recommended to avoid clashes with other catalogs.
 const String bistroCatalogId = 'com.example.a2ui.bistro';

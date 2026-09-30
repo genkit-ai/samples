@@ -24,12 +24,11 @@
 /// `DateTimeInput` and `ChoicePicker`.
 library;
 
+import 'package:a2ui_reservations_shared/shared.dart';
 import 'package:genkit/genkit.dart';
 import 'package:genkit_a2ui/a2ui.dart';
 import 'package:genkit_google_genai/genkit_google_genai.dart';
 import 'package:schemantic/schemantic.dart';
-
-import 'shared.dart';
 
 part 'agent.g.dart';
 
@@ -250,7 +249,7 @@ final confirmReservation = ai.defineTool(
 /// the client. [InMemorySessionStore] persists conversation state across turns.
 final uiAgent = ai.defineAgent(
   name: 'uiAgent',
-  model: googleAI.gemini('gemini-flash-latest'),
+  model: googleAI.gemini('gemini-flash-lite-latest'),
   system:
       'You are the dining concierge for Cymbal Bistro. Keep text responses brief.\n'
       'Use checkAvailability before rendering a reservation form card, and use '

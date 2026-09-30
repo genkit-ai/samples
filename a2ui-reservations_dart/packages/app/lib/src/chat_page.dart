@@ -12,246 +12,61 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// A2UI Dining Reservations Flutter client.
-///
-/// Connects to the Genkit A2UI agent (`bin/server.dart`) using `remoteAgent`
-/// from `package:genkit/client.dart`, streams prose and A2UI surfaces into a
-/// modern chat interface, and renders interactive surfaces with `genui`.
-///
-/// Key A2UI integration points demonstrated below:
-/// 1. Matching client & server catalogs via [bistroCatalogId] (`_catalog`).
-/// 2. Streaming agent chunks (`_runTurn`) and extracting A2UI envelopes with
-///    [a2uiEnvelopesFromParts] into a [SurfaceController].
-/// 3. Capturing user interactions from rendered surfaces (`_onSurfaceSubmit`)
-///    and sending them back as structured turns with [actionToMessage].
+/// Chat page and UI widgets for Cymbal Bistro.
 library;
 
-import 'dart:convert';
-
-import 'package:a2ui_core/a2ui_core.dart' as core;
 import 'package:flutter/material.dart';
-import 'package:genkit/client.dart';
 import 'package:genkit_a2ui/client.dart';
 import 'package:genui/genui.dart' hide DataPart, TextPart, basicCatalogId;
 
-import 'shared.dart';
-
-/// Base URL of the Shelf agent server. Override with `--dart-define=AGENT_BASE_URL`.
-const String _baseUrl = String.fromEnvironment(
-  'AGENT_BASE_URL',
-  defaultValue: 'http://localhost:8080',
-);
-
-// ---------------------------------------------------------------------------
-// 1. Client A2UI Catalog Configuration
-// ---------------------------------------------------------------------------
-
-/// Custom `Card` catalog item with comfortable 20px padding for form layouts.
-final CatalogItem _bistroCardItem = CatalogItem(
-  name: 'Card',
-  dataSchema: BasicCatalogItems.card.dataSchema,
-  widgetBuilder: (itemContext) {
-    final childId = (itemContext.data as Map)['child'] as String;
-    return Card(
-      color: Theme.of(itemContext.buildContext).colorScheme.surface,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: itemContext.buildChild(childId),
-      ),
-    );
-  },
-);
-
-/// The client catalog, tagged with the same [bistroCatalogId] advertised by
-/// the server's `bistroCatalog` (`lib/agent.dart`).
-final Catalog _catalog = BasicCatalogItems.asCatalog().copyWith(
-  catalogId: bistroCatalogId,
-  newItems: [_bistroCardItem],
-);
-
-void main() {
-  runApp(const A2uiApp());
-}
-
-// ---------------------------------------------------------------------------
-// 2. Core Chat & A2UI Streaming Logic
-// ---------------------------------------------------------------------------
-
-/// Models an entry in the conversation stream: prose text, an interactive
-/// A2UI surface, or a user UI interaction badge.
-sealed class _Entry {
-  const _Entry();
-}
-
-class _TextEntry extends _Entry {
-  _TextEntry(this.isUser, this.text);
-  final bool isUser;
-  String text;
-}
-
-class _SurfaceEntry extends _Entry {
-  _SurfaceEntry(this.surfaceId);
-  final String surfaceId;
-}
-
-class _ActionEntry extends _Entry {
-  _ActionEntry(this.action);
-  final A2uiClientAction action;
-}
+import 'chat_controller.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  const ChatPage({super.key, this.controller});
+
+  final ChatController? controller;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  late final AgentApi _agent;
-  late AgentChat _chat;
-  late SurfaceController _surfaceController;
-
-  final _entries = <_Entry>[];
+  late final ChatController _controller;
+  late final bool _ownsController;
   final _input = TextEditingController();
   final _scroll = ScrollController();
-  bool _busy = false;
 
   @override
   void initState() {
     super.initState();
-    _agent = remoteAgent(
-      url: '$_baseUrl/api/uiAgent',
-      getSnapshotUrl: '$_baseUrl/api/uiAgent/getSnapshot',
-      abortUrl: '$_baseUrl/api/uiAgent/abort',
-    );
-    _initSession();
+    _ownsController = widget.controller == null;
+    _controller = widget.controller ?? ChatController();
+    _controller.addListener(_onControllerChanged);
   }
 
-  void _initSession() {
-    _chat = _agent.chat();
-    _surfaceController = SurfaceController(catalogs: [_catalog]);
-
-    // Mount newly created A2UI surfaces into the conversation log.
-    _surfaceController.surfaceUpdates.listen((update) {
-      if (update is SurfaceAdded) {
-        final exists = _entries.whereType<_SurfaceEntry>().any(
-          (e) => e.surfaceId == update.surfaceId,
-        );
-        if (!exists && mounted) {
-          setState(() => _entries.add(_SurfaceEntry(update.surfaceId)));
-          _scrollToBottom();
-        }
-      }
-    });
-
-    // Forward interactive surface events (e.g. button clicks) to the agent.
-    _surfaceController.onSubmit.listen(_onSurfaceSubmit);
-  }
-
-  void _resetSession() {
-    if (_busy) return;
-    _surfaceController.dispose();
-    setState(() {
-      _entries.clear();
-      _initSession();
-    });
+  void _onControllerChanged() {
+    if (!mounted) return;
+    setState(() {});
+    _scrollToBottom();
   }
 
   @override
   void dispose() {
-    _surfaceController.dispose();
-    _agent.close();
+    _controller.removeListener(_onControllerChanged);
+    if (_ownsController) {
+      _controller.dispose();
+    }
     _input.dispose();
     _scroll.dispose();
     super.dispose();
   }
 
-  /// Sends a user text prompt to the agent.
   Future<void> _send(String text) async {
-    if (text.trim().isEmpty || _busy) return;
+    if (text.trim().isEmpty || _controller.busy) return;
     _input.clear();
-    setState(() {
-      _entries.add(_TextEntry(true, text));
-      _busy = true;
-    });
+    await _controller.sendText(text);
     _scrollToBottom();
-    await _runTurn(_chat.sendStream(text: text));
-  }
-
-  /// Converts a rendered surface's submit interaction into an [A2uiClientAction]
-  /// and sends it back to the agent as the next conversation turn.
-  Future<void> _onSurfaceSubmit(ChatMessage message) async {
-    if (_busy) return;
-    final action = extractClientAction(message);
-    if (action == null) return;
-
-    setState(() {
-      _entries.add(_ActionEntry(action));
-      _busy = true;
-    });
-    _scrollToBottom();
-    await _runTurn(_chat.sendStream(message: actionToMessage(action)));
-  }
-
-  /// Streams a single agent turn, incrementally rendering prose text and
-  /// decoding A2UI envelopes into the [SurfaceController].
-  Future<void> _runTurn(AgentTurn turn) async {
-    _TextEntry? prose;
-    try {
-      await for (final chunk in turn.stream) {
-        // 1. Append streamed prose text deltas
-        if (chunk.text.isNotEmpty) {
-          if (prose == null) {
-            prose = _TextEntry(false, '');
-            setState(() => _entries.add(prose!));
-          }
-          setState(() => prose!.text += chunk.text);
-          _scrollToBottom();
-        }
-
-        // 2. Decode A2UI envelopes from data parts and update surfaces
-        for (final envelope in a2uiEnvelopesFromParts(
-          chunk.raw.modelChunk?.content,
-        )) {
-          _handleEnvelope(envelope);
-        }
-      }
-      await turn.response;
-    } catch (err) {
-      setState(() => _entries.add(_TextEntry(false, 'Error: $err')));
-    } finally {
-      if (prose != null && prose.text.trim().isEmpty) {
-        setState(() => _entries.remove(prose));
-      }
-      if (mounted) {
-        setState(() => _busy = false);
-        _scrollToBottom();
-        Future.delayed(const Duration(milliseconds: 150), _scrollToBottom);
-      }
-    }
-  }
-
-  void _handleEnvelope(Map<String, dynamic> envelope) {
-    try {
-      _sanitizeEnvelope(envelope);
-      _surfaceController.handleMessage(core.A2uiMessage.fromJson(envelope));
-    } catch (err) {
-      debugPrint('Failed to apply A2UI envelope: $err');
-    }
-  }
-
-  /// Prevents infinite height layout exceptions when a `Row` uses `align: stretch`
-  /// inside an unbounded vertical scroll view.
-  void _sanitizeEnvelope(Map<String, dynamic> envelope) {
-    final update = envelope['updateComponents'];
-    if (update is! Map) return;
-    final components = update['components'];
-    if (components is! List) return;
-    for (final c in components) {
-      if (c is Map && c['component'] == 'Row' && c['align'] == 'stretch') {
-        c.remove('align');
-      }
-    }
+    Future.delayed(const Duration(milliseconds: 150), _scrollToBottom);
   }
 
   void _scrollToBottom() {
@@ -268,37 +83,40 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final entries = _controller.entries;
+    final busy = _controller.busy;
+
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(entries.isNotEmpty, busy),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 780),
           child: Column(
             children: [
-              if (_entries.isNotEmpty) ...[
-                _SuggestionBar(onTap: _busy ? null : _send),
+              if (entries.isNotEmpty) ...[
+                _SuggestionBar(onTap: busy ? null : _send),
                 const Divider(color: Color(0xFF1A2337), height: 1),
               ],
               Expanded(
-                child: _entries.isEmpty
-                    ? _WelcomeHero(onSelectPrompt: _busy ? null : _send)
+                child: entries.isEmpty
+                    ? _WelcomeHero(onSelectPrompt: busy ? null : _send)
                     : ListView.builder(
                         controller: _scroll,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 20,
                         ),
-                        itemCount: _entries.length,
-                        itemBuilder: (context, i) => _buildEntry(_entries[i]),
+                        itemCount: entries.length,
+                        itemBuilder: (context, i) => _buildEntry(entries[i]),
                       ),
               ),
-              if (_busy)
+              if (busy)
                 const LinearProgressIndicator(
                   color: Color(0xFF6582CC),
                   backgroundColor: Color(0xFF0F1827),
                   minHeight: 2,
                 ),
-              _Composer(controller: _input, enabled: !_busy, onSend: _send),
+              _Composer(controller: _input, enabled: !busy, onSend: _send),
             ],
           ),
         ),
@@ -306,7 +124,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(bool hasEntries, bool busy) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(62),
       child: Container(
@@ -363,11 +181,11 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                     const Spacer(),
                     const _StatusBadge(label: 'A2UI v0.9'),
-                    if (_entries.isNotEmpty) ...[
+                    if (hasEntries) ...[
                       const SizedBox(width: 8),
                       IconButton(
                         tooltip: 'New reservation session',
-                        onPressed: _busy ? null : _resetSession,
+                        onPressed: busy ? null : _controller.resetSession,
                         style: IconButton.styleFrom(
                           backgroundColor: const Color(0xFF141F32),
                           foregroundColor: const Color(0xFFCBD5E1),
@@ -389,9 +207,9 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget _buildEntry(_Entry entry) {
+  Widget _buildEntry(ChatEntry entry) {
     switch (entry) {
-      case _TextEntry(:final isUser, :final text):
+      case TextEntry(:final isUser, :final text):
         final trimmed = text.trim();
         if (trimmed.isEmpty) return const SizedBox.shrink();
         if (isUser) {
@@ -441,13 +259,13 @@ class _ChatPageState extends State<ChatPage> {
           );
         }
 
-      case _ActionEntry(:final action):
+      case ActionEntry(:final action):
         return Align(
           alignment: Alignment.centerRight,
           child: _ActionBadge(action: action),
         );
 
-      case _SurfaceEntry(:final surfaceId):
+      case SurfaceEntry(:final surfaceId):
         return Align(
           alignment: Alignment.centerLeft,
           child: ConstrainedBox(
@@ -456,163 +274,15 @@ class _ChatPageState extends State<ChatPage> {
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: IntrinsicHeight(
                 child: Surface(
-                  surfaceContext: _surfaceController.contextFor(surfaceId),
+                  surfaceContext: _controller.surfaceController.contextFor(
+                    surfaceId,
+                  ),
                 ),
               ),
             ),
           ),
         );
     }
-  }
-}
-
-/// Extracts an [A2uiClientAction] from a `genui` [ChatMessage] emitted by
-/// `SurfaceController.onSubmit`.
-A2uiClientAction? extractClientAction(ChatMessage message) {
-  for (final part in message.parts) {
-    final interaction = part.asUiInteractionPart?.interaction;
-    if (interaction == null) continue;
-    final decoded = jsonDecode(interaction);
-    final action = (decoded is Map) ? decoded['action'] : null;
-    if (action is Map) {
-      final map = action.cast<String, dynamic>();
-      return A2uiClientAction(
-        name: (map['name'] as String?) ?? 'action',
-        surfaceId: (map['surfaceId'] as String?) ?? '',
-        sourceComponentId: (map['widgetId'] as String?) ?? '',
-        timestamp: DateTime.now().toUtc().toIso8601String(),
-        context: (map['context'] as Map?)?.cast<String, dynamic>() ?? const {},
-      );
-    }
-  }
-  return null;
-}
-
-// ---------------------------------------------------------------------------
-// 3. UI Chrome & Theme Widgets
-// ---------------------------------------------------------------------------
-
-class A2uiApp extends StatelessWidget {
-  const A2uiApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const bgDark = Color(0xFF070B13);
-    const surfaceDark = Color(0xFF0F1827);
-    const borderDark = Color(0xFF222D47);
-    const primaryBlue = Color(0xFF6582CC);
-    const lightText = Color(0xFFE2E8F0);
-
-    return MaterialApp(
-      title: 'Cymbal Bistro - A2UI',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: bgDark,
-        colorScheme: const ColorScheme.dark(
-          surface: surfaceDark,
-          surfaceContainerHighest: Color(0xFF141F32),
-          primary: primaryBlue,
-          onPrimary: Colors.white,
-          secondary: Color(0xFF7FA2FF),
-          outline: borderDark,
-        ),
-        cardTheme: CardThemeData(
-          color: surfaceDark,
-          elevation: 0,
-          margin: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: const BorderSide(color: borderDark, width: 1),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: primaryBlue,
-            foregroundColor: Colors.white,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-            textStyle: const TextStyle(
-              fontSize: 14.5,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.2,
-            ),
-          ),
-        ),
-        filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(
-            backgroundColor: primaryBlue,
-            foregroundColor: Colors.white,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-            textStyle: const TextStyle(
-              fontSize: 14.5,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.2,
-            ),
-          ),
-        ),
-        chipTheme: ChipThemeData(
-          backgroundColor: surfaceDark,
-          selectedColor: const Color(0xFF1E325C),
-          checkmarkColor: const Color(0xFF93B4FF),
-          side: const BorderSide(color: borderDark),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          labelStyle: const TextStyle(color: lightText, fontSize: 13),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: const Color(0xFF0A101C),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: 12,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: borderDark),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: borderDark),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: primaryBlue, width: 1.5),
-          ),
-          labelStyle: const TextStyle(
-            color: Color(0xFF94A3B8),
-            fontSize: 13.5,
-          ),
-        ),
-        sliderTheme: SliderThemeData(
-          activeTrackColor: primaryBlue,
-          inactiveTrackColor: const Color(0xFF1A2946),
-          thumbColor: const Color(0xFF7FA2FF),
-          overlayColor: primaryBlue.withValues(alpha: 0.2),
-        ),
-        checkboxTheme: CheckboxThemeData(
-          fillColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.selected)) {
-              return primaryBlue;
-            }
-            return Colors.transparent;
-          }),
-          side: const BorderSide(color: borderDark, width: 1.5),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        ),
-        useMaterial3: true,
-      ),
-      home: const ChatPage(),
-    );
   }
 }
 

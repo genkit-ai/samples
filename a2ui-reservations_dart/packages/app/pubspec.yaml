@@ -1,0 +1,26 @@
+name: a2ui_reservations_app
+description: "Flutter client for the Cymbal Bistro A2UI dining reservation concierge."
+publish_to: 'none'
+version: 1.0.0+1
+
+resolution: workspace
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  a2ui_reservations_shared: any
+  a2ui_core: ^0.1.0
+  genkit: ^0.16.1
+  genkit_a2ui: ^0.2.2
+  genui: ^0.10.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

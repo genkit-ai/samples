@@ -1,34 +1,11 @@
-name: a2ui_reservations_dart
-description: "A2UI dining reservation sample: a Shelf server hosting an A2UI-enabled Genkit agent, plus a Flutter client that renders surfaces with genui."
+name: a2ui_reservations_workspace
+description: "A2UI dining reservation sample workspace: shared A2UI catalog contract, Shelf + Genkit server, and Flutter genui client."
 publish_to: 'none'
-
-version: 1.0.0+1
 
 environment:
   sdk: ^3.10.0
 
-dependencies:
-  flutter:
-    sdk: flutter
-  a2ui_core: ^0.1.0
-  genui: ^0.10.1
-
-  genkit: ^0.16.1
-  genkit_a2ui: ^0.2.2
-  genkit_google_genai: ^0.3.1
-  genkit_shelf: ^0.1.1
-  genkit_middleware: ^0.6.1
-  schemantic: ^0.2.2
-  shelf: ^1.4.0
-  shelf_router: ^1.1.0
-  shelf_cors_headers: ^0.1.5
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^5.0.0
-  build_runner: ^2.4.0
-  schemantic_builder: ^0.1.2
-
-flutter:
-  uses-material-design: true
+workspace:
+  - packages/shared
+  - packages/server
+  - packages/app

@@ -1,0 +1,12 @@
+name: a2ui_reservations_shared
+description: "Shared A2UI catalog identifiers and contracts between the Cymbal Bistro server and Flutter client."
+publish_to: 'none'
+version: 1.0.0
+
+resolution: workspace
+
+environment:
+  sdk: ^3.10.0
+
+dev_dependencies:
+  lints: ^5.0.0
