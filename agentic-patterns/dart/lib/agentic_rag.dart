@@ -66,7 +66,7 @@ void defineAgenticRagFlows(Genkit ai) {
           })
           .toList();
 
-      if (queryWords.isEmpty) return [];
+      if (queryWords.isEmpty) return .response([]);
 
       final docs = menuItems
           .where((item) {
@@ -77,7 +77,7 @@ void defineAgenticRagFlows(Genkit ai) {
           .map((item) => DocumentData(content: [TextPart(text: item)]))
           .toList();
 
-      return docs;
+      return .response(docs);
     },
   );
 

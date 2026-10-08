@@ -42,9 +42,11 @@ void defineAutonomousOperationFlows(Genkit ai) {
     outputSchema: .string(),
     fn: (input, _) async {
       // In a real app, you would call a search API here.
-      return 'Search results for "${input.query}": Genkit is a powerful AI framework from Firebase. '
-          'This tool is mocked for demonstration purposes. In a real app, you would call a search API here. '
-          'For now, pretend you found relevant information.';
+      return .response(
+        'Search results for "${input.query}": Genkit is a powerful AI framework from Firebase. '
+        'This tool is mocked for demonstration purposes. In a real app, you would call a search API here. '
+        'For now, pretend you found relevant information.',
+      );
     },
   );
 
@@ -55,7 +57,7 @@ void defineAutonomousOperationFlows(Genkit ai) {
     outputSchema: .string(),
     fn: (input, context) async {
       // This tool interrupts the flow to ask the user a question.
-      context.interrupt(input.question);
+      return .interrupt(input.question);
     },
   );
 
