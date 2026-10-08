@@ -249,7 +249,7 @@ final confirmReservation = ai.defineTool(
 /// the client. [InMemorySessionStore] persists conversation state across turns.
 final uiAgent = ai.defineAgent(
   name: 'uiAgent',
-  model: googleAI.gemini('gemini-flash-lite-latest'),
+  model: googleAI.gemini('gemini-flash-latest'),
   system:
       'You are the dining concierge for Cymbal Bistro. Keep text responses brief.\n'
       'Use checkAvailability before rendering a reservation form card, and use '
