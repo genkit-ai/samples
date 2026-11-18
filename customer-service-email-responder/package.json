@@ -7,7 +7,7 @@
     "genkit:dev": "genkit start -- tsx --watch src/index.ts",
     "compile": "tsc",
     "build": "npm run build:clean && npm run compile",
-    "build:clean": "rimraf ./lib",
+    "build:clean": "node -e \"require('fs').rmSync('./lib', { recursive: true, force: true })\"",
     "build:watch": "tsc --watch",
     "build-and-run": "npm run build && node lib/index.js",
     "migrate": "prisma migrate dev",

@@ -1,0 +1,34 @@
+{
+  "name": "genkit-samples",
+  "private": true,
+  "scripts": {
+    "build:all-samples": "pnpm -r --workspace-concurrency 4 --if-present build"
+  },
+  "pnpm": {
+    "overrides": {
+      "@emnapi/runtime": "^1.7.1",
+      "@grpc/grpc-js": ">=1.13.6",
+      "body-parser": ">=1.20.9",
+      "next@>=15.0.0 <15.5.28": ">=15.5.28",
+      "picomatch": ">=4.0.4",
+      "postcss": ">=8.5.18",
+      "tmp": ">=0.2.6",
+      "vite@<6.4.4": ">=6.4.4",
+      "zod@>=4.0.0 <4.6.6": ">=4.6.6"
+    },
+    "onlyBuiltDependencies": [
+      "@firebase/util",
+      "@nestjs/core",
+      "@parcel/watcher",
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "lightningcss",
+      "lmdb",
+      "msgpackr-extract",
+      "prisma",
+      "protobufjs",
+      "sharp"
+    ]
+  }
+}
