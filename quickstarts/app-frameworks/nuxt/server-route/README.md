@@ -7,7 +7,7 @@ Guide: https://genkit.dev/docs/js/app-frameworks/nuxt (JS / server route)
 ## Run
 
 ```bash
-cd ../../.. && pnpm install   # once, from samples/quickstarts
+pnpm install   # once, from the repo root (or npm install in this directory)
 cd app-frameworks/nuxt/server-route
 GEMINI_API_KEY=<your-key> pnpm dev
 ```

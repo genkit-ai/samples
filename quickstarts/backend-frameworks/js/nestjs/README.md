@@ -7,7 +7,7 @@ Guide: https://genkit.dev/docs/js/backend-frameworks/nestjs
 ## Run
 
 ```bash
-pnpm install   # once, from quickstarts/
+pnpm install   # once, from the repo root (or npm install in this directory)
 cd quickstarts/backend-frameworks/js/nestjs
 GEMINI_API_KEY=<your-key> pnpm start          # or pnpm start:dev for watch mode
 ```

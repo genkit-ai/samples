@@ -7,7 +7,7 @@ Guide: https://genkit.dev/docs/js/backend-frameworks/fastify
 ## Run
 
 ```bash
-pnpm install   # once, from quickstarts/
+pnpm install   # once, from the repo root (or npm install in this directory)
 cd quickstarts/backend-frameworks/js/fastify
 GEMINI_API_KEY=<your-key> pnpm start
 ```

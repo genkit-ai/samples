@@ -7,7 +7,7 @@ Guide: https://genkit.dev/docs/js/app-frameworks/sveltekit (SvelteKit SSR tab)
 ## Run
 
 ```bash
-cd quickstarts && pnpm install   # once, from the repo root
+pnpm install   # once, from the repo root (or npm install in this directory)
 cd app-frameworks/sveltekit/ssr
 GEMINI_API_KEY=<your-key> pnpm dev
 ```
