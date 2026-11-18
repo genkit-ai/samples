@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node lib/index.js",
     "genkit:dev": "genkit start -- tsx --watch src/index.ts",
-    "compile": "tsc",
+    "compile": "prisma generate && tsc",
     "build": "npm run build:clean && npm run compile",
     "build:clean": "node -e \"require('fs').rmSync('./lib', { recursive: true, force: true })\"",
     "build:watch": "tsc --watch",
@@ -35,6 +35,7 @@
     "typescript": "^5.7.2"
   },
   "prisma": {
+    "schema": "./src/prisma/schema.prisma",
     "seed": "ts-node ./prisma/seed.ts"
   },
   "packageManager": "pnpm@9.13.2+sha256.ccce81bf7498c5f0f80e31749c1f8f03baba99d168f64590fc7e13fad3ea1938"
