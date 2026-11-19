@@ -16,7 +16,7 @@
     "@genkit-ai/express": "^1.26.0",
     "@genkit-ai/google-genai": "^1.26.0",
     "express": "^4",
-    "glob": "^13.0.0"
+    "glob": "^14.0.2"
   },
   "devDependencies": {
     "@types/mime-types": "^3.0.1",
