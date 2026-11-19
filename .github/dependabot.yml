@@ -96,3 +96,29 @@ updates:
       - dependency-name: "*"
         update-types:
           - "version-update:semver-major"
+
+  # Maintain dependencies for Dart and Flutter samples
+  - package-ecosystem: "pub"
+    directories:
+      - "/a2ui-reservations_dart"
+      - "/agentic-patterns/dart"
+      - "/eli5_dart"
+      - "/eli5_dart/flutter"
+      - "/quickstarts/app-frameworks/flutter"
+      - "/quickstarts/backend-frameworks/dart/shelf"
+      - "/simple-chatbot/flutter"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    groups:
+      dart-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
