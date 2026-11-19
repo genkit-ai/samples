@@ -10,11 +10,11 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.0.0",
+    "astro": "^7.4.5",
     "genkit": "^1.36.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.12",
     "@emnapi/runtime": "^1.11.3",
     "typescript": "^5.9.3"
   }
