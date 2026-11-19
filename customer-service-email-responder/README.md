@@ -27,7 +27,7 @@ Before you begin, make sure you have the following installed:
 
 1. Install dependencies:
    ```
-   pnpm i
+   npm install
    ```
 
 2. Set up your environment:

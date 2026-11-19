@@ -89,15 +89,17 @@ export const customerServiceFlow = ai.defineFlow(
 async function escalateToHuman(inquiry: string, email: string, reason: string) {
   const customer = await getCustomerByEmail(email);
 
-  const escalation = await createEscalation(
-    customer ? customer.id : email,
-    'Customer Inquiry Escalation',
-    `Inquiry: ${inquiry}\n\nReason for escalation: ${reason}`,
-    inquiry
-  );
+  const escalation = customer
+    ? await createEscalation(
+        customer.id,
+        'Customer Inquiry Escalation',
+        `Inquiry: ${inquiry}\n\nReason for escalation: ${reason}`,
+        inquiry
+      )
+    : null;
 
   return {
     message: "Your inquiry has been escalated to our customer service team. We'll get back to you as soon as possible.",
-    escalationId: escalation.id
+    escalationId: escalation?.id ?? null
   };
 } 

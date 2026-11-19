@@ -16,13 +16,13 @@ quickstarts/
 │   ├── py/{fastapi, flask, django}
 │   └── dart/shelf
 └── app-frameworks/          # UIs — pair with any backend, or use the framework's own server
-    ├── angular/{ssr, standalone}                   # self-contained npm projects
+    ├── angular/{ssr, standalone}
     ├── astro/{endpoint, standalone}
     ├── nextjs/{app-router, pages, standalone}
     ├── nuxt/{server-route, standalone}
-    ├── remix/{server-route, standalone}            # self-contained npm projects
+    ├── remix/{server-route, standalone}
     ├── sveltekit/{ssr, standalone}
-    ├── tanstack-start/{api-route, standalone}      # self-contained npm projects
+    ├── tanstack-start/{api-route, standalone}
     ├── react-vite/                                 # browser-only → any backend
     └── flutter/                                    # Flutter web → any backend
 ```
@@ -39,7 +39,7 @@ The pnpm workspace is at the root, so a single `pnpm install` covers every JS sa
 - **Python**: Python ≥ 3.11, [`uv`](https://docs.astral.sh/uv/).
 - **Dart / Flutter**: Dart SDK ≥ 3.10. The Flutter web sample also requires Flutter.
 
-Every sample installs Genkit from the public registries, so no local Genkit checkout is required. The JS backends and the Vite/Next/Nuxt/Astro/SvelteKit frontends are a single pnpm workspace (`pnpm install` at this directory covers them all). The CLI-scaffolded frameworks — **Angular, Remix, and TanStack Start** — are self-contained npm projects with their own lockfiles; install and run those with `npm install && npm run dev` (or `npm start`) inside each project directory.
+Every sample installs Genkit from the public registries, so no local Genkit checkout is required. All JS quickstarts (including Angular, Remix, and TanStack Start) are part of the repo's root `pnpm` workspace (`pnpm install` at the repo root covers them all), or you can install and run any individual sample standalone with `npm install`.
 
 ## How the flow works (every sample)
 
@@ -56,14 +56,14 @@ Every backend exposes `POST /bargainChefFlow` (or, for full-stack frameworks, `P
 ### JS backends
 
 ```bash
-cd quickstarts
+# From the repo root:
 pnpm install     # one install for every JS sample
 
 # Pick one:
-cd backend-frameworks/js/express  && GEMINI_API_KEY=... pnpm start    # http://localhost:8080
-cd backend-frameworks/js/fastify  && GEMINI_API_KEY=... pnpm start    # http://localhost:3000
-cd backend-frameworks/js/hono     && GEMINI_API_KEY=... pnpm start    # http://localhost:3780
-cd backend-frameworks/js/nestjs   && GEMINI_API_KEY=... pnpm start    # http://localhost:3000
+cd quickstarts/backend-frameworks/js/express  && GEMINI_API_KEY=... pnpm start    # http://localhost:8080
+cd quickstarts/backend-frameworks/js/fastify  && GEMINI_API_KEY=... pnpm start    # http://localhost:3000
+cd quickstarts/backend-frameworks/js/hono     && GEMINI_API_KEY=... pnpm start    # http://localhost:3780
+cd quickstarts/backend-frameworks/js/nestjs   && GEMINI_API_KEY=... pnpm start    # http://localhost:3000
 ```
 
 ### Go backends
@@ -130,9 +130,9 @@ Adjust the port and (for full-stack frameworks) the path:
 These bundle their own server route, so you only run one process:
 
 ```bash
-cd quickstarts
+# From the repo root:
 pnpm install
-cd app-frameworks/nextjs/app-router    # or nextjs/pages, sveltekit/ssr, nuxt/server-route, astro/endpoint
+cd quickstarts/app-frameworks/nextjs/app-router    # or nextjs/pages, sveltekit/ssr, nuxt/server-route, astro/endpoint
 GEMINI_API_KEY=... pnpm dev
 # open the URL printed by the dev server
 ```
@@ -248,7 +248,6 @@ All samples below resolve Genkit from the public registries (no local checkout) 
 
 ## Troubleshooting
 
-- **Angular / Remix / TanStack Start: `Cannot find module 'genkit'`**: these are self-contained npm projects, not part of the pnpm workspace. Run `npm install` inside the project directory (not `pnpm install` at the repo root).
 - **Go: `cannot find module`**: run `go mod tidy` in the sample directory to fetch `github.com/firebase/genkit/go` from the module proxy.
 - **Python: `ModuleNotFoundError: genkit`**: run `uv sync` in the sample directory to install from PyPI.
 - **Dart: dependency resolution fails**: run `dart pub get` in `backend-frameworks/dart/shelf`, then `dart run build_runner build` to regenerate `*.g.dart` from the `@Schema()` classes.

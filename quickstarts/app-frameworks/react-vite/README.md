@@ -14,7 +14,7 @@ cd backend-frameworks/js/express && GEMINI_API_KEY=<your-key> pnpm start
 # or backend-frameworks/go/chi, backend-frameworks/py/flask, backend-frameworks/dart/shelf, …
 
 # Terminal 2 — this frontend:
-cd quickstarts && pnpm install     # once, from the quickstarts root
+pnpm install     # once, from the repo root (or npm install in this directory)
 cd app-frameworks/react-vite
 pnpm dev
 ```

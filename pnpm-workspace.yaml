@@ -1,0 +1,38 @@
+packages:
+  - '.'
+  - 'agent-streaming'
+  - 'agentic-patterns/js'
+  - 'canvas'
+  - 'canvas/ui'
+  - 'customer-service-email-responder'
+  - 'dynamic-tool-approval'
+  - 'eli5'
+  - 'eli5_go/client'
+  - 'emoji-face'
+  - 'simple-chatbot'
+  - 'simple-chatbot/ui'
+  - 'quickstarts/app-frameworks/*/*'
+  - 'quickstarts/app-frameworks/react-vite'
+  - 'quickstarts/backend-frameworks/js/*'
+
+# 21-day minimum release age (in minutes) to align with Airlock soak policy.
+minimumReleaseAge: 30240
+
+# Exempt validated 1P Genkit, Google AI/Cloud, and Firebase SDK packages.
+minimumReleaseAgeExclude:
+  - '@genkit-ai/*'
+  - 'genkit'
+  - 'genkit-cli'
+  - 'dotprompt'
+  - '@google-cloud/*'
+  - 'googleapis'
+  - 'google-auth-library'
+  - '@firebase/*'
+  - 'firebase'
+  - 'firebase-admin'
+
+# Allow astro CLI (inside .pnpm store) to resolve @astrojs/check.
+packageExtensions:
+  astro:
+    peerDependencies:
+      '@astrojs/check': '*'

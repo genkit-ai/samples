@@ -6,3 +6,4 @@ pubspec.lock
 GENKIT.md
 dist/
 node_modules/
+package-lock.json
