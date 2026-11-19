@@ -22,6 +22,10 @@ version: 2
 #    `version-update:semver-major` PRs via `ignore` (so breaking major framework
 #    jumps are handled intentionally rather than turning the weekly PR red).
 #    Security/CVE updates bypass both `cooldown` and `ignore`.
+# 3. `npm` and `uv` use `versioning-strategy: "increase-if-necessary"` so existing
+#    open ranges aren't churned while out-of-range/capped deps still surface.
+#    Genkit SDK packages are grouped separately from third-party deps so a
+#    breaking 0.x SDK bump doesn't block routine third-party updates.
 updates:
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -38,15 +42,29 @@ updates:
   # Maintain dependencies for JS/TS samples workspace
   - package-ecosystem: "npm"
     directory: "/"
-    versioning-strategy: "lockfile-only"
+    versioning-strategy: "increase-if-necessary"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 21
     groups:
+      genkit-js:
+        patterns:
+          - "genkit"
+          - "genkit-*"
+          - "@genkit-ai/*"
+          - "dotprompt"
+        update-types:
+          - "minor"
+          - "patch"
       samples-dependencies:
         patterns:
           - "*"
+        exclude-patterns:
+          - "genkit"
+          - "genkit-*"
+          - "@genkit-ai/*"
+          - "dotprompt"
         update-types:
           - "minor"
           - "patch"
@@ -81,14 +99,25 @@ updates:
   # Maintain dependencies for Python samples workspace
   - package-ecosystem: "uv"
     directory: "/"
+    versioning-strategy: "increase-if-necessary"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
     groups:
+      genkit-py:
+        patterns:
+          - "genkit"
+          - "genkit-*"
+        update-types:
+          - "minor"
+          - "patch"
       py-dependencies:
         patterns:
           - "*"
+        exclude-patterns:
+          - "genkit"
+          - "genkit-*"
         update-types:
           - "minor"
           - "patch"
