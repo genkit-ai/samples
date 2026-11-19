@@ -102,3 +102,61 @@ jobs:
           uv run --no-sync --directory quickstarts/backend-frameworks/py/django python manage.py check
           uv run --no-sync --directory quickstarts/backend-frameworks/py/fastapi python -c "import main"
           uv run --no-sync --directory quickstarts/backend-frameworks/py/flask python -c "import main"
+
+  check-dart:
+    name: Check Dart Samples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+      - name: Analyze and test Dart samples
+        run: |
+          for dir in \
+            agentic-patterns/dart \
+            eli5_dart \
+            quickstarts/backend-frameworks/dart/shelf; do
+            echo "::group::$dir"
+            (
+              cd "$dir"
+              dart pub get
+              dart analyze
+              if [ -d test ]; then
+                dart test
+              fi
+            )
+            echo "::endgroup::"
+          done
+
+  check-flutter:
+    name: Check Flutter Samples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          channel: stable
+          cache: true
+      - name: Analyze and test Flutter samples
+        run: |
+          for dir in \
+            a2ui-reservations_dart \
+            eli5_dart/flutter \
+            quickstarts/app-frameworks/flutter \
+            simple-chatbot/flutter; do
+            echo "::group::$dir"
+            (
+              cd "$dir"
+              flutter pub get
+              flutter analyze --no-fatal-infos
+              if [ -d test ]; then
+                flutter test
+              fi
+            )
+            echo "::endgroup::"
+          done
