@@ -54,3 +54,26 @@ updates:
       - dependency-name: "*"
         update-types:
           - "version-update:semver-major"
+
+  # Maintain dependencies for Go samples
+  - package-ecosystem: "gomod"
+    directories:
+      - "/agentic-patterns/go"
+      - "/eli5_go"
+      - "/simple-chatbot/go"
+      - "/quickstarts/backend-frameworks/go/*"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    groups:
+      go-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
