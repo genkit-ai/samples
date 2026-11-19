@@ -96,6 +96,8 @@ jobs:
       - name: Syntax check Python samples
         run: uv run --no-sync python -m compileall -q quickstarts/backend-frameworks/py
       - name: Smoke check Python sample imports
+        env:
+          GEMINI_API_KEY: dummy-ci-key
         run: |
           uv run --no-sync --directory quickstarts/backend-frameworks/py/django python manage.py check
           uv run --no-sync --directory quickstarts/backend-frameworks/py/fastapi python -c "import main"
