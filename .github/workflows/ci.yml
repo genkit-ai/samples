@@ -78,4 +78,4 @@ jobs:
               go test ./...
             )
             echo "::endgroup::"
-          done < <(find . -name go.mod -not -path '*/node_modules/*' | sort)
+          done < <(find . -name go.mod | sort)
