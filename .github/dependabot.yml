@@ -51,7 +51,9 @@ updates:
       genkit-js:
         patterns:
           - "genkit"
+          - "genkit-*"
           - "@genkit-ai/*"
+          - "dotprompt"
         update-types:
           - "minor"
           - "patch"
@@ -60,7 +62,9 @@ updates:
           - "*"
         exclude-patterns:
           - "genkit"
+          - "genkit-*"
           - "@genkit-ai/*"
+          - "dotprompt"
         update-types:
           - "minor"
           - "patch"
