@@ -14,7 +14,7 @@
     "genkit:start": "genkit start -- tsx --watch src/genkit/bargainChefFlow.ts"
   },
   "dependencies": {
-    "@genkit-ai/fetch": "^0.1.1",
+    "@genkit-ai/fetch": "^0.6.0",
     "@genkit-ai/google-genai": "^1.36.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",

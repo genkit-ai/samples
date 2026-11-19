@@ -233,8 +233,8 @@ importers:
         specifier: ^1.39.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/middleware':
-        specifier: ^0.7.0
-        version: 0.7.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.11.0
+        version: 0.11.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       express:
         specifier: ^5.2.1
         version: 5.3.0
@@ -686,8 +686,8 @@ importers:
         specifier: ^9.0.0
         version: 9.5.5(astro@5.18.2(@astrojs/check@0.9.12(@emnapi/runtime@1.11.3)(prettier@3.9.10)(typescript@5.9.3))(@types/node@25.9.9)(db0@0.3.4)(idb-keyval@6.3.0)(ioredis@5.11.1)(jiti@2.7.0)(rollup@4.66.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(typescript@5.9.3)(yaml@2.9.1))
       '@genkit-ai/fetch':
-        specifier: ^0.1.1
-        version: 0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.36.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -776,8 +776,8 @@ importers:
   quickstarts/app-frameworks/nextjs/pages:
     dependencies:
       '@genkit-ai/fetch':
-        specifier: ^0.1.1
-        version: 0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.36.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -844,8 +844,8 @@ importers:
   quickstarts/app-frameworks/nuxt/server-route:
     dependencies:
       '@genkit-ai/fetch':
-        specifier: ^0.1.1
-        version: 0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.36.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -922,8 +922,8 @@ importers:
   quickstarts/app-frameworks/remix/server-route:
     dependencies:
       '@genkit-ai/fetch':
-        specifier: ^0.1.1
-        version: 0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.36.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -1020,8 +1020,8 @@ importers:
   quickstarts/app-frameworks/sveltekit/ssr:
     dependencies:
       '@genkit-ai/fetch':
-        specifier: ^0.1.1
-        version: 0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.36.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -1088,8 +1088,8 @@ importers:
   quickstarts/app-frameworks/tanstack-start/api-route:
     dependencies:
       '@genkit-ai/fetch':
-        specifier: ^0.1.1
-        version: 0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.36.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -1098,7 +1098,7 @@ importers:
         version: 4.3.3(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
       '@tanstack/react-devtools':
         specifier: latest
-        version: 0.10.13(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.17)
+        version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.17)
       '@tanstack/react-router':
         specifier: latest
         version: 1.170.46(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1135,7 +1135,7 @@ importers:
         version: 0.5.20(tailwindcss@4.3.3)
       '@tanstack/devtools-vite':
         specifier: latest
-        version: 0.8.5(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
+        version: 0.8.6(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
       '@tanstack/router-cli':
         specifier: ^1.132.0
         version: 1.167.46
@@ -1183,7 +1183,7 @@ importers:
         version: 4.3.3(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
       '@tanstack/react-devtools':
         specifier: latest
-        version: 0.10.13(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.17)
+        version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.17)
       '@tanstack/react-router':
         specifier: latest
         version: 1.170.46(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1220,7 +1220,7 @@ importers:
         version: 0.5.20(tailwindcss@4.3.3)
       '@tanstack/devtools-vite':
         specifier: latest
-        version: 0.8.5(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
+        version: 0.8.6(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
       '@tanstack/router-cli':
         specifier: ^1.132.0
         version: 1.167.46
@@ -1298,8 +1298,8 @@ importers:
         specifier: ^10.0.1
         version: 10.1.0
       '@genkit-ai/fastify':
-        specifier: ^0.1.1
-        version: 0.1.1(fastify@5.12.7)(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(fastify@5.12.7)(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.38.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -1326,8 +1326,8 @@ importers:
   quickstarts/backend-frameworks/js/hono:
     dependencies:
       '@genkit-ai/fetch':
-        specifier: ^0.1.1
-        version: 0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
+        specifier: ^0.6.0
+        version: 0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
       '@genkit-ai/google-genai':
         specifier: ^1.36.0
         version: 1.44.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))
@@ -2936,9 +2936,9 @@ packages:
     resolution: {integrity: sha512-itEsHARSsYS95+udF/TtIzNeQ0Uhx4uIna0sk4E0wQJBUnLc/G1X6D7oRljoOuwwCezRLGvWBRyNrugv/esOEw==}
     engines: {node: '>=18.0.0'}
 
-  '@firebase/database-compat@2.1.7':
-    resolution: {integrity: sha512-lBq9sJm8MnJINKJnkAKSOj2MbC66xGoSVCcGkPtstl+lkoKEBtD46qHLbuDgW/WbLPoKVm17RIN8BxHj+Z2F2w==}
-    engines: {node: '>=20.0.0'}
+  '@firebase/database-compat@2.1.8':
+    resolution: {integrity: sha512-wCMI122co2+rbldcZALIgmFoVn0Pj+PAuCjo0zvppMaPm/ksmK9twpmGCrmbUVjqe6xRs0YkCrKlblNujG2cpQ==}
+    engines: {node: '>=24.12.0'}
     peerDependencies:
       '@firebase/app': 0.x
       '@firebase/app-compat': 0.x
@@ -2958,9 +2958,9 @@ packages:
     resolution: {integrity: sha512-H9Rpj1pQ1yc9+4HQOotFGLxqAXwOzCHsRSRjcQFNOr8lhUt6LeYjf0NSRL04sc4X0dWe8DsCvYKxMYvFG/iOJw==}
     engines: {node: '>=18.0.0'}
 
-  '@firebase/database@1.1.5':
-    resolution: {integrity: sha512-/JGpvszLoNXNgzilRXocigGfFF4hbcPA9wN1i1kjJx6oKkXgkHteZYl3lQs1lJX3ETDf6bv7zI15lPMVUp4sAQ==}
-    engines: {node: '>=20.0.0'}
+  '@firebase/database@1.1.6':
+    resolution: {integrity: sha512-nPktjjCWA9TSJUc0KtStBRugI6AF1b53qOlDvXkHtueIBt1sOhPzCT7S2gtxrs07S9jGA2o7J5faEa/PFAXomg==}
+    engines: {node: '>=24.12.0'}
 
   '@firebase/firestore-compat@0.3.53':
     resolution: {integrity: sha512-qI3yZL8ljwAYWrTousWYbemay2YZa+udLWugjdjju2KODWtLG94DfO4NALJgPLv8CVGcDHNFXoyQexdRA0Cz8Q==}
@@ -3122,16 +3122,16 @@ packages:
       express: ^4.21.1 || ^5
       genkit: ^1.44.0
 
-  '@genkit-ai/fastify@0.1.1':
-    resolution: {integrity: sha512-HenjqWFSEv61UormvpTegsgDb5hPiz/ZZeAwgWc/MLXC66ZX1oLbYot8eF4+OveKUoKXTrq5mHOqFYLy1BoZ/Q==}
+  '@genkit-ai/fastify@0.6.0':
+    resolution: {integrity: sha512-BqgdAvqaf/srBOQQ7rOtWqlZyZxLC3+J7Cefk6Ug1YzqwgAHexpJiDLkDnrST970ekc9z9nzw96QRQizh0Ysyw==}
     peerDependencies:
       fastify: ^4.0.0 || ^5.0.0
-      genkit: ^1.38.0
+      genkit: ^1.43.0
 
-  '@genkit-ai/fetch@0.1.3':
-    resolution: {integrity: sha512-xq3NhxJpTPM8ITkF7+jreMshPZJVMEjMcbVlJ51aNpYwPNxFySgA+3cTsu9BukTFTyFFt9nkqyi3YkDXOo7zlA==}
+  '@genkit-ai/fetch@0.6.0':
+    resolution: {integrity: sha512-Dc5WZWTtcmcckrz6GhMBQiSlYoR/GWGR9iyUTDvwhHm/23IUNclvYsyhloUb3Xa6HVfMASnS9ftqgIhbh1ry9g==}
     peerDependencies:
-      genkit: ^1.38.0
+      genkit: ^1.43.0
 
   '@genkit-ai/firebase@1.44.0':
     resolution: {integrity: sha512-VZ0v588TJ+CL6gAziZelrnAAHmSPIjGAN/JroWLDLR2O55iWCYNMkcyBzPhkOI/1qLagTkosz98W/wxUGTBH/w==}
@@ -3160,10 +3160,10 @@ packages:
     peerDependencies:
       genkit: ^1.28.0
 
-  '@genkit-ai/middleware@0.7.0':
-    resolution: {integrity: sha512-9etI40/sC1BpZ7xFgTcf7Ivn0qxu6ff9mmqHeApwzA7we3otp7r/Ola0DDwg+sNs52eLeTg7y1DkRS13UqQF/A==}
+  '@genkit-ai/middleware@0.11.0':
+    resolution: {integrity: sha512-73Zf09REiJ4vDEIFR+BrFtxo7KuA9vcHT5l6e5M2WH1JHx/H4mbIAwQlE1ZsTdX9xr/KU/X08R5xgU8E+IkShg==}
     peerDependencies:
-      genkit: ^1.39.0
+      genkit: ^1.43.0
 
   '@genkit-ai/next@1.44.0':
     resolution: {integrity: sha512-T+oRwoUTiC98J5cCtimy9NbQK3tWz9IfybzaezjUfEAjj6wgV6FZh9ssrjKtDpmFL26xgBwnoarTqZqZmiROeA==}
@@ -3277,6 +3277,10 @@ packages:
 
   '@grpc/grpc-js@1.14.6':
     resolution: {integrity: sha512-SgC/B3/VZ8lTyOZ4Cwk6f1skWhmkNAaVfiX90qd5u1rRXGKk1//8FTUEN9GvOUq7rfWIqAYkA3CoyumYVpOS6g==}
+    engines: {node: '>=12.10.0'}
+
+  '@grpc/grpc-js@1.14.7':
+    resolution: {integrity: sha512-W4W/fcBMGRVtG6dW2c7cw2mnpS3hvbBd+oQXjh2iYFTZDk1JJmcNqkM5KSaPubQpamlUUurrlb7G1s9NJeERmQ==}
     engines: {node: '>=12.10.0'}
 
   '@grpc/proto-loader@0.7.15':
@@ -6850,8 +6854,8 @@ packages:
     peerDependencies:
       vite: '>=6.4.4'
 
-  '@tanstack/devtools-bundler-core@0.1.3':
-    resolution: {integrity: sha512-F0tlxIyfFqXkZ1mJP1EjtkiSeJA+ztXY2AYOHf7r4goCIEAOp86N9PFJ/yv8vu1TnmxGS6vKsZCS3Kyls9xQQA==}
+  '@tanstack/devtools-bundler-core@0.1.4':
+    resolution: {integrity: sha512-NaDbpESGyGLV4XPbLsL1b7XeGnYovbnRjoTZ9LoAwllaaposdcrgtBsAcbdr0n4p+mltEVrUB6AFpvAmjj0VGQ==}
     engines: {node: '>=18'}
 
   '@tanstack/devtools-client@0.0.8':
@@ -6867,25 +6871,24 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@tanstack/devtools-ui@0.7.1':
-    resolution: {integrity: sha512-3xQ/ezZ2qVNszhjpCN2N3jn7uHc2J1PMgcyjHzH4XZBt9xAQyMMcPNoR2cd7rzReyxWoJpZUWiDBmOJiCtLj9A==}
+  '@tanstack/devtools-ui@0.7.2':
+    resolution: {integrity: sha512-Ij6EpEXkx13OOVMJPCJpMzWzVV/mcsqfXM4d+ZjqCrQtgbt7cd2rsCseuKuYNmuGhJiOLYNXzYU5da7UqCY54g==}
     engines: {node: '>=18'}
     peerDependencies:
-      solid-js: '>=1.9.7'
+      solid-js: ^1.9.13
 
-  '@tanstack/devtools-vite@0.8.5':
-    resolution: {integrity: sha512-xaifCEmiwwzizlbp973oISXNsnmuU/BugLa66gryAZaPJJ/qo1kJd2DxY5X960eHwmyIS3SN0KYrL3/aRhucmA==}
+  '@tanstack/devtools-vite@0.8.6':
+    resolution: {integrity: sha512-CkaVqh3P7cJmQ6mMIxQfEmmR8gwlmgRCcoiWOMLigHaPobrrwTqsZvKqvYRHBybZ3ZT1ZSBj5TwlP7ukJJcRlg==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
       vite: '>=6.4.4'
 
-  '@tanstack/devtools@0.15.0':
-    resolution: {integrity: sha512-KyS7Qi82Eq9yG8C+uae3ikAPb+D5rfzVhvOOjXVAHZ/64s6TWJlDWpREw1FrHIYZaI7paErpsExSSKlF5BKA/A==}
+  '@tanstack/devtools@0.16.0':
+    resolution: {integrity: sha512-SgmsZ1RwWgohY+S2GhZ1bCttZ+bICb8EKaI1DUFBrs/CXL67IaW25TouoHflj5fGzrppfDM2ld56+TLuzMwJSA==}
     engines: {node: '>=18'}
-    hasBin: true
     peerDependencies:
-      solid-js: '>=1.9.7'
+      solid-js: ^1.9.13
 
   '@tanstack/history@1.162.5':
     resolution: {integrity: sha512-w1+YvwmTkwt5n8yUqEH3IWZ9DsmorCZW/EQ3KYHnqEgIkOZpH54NvW6/Epq3Dzb8H0ifIeYX8PExvrNLIH5FIA==}
@@ -6894,8 +6897,8 @@ packages:
   '@tanstack/query-core@5.105.0':
     resolution: {integrity: sha512-7p56vRmT/z4UJ6sctGIdl5WRUQyUv53IUpUwEKi2g97zMbO7zh8ZsCLffGAvCPBR4xD72e3VXsDyLwXHhoNTMQ==}
 
-  '@tanstack/react-devtools@0.10.13':
-    resolution: {integrity: sha512-r0cdB/14+st2Vxl/1Bodlyq4VC8pf9SykLQDYbGHDc1+V146WQo5B3KlYLkfyxD9Q/6+9NPRQHZyl8fvZVMdRA==}
+  '@tanstack/react-devtools@0.10.14':
+    resolution: {integrity: sha512-wFoNpqiU03MDbY1RljhX4vMUoGWwqpa5AZthWEaJRrojBFWFoB57lzzIM5r+EPGi+BsEX+OcXkn8Zkfoe4hGiA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/react': '>=16.8'
@@ -9478,8 +9481,8 @@ packages:
     resolution: {integrity: sha512-iJ9KMsiu+xKtNRX0PmGLSaIU3bUBAyzWTyqKemKPzNPsmmsBCQYmlNg+brEbES7IHSXtdVwzBPzx1vz3FAaipw==}
     engines: {node: '>=18'}
 
-  gcp-metadata@9.2.2:
-    resolution: {integrity: sha512-hlaHpCBoNCzoUjMnBZq0LbUiYqPAhXFaAgyNwQqwWU44TZIYJK3RD3o2wkNdvPs8nnUXqJjTudnodLJkLMBjow==}
+  gcp-metadata@9.2.3:
+    resolution: {integrity: sha512-d2OI/dJJ3IIaeOz3c9jvr5j5G5beI5fQzbgilNiWhDKGwvJN9o10Qub70NkbF6PNJSUoNKZ77JKYGz0Fs4+9Lg==}
     engines: {node: '>=22'}
 
   generic-names@4.0.0:
@@ -9592,8 +9595,8 @@ packages:
     resolution: {integrity: sha512-i1ydyHrqcIxXkWh/uBmVkzCvIuq5yiK2ATndIe5XxKholrG/MTYP9xGYka4sQhrbIAgGjL2B6NOE7rFaiF3fXw==}
     engines: {node: '>=18'}
 
-  google-auth-library@11.3.3:
-    resolution: {integrity: sha512-VxjQ5+zHeR4RcRi001qnT/6KRKy2CIjQ5I7/wFErvRqr0+setlRqjDOAzvjzWEzyvsWswZE6WMQJtS8OpeTqAQ==}
+  google-auth-library@11.3.4:
+    resolution: {integrity: sha512-RaYCDoeYIIFTRgH8hesSxqLrmtC2l+DB3cSCS/SN1TPGjI2VpPdJmF3bfRLUn8VvP/4I2Af9fsktw2f9SvVSVg==}
     engines: {node: '>=22'}
 
   google-auth-library@9.15.1:
@@ -9608,8 +9611,8 @@ packages:
     resolution: {integrity: sha512-M4vpZcXQIC1gqIVGQ7eaU3jXQA6zecStyTXu514TYfThlgSurYJOxHZo9fzU6hAgwPWvuEynAVHWyaIk80VeEA==}
     engines: {node: '>=18'}
 
-  google-gax@6.13.0:
-    resolution: {integrity: sha512-7Q60oxwV2M2zWytwB5siHUlip1jTVWoSxfF25NI13wGKlJ9jUwyWvKWrDfXjAuBOI5NVrv0R/tPaYi80V/5ZFg==}
+  google-gax@6.14.0:
+    resolution: {integrity: sha512-C6By4tAdiSoY+4S1Y8phpJkIqELIu0kPtUIcVacScAKhi4LwR6w9dbZI3JHnIfMBvWyvxgPZS2Y7hryBwTNJBQ==}
     engines: {node: '>=22'}
 
   google-logging-utils@0.0.2:
@@ -9620,8 +9623,8 @@ packages:
     resolution: {integrity: sha512-eAmLkjDjAFCVXg7A1unxHsLf961m6y17QFqXqAXGj/gVkKFrEICfStRfwUlGNfeCEjNRa32JEWOUTlYXPyyKvA==}
     engines: {node: '>=14'}
 
-  google-logging-utils@2.1.0:
-    resolution: {integrity: sha512-1R6uiq6XhXW2ZrcGtZpGgVDsYGzSmveVOn8Pp37qe1fbThHZ34e3t3eXj5mVu6PFSVx9fvB1KNVnYgVtq/BRcA==}
+  google-logging-utils@2.1.1:
+    resolution: {integrity: sha512-jYZOPMaRGS3Hldyudft6bdibW9ZWUKBkMdB2TeSETkV1c2T9TR4zxEWZETHv9xJ8KHr2hgkNLaSa8kcEcwlpeQ==}
     engines: {node: '>=22'}
 
   googleapis-common@7.2.0:
@@ -10062,6 +10065,9 @@ packages:
 
   jose@6.2.13:
     resolution: {integrity: sha512-7TIg10ZE1x82YediN+lcrPNvGMKge9yFHQD+Qho/b8y2adfugU3AsvvHfxV0fzyFllT6l9xCjf4RWY9g/Z9PJQ==}
+
+  jose@6.2.14:
+    resolution: {integrity: sha512-3JasLuki1NRLQvY4wCoC37KZk4qxoBx2k2aFqLxT84IezqW0bkJKnNtxnZj/Fu1xsQivoc/lytxaRHJoGLjJ1A==}
 
   js-tokens@10.0.0:
     resolution: {integrity: sha512-lM/UBzQmfJRo9ABXbPWemivdCW8V2G8FHaHdypQaIy523snUjog0W71ayWXTjiR+ixeMyVHN2XcpnTd/liPg/Q==}
@@ -12920,6 +12926,7 @@ packages:
 
   tldts-core@7.4.20:
     resolution: {integrity: sha512-C630TWXZCZmLq0F2bW4QqwnaaxCQ/svpAqvJwnC4JvgEM5ohhBnGsEzTLSOXcN+xjz+kEaHS5uoWIw2klnqd0A==}
+    deprecated: Partial release, see https://github.com/remusao/tldts/issues/2735. Use >=7.4.22.
 
   tldts@7.4.19:
     resolution: {integrity: sha512-48dH6aSpQnpbzDUc4vIQZ1VjB8tkK+e8c1yx05/SZK+rkssgjEOlxDd/yU8/a4vGYQ9vRgJr9dwMq9TJ0b3X2Q==}
@@ -15665,10 +15672,10 @@ snapshots:
       '@firebase/util': 1.12.1
       tslib: 2.8.1
 
-  '@firebase/database-compat@2.1.7(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2)':
+  '@firebase/database-compat@2.1.8(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2)':
     dependencies:
       '@firebase/component': 0.7.5
-      '@firebase/database': 1.1.5
+      '@firebase/database': 1.1.6
       '@firebase/database-types': 1.0.22
       '@firebase/logger': 0.5.2
       '@firebase/util': 1.15.3
@@ -15699,7 +15706,7 @@ snapshots:
       faye-websocket: 0.11.4
       tslib: 2.8.1
 
-  '@firebase/database@1.1.5':
+  '@firebase/database@1.1.6':
     dependencies:
       '@firebase/app-check-interop-types': 0.3.5
       '@firebase/auth-interop-types': 0.2.6
@@ -15999,12 +16006,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@genkit-ai/fastify@0.1.1(fastify@5.12.7)(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))':
+  '@genkit-ai/fastify@0.6.0(fastify@5.12.7)(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))':
     dependencies:
       fastify: 5.12.7
       genkit: 1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0)
 
-  '@genkit-ai/fetch@0.1.3(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))':
+  '@genkit-ai/fetch@0.6.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))':
     dependencies:
       genkit: 1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0)
 
@@ -16067,7 +16074,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@genkit-ai/middleware@0.7.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))':
+  '@genkit-ai/middleware@0.11.0(genkit@1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0))':
     dependencies:
       genkit: 1.44.0(@google-cloud/firestore@9.4.1)(firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2))(firebase@11.10.0)
       mime-types: 3.0.2
@@ -16283,7 +16290,7 @@ snapshots:
 
   '@google-cloud/firestore-api@0.7.1':
     dependencies:
-      google-gax: 6.13.0
+      google-gax: 6.14.0
       long: 5.3.2
     transitivePeerDependencies:
       - supports-color
@@ -16306,7 +16313,7 @@ snapshots:
       '@opentelemetry/api': 1.10.0
       fast-deep-equal: 3.1.3
       functional-red-black-tree: 1.0.1
-      google-gax: 6.13.0
+      google-gax: 6.14.0
       protobufjs: 7.6.6
     transitivePeerDependencies:
       - supports-color
@@ -16438,7 +16445,7 @@ snapshots:
       duplexify: 4.1.3
       fast-xml-parser: 5.11.2
       gaxios: 7.3.1
-      google-auth-library: 11.3.3
+      google-auth-library: 11.3.4
       html-entities: 2.6.0
       mime: 3.0.0
       p-limit: 3.1.0
@@ -16454,6 +16461,12 @@ snapshots:
     dependencies:
       '@grpc/proto-loader': 0.8.1
       '@js-sdsl/ordered-map': 4.4.2
+
+  '@grpc/grpc-js@1.14.7':
+    dependencies:
+      '@grpc/proto-loader': 0.8.1
+      '@js-sdsl/ordered-map': 4.4.2
+    optional: true
 
   '@grpc/proto-loader@0.7.15':
     dependencies:
@@ -20744,7 +20757,7 @@ snapshots:
       tailwindcss: 4.3.3
       vite: 8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
 
-  '@tanstack/devtools-bundler-core@0.1.3(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)':
+  '@tanstack/devtools-bundler-core@0.1.4(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)':
     dependencies:
       '@tanstack/devtools-client': 0.0.8
       '@tanstack/devtools-event-bus': 0.4.3
@@ -20772,7 +20785,7 @@ snapshots:
 
   '@tanstack/devtools-event-client@0.5.0': {}
 
-  '@tanstack/devtools-ui@0.7.1(csstype@3.2.3)(solid-js@1.9.17)':
+  '@tanstack/devtools-ui@0.7.2(csstype@3.2.3)(solid-js@1.9.17)':
     dependencies:
       clsx: 2.1.1
       dayjs: 1.11.23
@@ -20781,9 +20794,9 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/devtools-vite@0.8.5(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))':
+  '@tanstack/devtools-vite@0.8.6(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(vite@8.3.5(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))':
     dependencies:
-      '@tanstack/devtools-bundler-core': 0.1.3(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)
+      '@tanstack/devtools-bundler-core': 0.1.4(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)
       '@tanstack/devtools-client': 0.0.8
       '@tanstack/devtools-event-bus': 0.4.3
       chalk: 5.6.2
@@ -20794,7 +20807,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@tanstack/devtools@0.15.0(csstype@3.2.3)(solid-js@1.9.17)':
+  '@tanstack/devtools@0.16.0(csstype@3.2.3)(solid-js@1.9.17)':
     dependencies:
       '@neodrag/core': 3.0.0-next.11
       '@neodrag/solid': 3.0.0-next.11(@neodrag/core@3.0.0-next.11)(solid-js@1.9.17)
@@ -20803,7 +20816,7 @@ snapshots:
       '@solid-primitives/resize-observer': 2.2.0(solid-js@1.9.17)
       '@tanstack/devtools-client': 0.0.8
       '@tanstack/devtools-event-bus': 0.4.3
-      '@tanstack/devtools-ui': 0.7.1(csstype@3.2.3)(solid-js@1.9.17)
+      '@tanstack/devtools-ui': 0.7.2(csstype@3.2.3)(solid-js@1.9.17)
       clsx: 2.1.1
       goober: 2.1.19(csstype@3.2.3)
       solid-js: 1.9.17
@@ -20816,9 +20829,9 @@ snapshots:
 
   '@tanstack/query-core@5.105.0': {}
 
-  '@tanstack/react-devtools@0.10.13(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.17)':
+  '@tanstack/react-devtools@0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.17)':
     dependencies:
-      '@tanstack/devtools': 0.15.0(csstype@3.2.3)(solid-js@1.9.17)
+      '@tanstack/devtools': 0.16.0(csstype@3.2.3)(solid-js@1.9.17)
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
       react: 19.3.1
@@ -23866,10 +23879,10 @@ snapshots:
   firebase-admin@14.5.0(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2):
     dependencies:
       '@fastify/busboy': 3.2.4
-      '@firebase/database-compat': 2.1.7(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2)
+      '@firebase/database-compat': 2.1.8(@firebase/app-compat@0.4.2)(@firebase/app@0.13.2)
       '@firebase/database-types': 1.0.22
       fast-deep-equal: 3.1.3
-      google-auth-library: 11.3.3
+      google-auth-library: 11.3.4
       jsonwebtoken: 9.0.3
       jwks-rsa: 4.1.0
     optionalDependencies:
@@ -24079,10 +24092,10 @@ snapshots:
       - supports-color
     optional: true
 
-  gcp-metadata@9.2.2:
+  gcp-metadata@9.2.3:
     dependencies:
       gaxios: 8.3.2
-      google-logging-utils: 2.1.0
+      google-logging-utils: 2.1.1
       json-bigint: 1.0.0
     transitivePeerDependencies:
       - supports-color
@@ -24352,13 +24365,13 @@ snapshots:
       - supports-color
     optional: true
 
-  google-auth-library@11.3.3:
+  google-auth-library@11.3.4:
     dependencies:
       base64-js: 1.5.1
       ecdsa-sig-formatter: 1.0.11
       gaxios: 8.3.2
-      gcp-metadata: 9.2.2
-      google-logging-utils: 2.1.0
+      gcp-metadata: 9.2.3
+      google-logging-utils: 2.1.1
       jws: 4.0.1
     transitivePeerDependencies:
       - supports-color
@@ -24411,14 +24424,14 @@ snapshots:
       - supports-color
     optional: true
 
-  google-gax@6.13.0:
+  google-gax@6.14.0:
     dependencies:
-      '@grpc/grpc-js': 1.14.6
+      '@grpc/grpc-js': 1.14.7
       '@grpc/proto-loader': 0.8.1
       '@opentelemetry/api': 1.10.0
       duplexify: 4.1.3
-      google-auth-library: 11.3.3
-      google-logging-utils: 2.1.0
+      google-auth-library: 11.3.4
+      google-logging-utils: 2.1.1
       node-fetch: 3.3.2
       object-hash: 3.0.0
       proto3-json-serializer: 4.1.0
@@ -24433,7 +24446,7 @@ snapshots:
   google-logging-utils@1.1.3:
     optional: true
 
-  google-logging-utils@2.1.0:
+  google-logging-utils@2.1.1:
     optional: true
 
   googleapis-common@7.2.0:
@@ -24976,6 +24989,9 @@ snapshots:
 
   jose@6.2.13: {}
 
+  jose@6.2.14:
+    optional: true
+
   js-tokens@10.0.0: {}
 
   js-tokens@4.0.0: {}
@@ -25102,7 +25118,7 @@ snapshots:
     dependencies:
       '@types/jsonwebtoken': 9.0.10
       debug: 4.4.3(supports-color@5.5.0)
-      jose: 6.2.13
+      jose: 6.2.14
       limiter: 1.1.5
       lru-cache: 11.5.3
       lru-memoizer: 3.0.0

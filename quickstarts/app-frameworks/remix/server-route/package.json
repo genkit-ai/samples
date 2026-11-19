@@ -10,7 +10,7 @@
     "genkit:start": "genkit start -- tsx --watch app/genkit/bargainChefFlow.ts"
   },
   "dependencies": {
-    "@genkit-ai/fetch": "^0.1.1",
+    "@genkit-ai/fetch": "^0.6.0",
     "@genkit-ai/google-genai": "^1.36.0",
     "@react-router/node": "7.16.0",
     "@react-router/serve": "7.16.0",
