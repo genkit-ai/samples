@@ -43,7 +43,7 @@
     "embla-carousel-react": "^8.6.0",
     "firebase": "^11.9.1",
     "genkit": "^1.14.1",
-    "lucide-react": "^0.475.0",
+    "lucide-react": "^0.577.0",
     "next": "^15.5.28",
     "patch-package": "^8.0.0",
     "react": "^18.3.1",
