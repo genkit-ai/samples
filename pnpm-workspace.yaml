@@ -22,16 +22,14 @@ minimumReleaseAge: 30240
 minimumReleaseAgeExclude:
   - '@genkit-ai/*'
   - 'genkit'
+  - 'genkit-cli'
   - 'dotprompt'
-  - '@google/genai'
   - '@google-cloud/*'
-  - '@googleapis/checks'
   - 'googleapis'
   - 'google-auth-library'
   - '@firebase/*'
   - 'firebase'
   - 'firebase-admin'
-  - 'firebase-functions'
 
 # Allow astro CLI (inside .pnpm store) to resolve @astrojs/check.
 packageExtensions:
