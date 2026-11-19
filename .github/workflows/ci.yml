@@ -79,3 +79,26 @@ jobs:
             )
             echo "::endgroup::"
           done < <(find . -name go.mod | sort)
+
+  check-py:
+    name: Check Python Samples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up uv
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5
+        with:
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --all-packages
+      - name: Syntax check Python samples
+        run: uv run --no-sync python -m compileall -q quickstarts/backend-frameworks/py
+      - name: Smoke check Python sample imports
+        env:
+          GEMINI_API_KEY: dummy-ci-key
+        run: |
+          uv run --no-sync --directory quickstarts/backend-frameworks/py/django python manage.py check
+          uv run --no-sync --directory quickstarts/backend-frameworks/py/fastapi python -c "import main"
+          uv run --no-sync --directory quickstarts/backend-frameworks/py/flask python -c "import main"

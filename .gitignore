@@ -7,3 +7,7 @@ GENKIT.md
 dist/
 node_modules/
 package-lock.json
+.venv/
+__pycache__/
+**/uv.lock
+!/uv.lock
