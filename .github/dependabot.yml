@@ -77,3 +77,22 @@ updates:
       - dependency-name: "*"
         update-types:
           - "version-update:semver-major"
+
+  # Maintain dependencies for Python samples workspace
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    groups:
+      py-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
