@@ -12,14 +12,14 @@
     "genkit:start": "genkit start -- tsx --watch src/genkit/bargainChefFlow.ts"
   },
   "dependencies": {
-    "astro": "^5.0.0",
-    "@astrojs/node": "^9.0.0",
+    "astro": "^7.4.5",
+    "@astrojs/node": "^11.1.9",
     "genkit": "^1.36.0",
     "@genkit-ai/google-genai": "^1.36.0",
     "@genkit-ai/fetch": "^0.1.1"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.12",
     "@emnapi/runtime": "^1.11.3",
     "typescript": "^5.9.3",
     "tsx": "^4.19.2",
