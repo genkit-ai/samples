@@ -10,7 +10,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.0.0",
+    "astro": "^7.4.7",
     "genkit": "^1.36.0"
   },
   "devDependencies": {
