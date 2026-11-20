@@ -90,7 +90,7 @@ async def bargain_chef_flow(input: BargainChefInput, ctx: ActionRunContext) -> R
         ),
         tools=[get_ingredients_on_sale],
         output_schema=Recipe,
-        config={'temperature': 0.7, 'thinkingConfig': {'thinkingLevel': 'MINIMAL'}},
+        config={'temperature': 0.7, 'thinkingConfig': {'thinkingLevel': 'LOW'}},
     )
 
     async for chunk in stream_response.stream:
