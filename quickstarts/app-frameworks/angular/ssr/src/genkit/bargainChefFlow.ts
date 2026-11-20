@@ -79,7 +79,7 @@ export const bargainChefFlow = ai.defineFlow(
     const { stream, response } = ai.generateStream({
       model: googleAI.model('gemini-flash-latest', {
         temperature: 0.7,
-        thinkingConfig: { thinkingLevel: 'MINIMAL' },
+        thinkingConfig: { thinkingLevel: 'LOW' },
       }),
       prompt: `Today is ${today}. The user is craving: ${craving}.
 

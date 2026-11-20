@@ -89,7 +89,7 @@ void main() async {
         model: googleAI.gemini('gemini-flash-latest'),
         config: GeminiOptions(
           temperature: 0.7,
-          thinkingConfig: ThinkingConfig(thinkingLevel: 'MINIMAL'),
+          thinkingConfig: ThinkingConfig(thinkingLevel: 'LOW'),
         ),
         prompt:
             'Today is $today. The user is craving: ${input.craving}.\n\n'
